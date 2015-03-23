@@ -1,0 +1,210 @@
+body 
+{
+margin-left:0px;
+margin-right:0px;
+margin-top:0px;
+margin-bottom:0px;
+background-color:white;
+overflow-x:hidden;
+}
+html
+{
+height:100%;
+}
+#chat
+{
+margin-top:32px;
+margin-bottom:48px;
+}
+#emote
+{
+width:32px;
+height:32px;
+margin-top:16px;
+}
+
+#call
+{
+width:40%;
+font-size:70%;
+height:inherit;
+background-color:#000;
+position:fixed;
+right:0;
+color:white;
+text-align:center;
+opacity:0.9;
+overflow-y:scroll;
+}
+#call video
+{
+width:100%;
+height:20%;
+}
+
+#imgShare
+{
+margin-top:16px;
+}
+iframe
+{
+margin-left:-30px;
+margin-top:15px;
+width:480px;
+height:320px;
+}
+li
+{
+font-family:tahoma,sans-serif;
+margin-left:-30px;
+margin-top:15px;
+list-style:none;
+text-align:left;
+color:#000;
+width:80%;
+font-size:90%;
+}
+#title
+{
+width:100%;
+opacity:0.9;
+height:32px;
+top:0px;
+position:fixed;
+z-index:2;
+color:#FFF;
+background-color:#259CFF;
+text-align:center;
+font-family:sans-serif;
+font-size:150%;
+}
+
+/**
+ *UI*/
+h4
+{
+color:blue;
+text-align:left;
+margin-bottom:-15px;
+margin-left:-30px;
+overflow-x:hidden;
+font-family:sans-serif;
+}
+h3
+{
+color:white;
+text-align:center;
+background-color:#3D739F;
+}
+#title p
+{
+font-family:sans-serif;
+text-align: center;
+}
+#title a
+{
+text-align:left;
+color:white;
+text-decoration:none;
+}
+form 
+{
+position:fixed;
+bottom: 0;
+width: 100%;
+height:32px;  
+opacity:0.8;
+border: 2px solid black;
+}
+form input 
+{ 
+border: 0;
+width: 95%;
+height:32px;
+color:#000;
+font-size:120%;
+opacity:0.8;
+bottom:0; 
+left:1%;
+right:3%;
+background-color:#FFF;
+}
+form button 
+{
+visibility: hidden;
+}
+#options h1
+{
+font-family:sans-serif,monospace,tahoma;
+text-align:center;
+}
+#options p
+{
+font-family:monospace;
+font-size:140%;
+text-align:center;
+}
+#options a
+{
+	color:blue;
+	font-style:bold;
+	text-align:center;
+}
+#customCSS
+{
+	width:100%;
+	height:30%;
+	bottom:0;
+	z-index:4;
+	position:relative;
+}
+#smiles
+{
+position:fixed;
+bottom:0;
+right:3%;
+width:3%;
+z-index:2;
+color:black;
+font-size:24px;
+}
+#smileContainer
+{
+background-color:black;
+position:fixed;
+opacity:0.9;
+overflow-y:scroll;
+width:50%;
+height:50%;
+bottom:32px;
+right:0;
+}
+#sml
+{
+color:white;
+}
+#usersOnline
+{
+position:fixed;
+top:32px;
+z-index:4;
+text-align:center;
+font-size:120%;
+background-color:black;
+width:30%;
+float:left;
+opacity:0.9;
+color:white;
+}
+#history
+{
+position:relative;
+margin-top:32px;
+width:100%; 
+font-family:sans-serif;
+font-size:80%;
+font-style:bold;
+background-color:#177EEA;
+color:#FFF;
+text-align:center;
+}

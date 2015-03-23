@@ -1,0 +1,374 @@
+<!--
+								tr&chat
+						
+					Created by based Uncle Trand <3
+				
+	<  Contact me at trandomii@gmail.com or on github @ selcal  >
+   
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 2 of the License, or
+   (at your option) any later version.
+   
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+   
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+   MA 02110-1301, USA.
+
+
+ayy lmao
+-->
+
+<!DOCTYPE html>
+
+<head>
+	<title>tr&chat</title>
+	<meta name="viewport" content="width=device-width, inital-scale=1"/>
+	
+	<script src="jquery.js"></script>
+	<script src="socket.js"></script>
+	
+	<!--For Calls, not ''necessary'' but good.-->
+	<script src="//cdn.webrtc-experiment.com/RTCMultiConnection.js"></script>
+	
+	<!-- Fallback -->	
+	<link id="currentStyle" rel ="stylesheet" href="normal.css">
+	
+<!-- Clientside stupid features. -->
+	<script>
+	var connection = new RTCMultiConnection('trautism');
+	var audioMute = false; // is tr&chat's audio muted?
+	var funMute = false; //is the user not fun?
+	function loadHistory()
+	{
+		alert('stub@loadHistory(); >> ~~Line 48');
+	}
+	</script>
+	
+	<script>
+		$(document).ready(function()
+{		
+		//generate rng to determine banner on login
+		$('#login').css("background-image","url(banner/banner"+Math.floor((Math.random() * 25) + 1)+".gif)");
+		//SET UP, HIDE THE POPOUT DIVS
+		$('#options').hide();
+		$('#title').hide();
+		$('#chatBar').hide();
+		$('#call').hide();
+		$('#usersOnline').hide();
+		$('#smileContainer').hide();
+		
+		//CORES:
+		var socket = io();
+		var userName = "Anonymous";
+		var historyRequested = false;
+		
+		var IN = false; // Call div toggle
+		
+		$('#login').submit(function()
+		{
+			userName = $('#loginForm').val();
+			userName = userName.replace(/<(.*?)>/g,' ');
+			connection.userid = userName;
+			//noscriptattacks:pleb edition
+		
+		if(userName === '' || userName === ' ' || userName === null)
+		{
+			//Set to anon if n/a
+			userName = 'Anonymous';
+		}
+		
+		//join with your username.
+		socket.emit('join',userName);
+		$('#login').fadeOut();
+		$('#title').show();
+		$('#chatBar').show();
+		return false;
+		});
+		
+		$('#chatBar').submit(function(msg,us)
+		{
+			//clientside commands:
+			if($('#m').val() === '/clear' || $('#m').val() === '/c')
+			{
+				$('#chat').empty();
+			}	
+			else
+			{
+				socket.emit('chatIN', $('#m').val(),userName);
+			}		
+	
+			$('#m').val('');
+			$("html, body").animate({ scrollTop: $(document).height() }, "fast");
+			return false;
+		});
+		
+		//GUI AND EVENT FIRING: 
+		
+		$("#cog").click(function(){$("#options").slideToggle("fast");});
+		
+		document.querySelector('#phone').onclick = function() 
+		{
+			if(IN)
+			{
+				connection.disconnect('trautism');
+			}
+			else
+			{
+				connection.connect('trautism');
+			}
+			$("#call").slideToggle("fast");
+		};
+		
+		document.querySelector('#smiles').onclick = function()
+		{
+			$("#smileContainer").fadeToggle();
+		};
+		
+		document.querySelector('#whoson').onclick = function()
+		{
+			$("#usersOnline").slideToggle("fast");
+			socket.emit('getUsersFromServer');
+		};
+		
+		//VIDEO CALLING AND AUDIO CALLING: 
+		connection.direction = 'many-to-many';
+		connection.session =
+		{
+			audio:true,
+			video:true,
+			data: true
+		};
+		connection.bandwidth =
+		{
+			audio:128,
+			video:256
+		};
+		connection.onmute = function(e) 
+		{
+		e.mediaElement.setAttribute('poster', 'talk.jpg');
+		};
+		connection.userid = userName;
+		
+		//END OPTIONS AND SETTINGS:
+		
+		
+		//
+		//
+		//
+		//Every stream that comes in, gets appended to the div.
+		connection.onstream = function(e) 
+		{
+			$("#call").append('<p>'+e.userid+'</p>');
+			$("#call").append(e.mediaElement);			
+			e.mediaElement.play();
+		};
+
+		connection.onstreamended = function(e)
+		{
+			e.mediaElement.parentNode.removeChild(e.mediaElement);
+			e.mediaElement.parentNode.removeChild('<p>'+e.userid+'</p>');
+		};
+		
+		
+		// SOCKET EVENTS:
+		socket.on('announcement',function(msg)
+		{
+			$("#chat").append('<h3>'+msg+'</h3>');
+		});
+		
+		socket.on('chatOUT', function(msg,us)
+		{
+			if(document.hidden === true && audioMute === false)
+			{
+				document.getElementById('audioChannel').src = 'msg.ogg';
+				document.getElementById('audioChannel').play();
+			}
+			$('#chat').append('<li><b id="userName">'+us+'</b>'+msg+'<li>');
+		});
+		
+		socket.on('returnUsersFromServer',function(users)
+		{
+		$('#usersOnline').empty();
+		$('#usersOnline').append('<b>whos online?</b>'); 
+
+
+		//empty old data, insert new data from server directly.
+		for(i=0;i<users.length;i++)
+		{
+		$('#usersOnline').append('<p>'+users[i]+'</p>');
+		}
+		});
+		
+		//GET
+		socket.on('GET2', function()
+		{
+			$('#chat').append($('<video src="dubs.mp4" height="320px" width="480px" autoplay></video>'));
+			$('#chat').append($('<li><img src="d.gif" width="64px" height="64px"><img src="u.gif" width="64px" height="64px"><img src="b.gif" width="64px" height="64px"><img src="s.gif" width="64px" height="64px"></li>'));
+
+		});
+		socket.on('GET3', function()
+		{
+			$('#chat').append($('<audio src="trips.mp3" autoplay ></audio>'));
+			$('#chat').append($('<li><img src="t.gif" width="64px" height="64px"><img src="r.gif" width="64px" height="64px"><img src="i.gif" width="64px" height="64px"><img src="p.gif" width="64px" height="64px"><img src="s.gif" width="64px" height="64px"></li>'));
+		});
+		socket.on('GET4', function()
+		{
+			$('#chat').append($('<video src="quads.mp4" height="320" width="480" autoplay onended="this.destroy()"></video>'));
+			$('#chat').append($('<img src="q.gif" width="64px" height="64px"><img src="u.gif" width="64px" height="64px"><img src="a.gif" width="64px" height="64px"><img src="d.gif" width="64px" height="64px"><img src="s.gif" width="64px" height="64px">'));
+		});
+		socket.on('GET5', function()
+		{
+			$('#chat').append($('<video src="quints.mp4" height="320" width="480" autoplay onended="this.destroy()"></video>'));
+			$('#chat').append($('<img src="q.gif" width="64px" height="64px"><img src="u.gif" width="64px" height="64px"><img src="i.gif" width="64px" height="64px"><img src="n.gif" width="64px" height="64px"><img src="t.gif" width="64px" height="64px"><img src="s.gif" width="64px" height="64px">'));
+		});
+		socket.on('GET420', function(video)
+		{
+			$('#chat').append($('<video src="'+video+'" height="420" width="420" autoplay onended="this.destroy()"></video>'));
+			$('#chat').append($('<img src="snoop.png" width="420" height="420"> <li color="green">Inhale combusted cannabis material on a daily basis!</li>'));
+		});
+});
+	
+</script>
+	
+<!--Voice chat video chat.-->
+
+<script>
+<!--Client side animation and flamboyancy-->
+function addEmote(inp)
+{
+	$('#m').val(function(n,c)
+	{
+		return c + inp;
+	});
+}
+
+</script>
+	
+</head>
+<body id="body">
+	
+<div id="login" style="z-index:1337;top:0;left:0;">
+<p id="loginTitle">tr&chat</p>
+<form id="liloForm" action="">
+<input id="loginForm" autocomplete="off"  autofocus maxlength = "18"/> 
+<button></button>
+<p>Alpha 0.6.7</p>
+</form>
+
+</div>
+
+	<audio id="audioChannel"></audio>
+	
+	<div id="title">
+		&nbsp;| tr&chat | 
+		&nbsp;
+	<a id="whoson">&#9787;</a>
+		&nbsp;
+	<a onclick="$('#chat').empty();"><b>X</b></a>
+		&nbsp;
+	<a id="phone">&#9742;</a>
+		&nbsp;
+	<a id="cog"><b>&#9881;</b></a>
+		&nbsp;
+	<a target="blank_" href="commands.html">?</a>
+	</div>	
+	
+<a id="top"></a> <!-- Bookmark for top of messages -->
+<div id="options" style="background-color:black;height:90%;color:#FFF;position:fixed;opacity:0.9;width:100%;overflow-y:scroll">
+	
+<h1>&#9881;</h1>
+<h3 id="optionsAUDIO" onclick="audioMute = !audioMute; if(!audioMute){this.innerHTML = 'Audio Notifications [ON]'}else{this.innerHTML = 'Audio Notifications [OFF]'} ">Audio Notifications [ON]</h3>
+<h3>Toggle Maximum Maymay Moed [ON]</h3>
+<h3>Suggest changes</h3>
+<h3>Styles & Custom CSS Rules</h3>
+<p>Preset Styles:</p>
+<h3 onclick="document.getElementById('currentStyle').href = 'normal.css'" style="background-color:#525252;color:#ADD8E6;font-family:sans-serif;">meditation++ (default)</h3>
+<br>
+<h3 onclick="document.getElementById('currentStyle').href = 'skype.css'" style="background-color:#00D4FF;color:white;font-family:sans-serif;">skype</h3>
+<br>
+<h3 onclick="document.getElementById('currentStyle').href = 'chan.css'" style="background-color:#D7AFA9;color:#750E00;">yotsuba C</h3>
+<br>
+<h3 onclick="document.getElementById('currentStyle').href = 'unix.css'" style="background-color:#001A22;color:#00FF0B;font-family:monospace;">UNIX</h3>
+<br>
+<a onclick="document.getElementById('currentStyle').href = ''">Run this page like it's <i>1989!</i> (For slow connections, or toasters. Potatoes also work too.)</a>
+<br>
+<p>Custom Stylesheet:</p>
+<textarea style="width:100%;height:640px;"></textarea>
+<button>RICE!</button>
+<br>
+<br>
+<p>tr&chat 0.6.7</p>
+<p style="color:#1AF000">change log</p>
+<p>+++++ Sexy new ' log in ' screen. Remember that if you enter in 
+nothing, you'll be marked as Anonymous. Never forget that.</p>
+<p>+ Ready for release?</p>
+<p>- Prompt based login.</p>
+<p>~ IT JUST WERKS :^)</p>
+</div>
+
+<div id="call">
+<h1>&#9742;</h1>
+<a onclick="connection.join('trautism');">|Join Call|</a>
+<a onclick="connection.open('trautism');">|Start Call|</a>
+</div>
+<h2 id="history" 
+onmouseover="historyRequest = true;
+			 $(this).animate({fontSize: '85%'},'fast');
+			 this.innerHTML = '(click or tap to view)';"
+onmouseout=" historyRequest = false;
+			 $(this).animate({fontSize: '80%'},'fast');
+			 this.innerHTML = '(view previous conservations)';"
+onclick="if(historyRequest){loadHistory();}"
+>
+(view previous conservations)
+</h2>
+
+<ul id="chat">	
+</ul>
+
+<div id="smiles">
+&#9786;
+</div>
+
+<div id="usersOnline">
+</div>
+
+<div id="smileContainer">
+<p id="sml" style="text-align:center;">&nbsp;</p>
+<img onclick="addEmote(':wiz:');" onmouseover="document.getElementById('sml').innerHTML = ':wiz:';" src="wiz.png">
+<img onclick="addEmote(':pepe:');" onmouseover="document.getElementById('sml').innerHTML = ':pepe:';" src="pepe.png">
+<img onclick="addEmote(':feel:');" onmouseover="document.getElementById('sml').innerHTML = ':feel:';" src="feel.png">
+<img onclick="addEmote(':hot:');" onmouseover="document.getElementById('sml').innerHTML = ':hot:';" src="hot.png">
+<img onclick="addEmote(':frog:');" onmouseover="document.getElementById('sml').innerHTML = ':frog:';" src="frog.gif">
+<img onclick="addEmote(':bush:');" onmouseover="document.getElementById('sml').innerHTML = ':bush:';" src="bush.png">
+<img onclick="addEmote(':bushappa:');" onmouseover="document.getElementById('sml').innerHTML = ':bushappa:';" src="bushappa.png">
+<img onclick="addEmote(':axe:');" onmouseover="document.getElementById('sml').innerHTML = ':axe:';" src="axe.png">
+<img onclick="addEmote(':gasm:');" onmouseover="document.getElementById('sml').innerHTML = ':gasm:';" src="gasm.png">
+<img onclick="addEmote(':smirk:');" onmouseover="document.getElementById('sml').innerHTML = ':smirk:';" src="smirk.png">
+<img onclick="addEmote(':snoop:');" onmouseover="document.getElementById('sml').innerHTML = ':snoop:';" src="snoop.png">
+<img onclick="addEmote(':srs:');" onmouseover="document.getElementById('sml').innerHTML = ':srs:';" src="srs.png">
+<img onclick="addEmote(':wow:');" onmouseover="document.getElementById('sml').innerHTML = ':wow:';" src="wow.png">
+<img onclick="addEmote(':yee:');" onmouseover="document.getElementById('sml').innerHTML = ':yee:';" src="yee.png">
+<img onclick="addEmote(':sadmike:');" onmouseover="document.getElementById('sml').innerHTML = ':sadmike:';" src="ixmike.png">
+<img onclick="addEmote('Kappa');" onmouseover="document.getElementById('sml').innerHTML = 'Kappa';" src="Kappa.png">
+<img onclick="addEmote(':shreksmug:');" onmouseover="document.getElementById('sml').innerHTML = ':shreksmug:';" src="shreksmug.png">
+<img onclick="addEmote(':shrekayy:');" onmouseover="document.getElementById('sml').innerHTML = ':shrekayy:';" src="shrekayy.png">
+<img onclick="addEmote(':shrekohno:');" onmouseover="document.getElementById('sml').innerHTML = ':shrekohno:';" src="shrekohno.png">
+<img onclick="addEmote(':shrekyeah:');" onmouseover="document.getElementById('sml').innerHTML = ':shrekyeah:';" src="shrekyeah.png">
+</div>
+
+<a id="bottom"></a> <!--bookmark@bottom of chat page-->
+
+<form id="chatBar" action="">
+<input id="m" autocomplete="off" autofocus maxlength = "256"/> 
+<button></button>
+</form>
+</body>
+
+</html>

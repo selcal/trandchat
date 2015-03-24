@@ -22,17 +22,15 @@ app.get('/', function(req, res){
 
 io.on('connection', function(socket)
 {
-  console.log('someone connected...');
   
   socket.on('chatIN', function(msg,us)
   {
 	   msg = command(msg,us);
-	   console.log(us + ': '+ msg);
 	   //todo:change this to a for loop with i's max as length of message
 	   //and see if the ' ' characters occurences === length of message
 	   if(msg === '<li></li>' || msg === '<li> </li>')
 	   {
-	   console.log('Broke spam by: ' + us);
+		   //breakSpam
 	   } 
 	   else
 	   {
@@ -191,7 +189,7 @@ return ('<video src="/movie/bestgame.mp4" height="320" width="480" autoplay></vi
 		case '/polska':
 		case '/sciernisko':
 		case 'kurwa':
-return ('<li>KURWA JAKI GLUPI MURZYN!!!</li><img src="/cancer/polishFlag.jpg"><audio src="/music/POLSKA.mp3" autoplay onended="this.remove()">');
+return ('<li>GLUPI MURZYN!!! POLSKA JEST SUPER!</li><img src="/cancer/polishFlag.jpg"><audio src="/music/POLSKA.mp3" autoplay onended="this.remove()">');
 		case 'cheekibreeki':
 		case 'RU':
 		case 'CHEEKI BREEKI':

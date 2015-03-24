@@ -69,6 +69,7 @@ visibility:hidden;
 {
 margin-top:32px;
 margin-bottom:48px;
+margin-right:40%;
 }
 #emote
 {
@@ -81,31 +82,30 @@ margin-top:16px;
  *************/
 #call
 {
-width:100%;
-z-index:8;
-height:40%;
+width:40%;
+position:fixed;
+right:0;
+z-index:4;
+height:100%;
 font-size:70%;
 background-color:#000;
-position:relative;
 top:24px;
 color:white;
 text-align:center;
 opacity:0.9;
-overflow-y:scroll;
+overflow:scroll;
 }
 #call video
 {
-width:128px;
+width:100%;
 height:128px;
 }
-
 #imgShare
 {
 margin-top:16px;
 }
 iframe
 {
-margin-left:-30px;
 margin-top:15px;
 width:480px;
 height:320px;
@@ -117,7 +117,6 @@ margin-left:-30px;
 list-style:none;
 text-align:left;
 color:white;
-width:80%;
 font-size:90%;
 }
 #title
@@ -139,7 +138,6 @@ font-size:20px;
  *UI*/
 #userName
 {
-display:inline;
 color:#90C4D9;
 text-align:left;
 margin-bottom:-15px;
@@ -150,7 +148,6 @@ h3
 {
 color:white;
 font-family:sans-serif;
-left:0px;
 text-align:center;
 background-color:#000000;
 }
@@ -167,12 +164,13 @@ text-decoration:none;
 }
 #chatBar 
 {
-position:fixed; bottom: 0; width: 100%; height:32px; background-color:#000; opacity:0.8;
+position:fixed;bottom: 0; width: 100%; height:32px; background-color:#000; opacity:0.8;
 }
 #chatBar input
 { 
 border: 0;
 width: 95%;
+z-index:9;
 height:32px;
 color:#FFF;
 font-size:120%;

@@ -1,0 +1,3 @@
+In tr&chat, banners are gif images displayed in the login div. 
+25 is the default maximum, but this can easily be changed in
+the clientside js near the top.

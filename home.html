@@ -1,9 +1,7 @@
 <!--
 								tr&chat
-						
-					Created by based Uncle Trand <3
 				
-	<  Contact me at trandomii@gmail.com or on github @ selcal  >
+	<  Contact me at selcal@protonmail.com or on github @ selcal  >
    
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -19,9 +17,7 @@
    along with this program; if not, write to the Free Software
    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
    MA 02110-1301, USA.
-
-
-ayy lmao
+   
 -->
 
 <!DOCTYPE html>
@@ -48,13 +44,25 @@ ayy lmao
 	{
 		alert('stub@loadHistory(); >> ~~Line 48');
 	}
+	function addEmote(inp)
+	{
+	$('#m').val(function(n,c)
+	{
+		return c + inp;
+	});
+	}
 	</script>
 	
+	<!--Fold when not in use, main communication below.-->
+	<!--Note to anyone reading, anyone know a better, less retarded way of doing
+	this? Thinking about external js file because this has gotten huge.-->
 	<script>
 		$(document).ready(function()
 {		
+		//Customization!!
+		var numberOfBanners = 25; //how many banners do you have in ./banner? Remember, start from banner1.gif.
 		//generate rng to determine banner on login
-		$('#login').css("background-image","url(banner/banner"+Math.floor((Math.random() * 25) + 1)+".gif)");
+		$('#login').css("background-image","url(banner/banner"+Math.floor((Math.random() * numberOfBanners) + 1)+".gif)");
 		//SET UP, HIDE THE POPOUT DIVS
 		$('#options').hide();
 		$('#title').hide();
@@ -164,7 +172,6 @@ ayy lmao
 		//Every stream that comes in, gets appended to the div.
 		connection.onstream = function(e) 
 		{
-			$("#call").append('<p>'+e.userid+'</p>');
 			$("#call").append(e.mediaElement);			
 			e.mediaElement.play();
 		};
@@ -172,7 +179,6 @@ ayy lmao
 		connection.onstreamended = function(e)
 		{
 			e.mediaElement.parentNode.removeChild(e.mediaElement);
-			e.mediaElement.parentNode.removeChild('<p>'+e.userid+'</p>');
 		};
 		
 		
@@ -189,7 +195,7 @@ ayy lmao
 				document.getElementById('audioChannel').src = 'msg.ogg';
 				document.getElementById('audioChannel').play();
 			}
-			$('#chat').append('<li><b id="userName">'+us+'</b>'+msg+'<li>');
+			$('#chat').append('<li>'+'<b id="userName">'+us+'</b>'+msg+'</li>');
 		});
 		
 		socket.on('returnUsersFromServer',function(users)
@@ -236,20 +242,6 @@ ayy lmao
 	
 </script>
 	
-<!--Voice chat video chat.-->
-
-<script>
-<!--Client side animation and flamboyancy-->
-function addEmote(inp)
-{
-	$('#m').val(function(n,c)
-	{
-		return c + inp;
-	});
-}
-
-</script>
-	
 </head>
 <body id="body">
 	
@@ -257,8 +249,8 @@ function addEmote(inp)
 <p id="loginTitle">tr&chat</p>
 <form id="liloForm" action="">
 <input id="loginForm" autocomplete="off"  autofocus maxlength = "18"/> 
-<button></button>
-<p>Alpha 0.6.7</p>
+<button>Let's Jam.</button>
+<p>Alpha 0.6.9</p>
 </form>
 
 </div>
@@ -276,7 +268,7 @@ function addEmote(inp)
 		&nbsp;
 	<a id="cog"><b>&#9881;</b></a>
 		&nbsp;
-	<a target="blank_" href="commands.html">?</a>
+	<a target="blank_" href="help.html">?</a>
 	</div>	
 	
 <a id="top"></a> <!-- Bookmark for top of messages -->
@@ -303,19 +295,18 @@ function addEmote(inp)
 <button>RICE!</button>
 <br>
 <br>
-<p>tr&chat 0.6.7</p>
+<p>tr&chat 0.6.8</p>
 <p style="color:#1AF000">change log</p>
-<p>+++++ Sexy new ' log in ' screen. Remember that if you enter in 
-nothing, you'll be marked as Anonymous. Never forget that.</p>
-<p>+ Ready for release?</p>
-<p>- Prompt based login.</p>
-<p>~ IT JUST WERKS :^)</p>
+<p>+ </p>
 </div>
 
 <div id="call">
-<h1>&#9742;</h1>
-<a onclick="connection.join('trautism');">|Join Call|</a>
-<a onclick="connection.open('trautism');">|Start Call|</a>
+<h1>
+<a onclick="connection.leave();">leave call</a>
+&#9742;
+<a onclick="connection.open('trautism');">host call</a>
+</h1>
+
 </div>
 <h2 id="history" 
 onmouseover="historyRequest = true;
@@ -342,6 +333,7 @@ onclick="if(historyRequest){loadHistory();}"
 <div id="smileContainer">
 <p id="sml" style="text-align:center;">&nbsp;</p>
 <img onclick="addEmote(':wiz:');" onmouseover="document.getElementById('sml').innerHTML = ':wiz:';" src="wiz.png">
+<img onclick="addEmote(':cheeki:');" onmouseover="document.getElementById('sml').innerHTML = ':cheeki:';" src="cheekibreeki.png">
 <img onclick="addEmote(':pepe:');" onmouseover="document.getElementById('sml').innerHTML = ':pepe:';" src="pepe.png">
 <img onclick="addEmote(':feel:');" onmouseover="document.getElementById('sml').innerHTML = ':feel:';" src="feel.png">
 <img onclick="addEmote(':hot:');" onmouseover="document.getElementById('sml').innerHTML = ':hot:';" src="hot.png">

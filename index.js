@@ -10,8 +10,7 @@ var usersNum = 0;
 //
 var isCallOpen = false; // is there already an open() call?
 var whoinited = ""; //who initiated the call in the first place?
-//control variables:
-app.set()			 
+//control variables:		 
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/home.html');
   app.use("/", express.static(__dirname));

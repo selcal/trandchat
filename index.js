@@ -1,3 +1,5 @@
+var portGiven = process.env.PORT;
+
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
@@ -9,13 +11,12 @@ var usersNum = 0;
 var isCallOpen = false; // is there already an open() call?
 var whoinited = ""; //who initiated the call in the first place?
 //control variables:
-				 
+app.set()			 
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/home.html');
   app.use("/", express.static(__dirname));
   app.use("/", express.static("emote"));
   app.use("/", express.static("movie"));
-  
 });
 
 // EVENTS
@@ -82,7 +83,7 @@ io.on('connection', function(socket)
 });
 
   
-http.listen(3000,function(){
+http.listen(portGiven,function(){
 	console.log("ayy lmao");
 });
 

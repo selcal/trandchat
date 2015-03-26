@@ -98,6 +98,7 @@ function command(msg,us)
 	msg = msg.replace(/Kappa/g, '<img src="/emote/Kappa.png">');
 	msg = msg.replace(/:gasm:/g, '<img src="/emote/gasm.png">');
 	msg = msg.replace(/:smirk:/g, '<img src="/emote/smirk.png">');
+	msg = msg.replace(/:cheeki:/g, '<img src="/emote/cheekibreeki.png">');
 	msg = msg.replace(/:yee:/g, '<img src="/emote/yee.png">');
 	msg = msg.replace(/:sadmike:/g, '<img src="/emote/ixmike.png">');
 	msg = msg.replace(/:axe:/g, '<img src="/emote/axe.png">');

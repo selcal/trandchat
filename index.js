@@ -36,7 +36,6 @@ io.on('connection', function(socket)
 	   {
 	   io.emit('chatOUT', msg, us);
        }
-	   console.log('==================================');
   });
 
 	socket.on('typing', function(us)
@@ -62,7 +61,6 @@ io.on('connection', function(socket)
 	
 	socket.on('getUsersFromServer',function()
 	{
-		console.log('Sent users to client on request: getUsersFromServer');
 		io.emit('returnUsersFromServer', users);
 	});
 	

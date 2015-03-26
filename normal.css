@@ -84,10 +84,11 @@ margin-top:16px;
 {
 width:40%;
 position:fixed;
+font-family:sans-serif;
 right:0;
 z-index:4;
 height:100%;
-font-size:70%;
+font-size:50%;
 background-color:#000;
 top:24px;
 color:white;

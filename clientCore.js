@@ -22,9 +22,12 @@ $(document).ready(function()
 {		
 		//Customization!!
 		var numberOfBanners = 25; //how many banners do you have in ./banner? Remember, start from banner1.gif.
+		
 		//generate rng to determine banner on login
 		$('#login').css("background-image","url(banner/banner"+Math.floor((Math.random() * numberOfBanners) + 1)+".gif)");
-		//SET UP, HIDE THE POPOUT DIVS
+		
+		//Set up, Hide UI elements.
+		
 		$('#options').hide();
 		$('#title').hide();
 		$('#chatBar').hide();
@@ -122,6 +125,7 @@ $(document).ready(function()
 		{
 		e.mediaElement.setAttribute('poster', 'talk.jpg');
 		};
+		connection.on
 		connection.userid = userName;
 		
 		//END OPTIONS AND SETTINGS:
@@ -156,7 +160,7 @@ $(document).ready(function()
 				document.getElementById('audioChannel').src = 'msg.ogg';
 				document.getElementById('audioChannel').play();
 			}
-			$('#chat').append('<li>'+'<b id="userName">'+us+'</b>'+msg+'</li>');
+			$('#chat').append('<li><b id="userName">'+us+'</b>'+msg+'</li>');
 		});
 		
 		socket.on('returnUsersFromServer',function(users)

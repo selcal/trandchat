@@ -14,6 +14,10 @@ html
 height:100%;
 width:100%;
 }
+a
+{
+cursor:pointer;
+}
 /***************
  * Login style *
  **************/
@@ -84,10 +88,11 @@ margin-top:16px;
 {
 width:40%;
 position:fixed;
+font-family:sans-serif;
 right:0;
 z-index:4;
 height:100%;
-font-size:70%;
+font-size:50%;
 background-color:#000;
 top:24px;
 color:white;
@@ -211,7 +216,7 @@ height:320px;
 {
 position:fixed;
 bottom:0;
-right:3%;
+right:0;
 width:3%;
 z-index:2;
 color:white;
@@ -233,7 +238,7 @@ right:0;
 color:white;
 font-family:sans-serif;
 }
-/* APPEND TO ALPHA v6 STYLESHEETS*/
+
 #usersOnline
 {
 position:fixed;
@@ -241,6 +246,7 @@ top:32px;
 z-index:4;
 text-align:center;
 font-size:120%;
+font-family:tahoma;
 background-color:black;
 width:30%;
 float:left;

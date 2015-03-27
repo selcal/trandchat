@@ -41,7 +41,7 @@
 <form id="liloForm" action="">
 <input id="loginForm" autocomplete="off"  autofocus maxlength = "18"/> 
 <button>Let's Jam.</button>
-<p id="version">tr&chat alpha 0.7.0</p>
+<p id="version">tr&chat alpha 0.7.1</p>
 </form>
 
 </div>
@@ -59,6 +59,8 @@
 		&nbsp;
 	<a id="cog"><b>&#9881;</b></a>
 		&nbsp;
+	<a onclick="autoScroll = !autoScroll;if(autoScroll){this.style='color:#00D127'}else{this.style='color:#D10007'}"><b>&#8595;</b></a>
+		&nbsp;
 	<a target="blank_" href="help.html">?</a>
 	</div>	
 	
@@ -67,8 +69,9 @@
 	
 <h1>&#9881;</h1>
 <h3 id="optionsAUDIO" onclick="audioMute = !audioMute; if(!audioMute){this.innerHTML = 'Audio Notifications [ON]'}else{this.innerHTML = 'Audio Notifications [OFF]'} ">Audio Notifications [ON]</h3>
-<h3>Toggle Maximum Maymay Moed [ON]</h3>
-<h3>Suggest changes</h3>
+<h3 onclick="memeMute = !memeMute; if(!memeMute){this.innerHTML = 'Meme Mute [OFF]'}else{this.innerHTML = 'Meme Mute[ON]'} ">Meme Mute [STUB]</h3>
+<a href="https://github.com/selcal/trandchat/issues">Suggest changes on github.</a>
+<br>
 <h3>Styles & Custom CSS Rules</h3>
 <p>Preset Styles:</p>
 <h3 onclick="document.getElementById('currentStyle').href = 'normal.css'" style="background-color:#525252;color:#ADD8E6;font-family:sans-serif;">meditation++ (default)</h3>
@@ -86,30 +89,24 @@
 <button>RICE!</button>
 <br>
 <br>
-<p id="version">tr&chat alpha 0.7.0</p>
+<p id="version">tr&chat alpha 0.7.1</p>
 <p style="color:#1AF000">change log</p>
-<p>+ </p>
+<p>+ Autoscroll toggle</p>
+<p>* Fixed embedding hopefully (not on HTTPS:// protocol)</p>
+<p>+ Cursor now changes upon mouseover event on A tag</p>
+<p>Fucking javascript won't let the memes be silenced so that'll come later. use /c faggots.</p>
+<p>#! SO DEEP PUT THAT ASS TO SLEEP</p>
 </div>
 
 <div id="call">
 <h1>
-<a onclick="connection.leave();">leave call</a>
+<a onclick="connection.disconnect('trautism');">leave call</a>
 &#9742;
 <a onclick="connection.open('trautism');">host call</a>
 </h1>
 
 </div>
-<h2 id="history" 
-onmouseover="historyRequest = true;
-			 $(this).animate({fontSize: '85%'},'fast');
-			 this.innerHTML = '(click or tap to view)';"
-onmouseout=" historyRequest = false;
-			 $(this).animate({fontSize: '80%'},'fast');
-			 this.innerHTML = '(view previous conservations)';"
-onclick="if(historyRequest){loadHistory();}"
->
-(view previous conservations)
-</h2>
+
 
 <ul id="chat">	
 </ul>

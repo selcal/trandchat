@@ -34,9 +34,8 @@ io.on('connection', function(socket)
 	   } 
 	   else
 	   {
-	   io.emit('chatOUT', msg, us);
+		io.emit('chatOUT', msg, us);
        }
-	   console.log('==================================');
   });
 
 	socket.on('typing', function(us)
@@ -177,6 +176,11 @@ function command(msg,us)
 		case '/jimmyrollins':
 		case '/rollan':
 return ('<li>↳ rolled ' + roll() + '!</li>');
+
+
+
+
+
 	    case 'nice':
 	    case 'noice':		
 return ('<li>'+msg+'</li><video src="/movie/nice.mp4" height="320" width="480" autoplay onended="this.remove()"></video>');

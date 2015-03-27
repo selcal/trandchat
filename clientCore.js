@@ -1,11 +1,12 @@
-var version = "tr&chat alpha 0.70";
+var version = "tr&chat alpha 0.7.1";
 /*
  * Client-side JS.
  * */
 
 var connection = new RTCMultiConnection('trautism');
 	var audioMute = false; // is tr&chat's audio muted?
-	var funMute = false; //is the user not fun?
+	var memeMute = false; //is the user not fun?
+	var autoScroll = true;
 	function loadHistory()
 	{
 		alert('stub@loadHistory(); >> ~~Line 48');
@@ -22,9 +23,12 @@ $(document).ready(function()
 {		
 		//Customization!!
 		var numberOfBanners = 25; //how many banners do you have in ./banner? Remember, start from banner1.gif.
+		
 		//generate rng to determine banner on login
 		$('#login').css("background-image","url(banner/banner"+Math.floor((Math.random() * numberOfBanners) + 1)+".gif)");
-		//SET UP, HIDE THE POPOUT DIVS
+		
+		//Set up, Hide UI elements.
+		
 		$('#options').hide();
 		$('#title').hide();
 		$('#chatBar').hide();
@@ -66,7 +70,7 @@ $(document).ready(function()
 			if($('#m').val() === '/clear' || $('#m').val() === '/c')
 			{
 				$('#chat').empty();
-			}	
+			}
 			else
 			{
 				socket.emit('chatIN', $('#m').val(),userName);
@@ -156,7 +160,14 @@ $(document).ready(function()
 				document.getElementById('audioChannel').src = 'msg.ogg';
 				document.getElementById('audioChannel').play();
 			}
-			$('#chat').append('<li>'+'<b id="userName">'+us+'</b>'+msg+'</li>');
+			$('#chat').append('<li><b id="userName">'+us+'</b></li>');
+			$('#chat').append(msg);
+			$('#chat').append('<br>');
+				
+				if(autoScroll === true)
+				{
+				$("html, body").animate({ scrollTop: $(document).height() }, "fast");
+				}
 		});
 		
 		socket.on('returnUsersFromServer',function(users)

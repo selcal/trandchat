@@ -1,3 +1,5 @@
+var portGiven = process.env.PORT;
+
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
@@ -8,14 +10,12 @@ var usersNum = 0;
 //
 var isCallOpen = false; // is there already an open() call?
 var whoinited = ""; //who initiated the call in the first place?
-//control variables:
-				 
+//control variables:		 
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/home.html');
   app.use("/", express.static(__dirname));
   app.use("/", express.static("emote"));
   app.use("/", express.static("movie"));
-  
 });
 
 // EVENTS
@@ -34,7 +34,7 @@ io.on('connection', function(socket)
 	   } 
 	   else
 	   {
-	   io.emit('chatOUT', msg, us);
+		io.emit('chatOUT', msg, us);
        }
   });
 
@@ -61,6 +61,7 @@ io.on('connection', function(socket)
 	
 	socket.on('getUsersFromServer',function()
 	{
+		console.log('Sent users to client on request: getUsersFromServer');
 		io.emit('returnUsersFromServer', users);
 	});
 	
@@ -80,8 +81,8 @@ io.on('connection', function(socket)
 });
 
   
-http.listen(3000,function(){
-  console.log('tr&chat is up! Yay!');
+http.listen(portGiven,function(){
+	console.log("ayy lmao");
 });
 
 //non core, save your eyes from the pain pls:
@@ -175,6 +176,11 @@ function command(msg,us)
 		case '/jimmyrollins':
 		case '/rollan':
 return ('<li>↳ rolled ' + roll() + '!</li>');
+
+
+
+
+
 	    case 'nice':
 	    case 'noice':		
 return ('<li>'+msg+'</li><video src="/movie/nice.mp4" height="320" width="480" autoplay onended="this.remove()"></video>');

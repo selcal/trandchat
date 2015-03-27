@@ -1,12 +1,14 @@
-var version = "tr&chat alpha 0.7.1";
+var version = "tr&chat alpha 0.7.2";
 /*
  * Client-side JS.
  * */
 
 var connection = new RTCMultiConnection('trautism');
+
 	var audioMute = false; // is tr&chat's audio muted?
 	var memeMute = false; //is the user not fun?
 	var autoScroll = true;
+	
 	function loadHistory()
 	{
 		alert('stub@loadHistory(); >> ~~Line 48');
@@ -14,9 +16,9 @@ var connection = new RTCMultiConnection('trautism');
 	function addEmote(inp)
 	{
 		$('#m').val(function(n,c)
-	{
-		return c + inp;
-	});
+		{
+			return c + inp;
+		});
 	}
 	
 $(document).ready(function()
@@ -58,7 +60,10 @@ $(document).ready(function()
 		
 		//join with your username.
 		socket.emit('join',userName);
+		
 		$('#login').fadeOut();
+		$('#login').remove();
+		
 		$('#title').show();
 		$('#chatBar').show();
 		return false;
@@ -124,7 +129,11 @@ $(document).ready(function()
 		};
 		connection.onmute = function(e) 
 		{
-		e.mediaElement.setAttribute('poster', 'talk.jpg');
+		e.mediaElement.setAttribute('poster', 'volumeOff.png');
+		};
+		connection.onunmute = function(e)
+		{
+		e.mediaElement.setAttribute('poster', 'volumeOn.png');
 		};
 		connection.userid = userName;
 		
@@ -139,6 +148,7 @@ $(document).ready(function()
 		{
 			$("#call").append(e.mediaElement);			
 			e.mediaElement.play();
+			e.mediaElement.controls = false;
 		};
 
 		connection.onstreamended = function(e)
@@ -148,6 +158,13 @@ $(document).ready(function()
 		
 		
 		// SOCKET EVENTS:
+		
+		socket.on('disconnect',function()
+		{
+		socket.emit('announcement',userName+' left the chat.');
+		socket.emit('left',userName);
+		});
+		
 		socket.on('announcement',function(msg)
 		{
 			$("#chat").append('<h3>'+msg+'</h3>');
@@ -160,9 +177,7 @@ $(document).ready(function()
 				document.getElementById('audioChannel').src = 'msg.ogg';
 				document.getElementById('audioChannel').play();
 			}
-			$('#chat').append('<li><b id="userName">'+us+'</b></li>');
-			$('#chat').append(msg);
-			$('#chat').append('<br>');
+			$('#chat').append('<li><b id="userName">'+us+'</b><br>'+msg+'</li><br>');
 				
 				if(autoScroll === true)
 				{

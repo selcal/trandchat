@@ -25,9 +25,10 @@
 <head>
 	<title>tr&chat</title>
 	<meta name="viewport" content="width=device-width, inital-scale=1"/>
+	<link rel="icon" href="favicon.png">
 	<script src="jquery.js"></script>
 	<script src="socket.js"></script>
-	<script src="//cdn.webrtc-experiment.com/RTCMultiConnection.js"></script>
+	<script src="rtc.js"></script>
 	<script src="clientCore.js"></script>
 
 	<link id="currentStyle" rel="stylesheet" href="normal.css">
@@ -41,7 +42,7 @@
 <form id="liloForm" action="">
 <input id="loginForm" autocomplete="off"  autofocus maxlength = "18"/> 
 <button>Let's Jam.</button>
-<p id="version">tr&chat alpha 0.7.1</p>
+<p id="version">tr&chat alpha 0.7.2</p>
 </form>
 
 </div>
@@ -51,35 +52,32 @@
 	<div id="title">
 		&nbsp;| tr&chat | 
 		&nbsp;
-	<a id="whoson">&#9787;</a>
+	<a title="Users Currently Online" id="whoson">&#9787;</a>
 		&nbsp;
-	<a onclick="$('#chat').empty();"><b>X</b></a>
+	<a title="Clear the Chat Screen (/c /clear)" onclick="$('#chat').empty();"><b>X</b></a>
 		&nbsp;
-	<a id="phone">&#9742;</a>
+	<a title="Calls and Video Chats" id="phone">&#9742;</a>
 		&nbsp;
-	<a id="cog"><b>&#9881;</b></a>
+	<a title="Autoscroll Toggle" onclick="autoScroll = !autoScroll;if(autoScroll){this.style='color:#00D127'}else{this.style='color:#D10007'}"><b>&#8595;</b></a>
 		&nbsp;
-	<a onclick="autoScroll = !autoScroll;if(autoScroll){this.style='color:#00D127'}else{this.style='color:#D10007'}"><b>&#8595;</b></a>
+	<a title="pls help i cannot computer" target="blank_" href="help.html">?</a>
 		&nbsp;
-	<a target="blank_" href="help.html">?</a>
+	<a title="Options and Changelog" id="cog"><b>&#9776;</b></a>
 	</div>	
 	
 <a id="top"></a> <!-- Bookmark for top of messages -->
-<div id="options" style="background-color:black;height:90%;color:#FFF;position:fixed;opacity:0.9;width:100%;overflow-y:scroll">
+<div id="options" style="background-color:black;height:90%;top:24px;color:#FFF;position:fixed;opacity:0.9;width:100%;overflow-y:scroll">
 	
-<h1>&#9881;</h1>
+<h1><u>Options</u></h1>
 <h3 id="optionsAUDIO" onclick="audioMute = !audioMute; if(!audioMute){this.innerHTML = 'Audio Notifications [ON]'}else{this.innerHTML = 'Audio Notifications [OFF]'} ">Audio Notifications [ON]</h3>
 <h3 onclick="memeMute = !memeMute; if(!memeMute){this.innerHTML = 'Meme Mute [OFF]'}else{this.innerHTML = 'Meme Mute[ON]'} ">Meme Mute [STUB]</h3>
-<a href="https://github.com/selcal/trandchat/issues">Suggest changes on github.</a>
+<h3><a href="https://github.com/selcal/trandchat/issues" target="blank_" >Suggest changes on github.</a></h3>
 <br>
 <h3>Styles & Custom CSS Rules</h3>
 <p>Preset Styles:</p>
 <h3 onclick="document.getElementById('currentStyle').href = 'normal.css'" style="background-color:#525252;color:#ADD8E6;font-family:sans-serif;">meditation++ (default)</h3>
-<br>
 <h3 onclick="document.getElementById('currentStyle').href = 'skype.css'" style="background-color:#00D4FF;color:white;font-family:sans-serif;">skype</h3>
-<br>
 <h3 onclick="document.getElementById('currentStyle').href = 'chan.css'" style="background-color:#D7AFA9;color:#750E00;">yotsuba C</h3>
-<br>
 <h3 onclick="document.getElementById('currentStyle').href = 'unix.css'" style="background-color:#001A22;color:#00FF0B;font-family:monospace;">UNIX</h3>
 <br>
 <a onclick="document.getElementById('currentStyle').href = ''">Run this page like it's <i>1989!</i> (For slow connections, or toasters. Potatoes also work too.)</a>
@@ -89,18 +87,22 @@
 <button>RICE!</button>
 <br>
 <br>
-<p id="version">tr&chat alpha 0.7.1</p>
+<p id="version">tr&chat alpha 0.7.2</p>
 <p style="color:#1AF000">change log</p>
-<p>+ Autoscroll toggle</p>
-<p>* Fixed embedding hopefully (not on HTTPS:// protocol)</p>
-<p>+ Cursor now changes upon mouseover event on A tag</p>
-<p>Fucking javascript won't let the memes be silenced so that'll come later. use /c faggots.</p>
-<p>#! SO DEEP PUT THAT ASS TO SLEEP</p>
+<p>+ Added maniac's affluently metrosexual sleeping emoticon.</p>
+<p>+ Rearranged some GUI components.</p>
+<p>|- Tooltips for GUI elements</p>
+<p>|- Options is now a standardized HTML entity and is on the right.</p>
+<p>|- Favicon! <img src="favicon.png"></p>
+
+<p>+ Fixed some bugs in the 'Users Currently Online' panel, under certain circumstances users wouldn't "leave" the chat.</p>
+<p>|- Fixed bug that wouldn't show a user leaving in realtime as an announcment inside the chat section.</p>
+
 </div>
 
 <div id="call">
 <h1>
-<a onclick="connection.disconnect('trautism');">leave call</a>
+<a onclick="connection.close('trautism');">leave call</a>
 &#9742;
 <a onclick="connection.open('trautism');">host call</a>
 </h1>
@@ -111,11 +113,7 @@
 <ul id="chat">	
 </ul>
 
-<div id="smiles">
-&#9786;
-</div>
-
-<div id="usersOnline">
+<div id="usersOnline" style="top:24px;">
 </div>
 
 <div id="smileContainer">
@@ -125,6 +123,7 @@
 <img onclick="addEmote(':pepe:');" onmouseover="document.getElementById('sml').innerHTML = ':pepe:';" src="pepe.png">
 <img onclick="addEmote(':feel:');" onmouseover="document.getElementById('sml').innerHTML = ':feel:';" src="feel.png">
 <img onclick="addEmote(':hot:');" onmouseover="document.getElementById('sml').innerHTML = ':hot:';" src="hot.png">
+<img onclick="addEmote(':maniaczzz:');" onmouseover="document.getElementById('sml').innerHTML = ':maniaczzz:';" src="maniacSleeper.png">
 <img onclick="addEmote(':frog:');" onmouseover="document.getElementById('sml').innerHTML = ':frog:';" src="frog.gif">
 <img onclick="addEmote(':bush:');" onmouseover="document.getElementById('sml').innerHTML = ':bush:';" src="bush.png">
 <img onclick="addEmote(':bushappa:');" onmouseover="document.getElementById('sml').innerHTML = ':bushappa:';" src="bushappa.png">
@@ -149,6 +148,11 @@
 <input id="m" autocomplete="off" autofocus maxlength = "256"/> 
 <button></button>
 </form>
+
+<div id="smiles">
+&#9786;
+</div>
+
 </body>
 
 </html>

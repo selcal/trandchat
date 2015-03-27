@@ -1,16 +1,17 @@
-var portGiven = process.env.PORT;
+var portGiven = process.env.PORT;//process.env.PORT;
 
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var express = require('express');
-//information variables:
+
+//User Storage::
+
 var users = [];
 var usersNum = 0;
-//
-var isCallOpen = false; // is there already an open() call?
-var whoinited = ""; //who initiated the call in the first place?
-//control variables:		 
+
+//Node::
+	 
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/home.html');
   app.use("/", express.static(__dirname));
@@ -18,23 +19,31 @@ app.get('/', function(req, res){
   app.use("/", express.static("movie"));
 });
 
-// EVENTS
+//Connect::Node::HTTP::
+http.listen(portGiven,function(){
+	console.log("ayy lmao");
+	console.log("PORT:"+portGiven+" !");
+});
+
+//SocketIOEvents::
 
 io.on('connection', function(socket)
 {
   
   socket.on('chatIN', function(msg,us)
   {
+	   //clean up/scrape and process input.
 	   msg = command(msg,us);
 	   //todo:change this to a for loop with i's max as length of message
 	   //and see if the ' ' characters occurences === length of message
+	   
 	   if(msg === '<li></li>' || msg === '<li> </li>')
 	   {
 		   //breakSpam
 	   } 
 	   else
 	   {
-		io.emit('chatOUT', msg, us);
+	   io.emit('chatOUT', msg, us);
        }
   });
 
@@ -43,59 +52,43 @@ io.on('connection', function(socket)
 		io.emit('typing',us);
 	});
 	
+//User Organization::
+					 
+	//NOTE (032715 selcal) normal socket.connect is NOT used in 
+	//this case because the user 
+	//actually 'connects' to the chat once they choose a name.
+	
 	socket.on('join',function(us)
 	{
 		socket.username = us;
-		users.push(us);
+		users.push(socket.username);
 		++usersNum;
-		io.emit('announcement',us+' joined the chat.');
+		io.emit('announcement',socket.username+' joined the chat.');
 	});
-	
-	socket.on('disconnect',function(socket)
+	socket.on('disconnect',function()
 	{
-		io.emit('leave');
+		io.emit('announcement',socket.username+' left the chat.');
 		var a = users.indexOf(socket.username);
 		users.splice(a,1);
 		--usersNum;
 	});
-	
 	socket.on('getUsersFromServer',function()
 	{
-		console.log('Sent users to client on request: getUsersFromServer');
 		io.emit('returnUsersFromServer', users);
 	});
 	
-	//CALL CHECKING AND REQUESTS::
-	
-	socket.on('callCheck',function(us)
-	{
-	if(isCallOpen === false)
-	{
-	whoinited = us;
-	}
-	io.emit('callStatus',whoinited);
-	});
-	
-	
-	
-});
-
-  
-http.listen(portGiven,function(){
-	console.log("ayy lmao");
 });
 
 //non core, save your eyes from the pain pls:
 
 function command(msg,us)
 {
-	//slice needed section
-	//remove HTML
 	msg = msg.replace(/<(.*?)>/g, "<li> I just tried to inject HTML! <i>God I love cock!</i></li>");
-	//emoticons:
+	
 	msg = msg.replace(/:snoop:/g, '<img src="/emote/snoop.png">');
 	msg = msg.replace(/Kappa/g, '<img src="/emote/Kappa.png">');
 	msg = msg.replace(/:gasm:/g, '<img src="/emote/gasm.png">');
+	msg = msg.replace(/:maniaczzz:/g, '<img src="/emote/maniacSleeper.png">');
 	msg = msg.replace(/:smirk:/g, '<img src="/emote/smirk.png">');
 	msg = msg.replace(/:cheeki:/g, '<img src="/emote/cheekibreeki.png">');
 	msg = msg.replace(/:yee:/g, '<img src="/emote/yee.png">');
@@ -145,6 +138,8 @@ function command(msg,us)
 	msg = msg.replace(/:x:/g, '<img src="/emote/x.gif">');
 	msg = msg.replace(/:y:/g, '<img src="/emote/y.gif">');
 	msg = msg.replace(/:z:/g, '<img src="/emote/z.gif">');
+	//slice needed section
+	//remove HTML
 	
 	if(msg.substring(0,4) === '/pic' || msg.substring(0,4) === '/img')
 	{

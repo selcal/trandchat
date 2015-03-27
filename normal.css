@@ -18,6 +18,7 @@ a
 {
 cursor:pointer;
 }
+#version{font-family:monospace;font-size:140%}
 /***************
  * Login style *
  **************/
@@ -103,7 +104,7 @@ overflow:scroll;
 #call video
 {
 width:100%;
-height:128px;
+height:180px;
 }
 #imgShare
 {
@@ -112,8 +113,8 @@ margin-top:16px;
 iframe
 {
 margin-top:15px;
-width:480px;
-height:320px;
+width:120%;
+height:70vh;
 }
 li
 {
@@ -130,6 +131,7 @@ width:100%;
 opacity:0.9;
 height:24px;
 top:0px;
+padding-bottom:2px;
 position:fixed;
 z-index:2;
 color:#FFFFFF;
@@ -155,6 +157,9 @@ color:white;
 font-family:sans-serif;
 text-align:center;
 background-color:#000000;
+border: 2px solid #FFF;
+border-radius:25px;
+box-shadow:2px 5px 10px #2F2F2F;
 }
 #title p
 {
@@ -181,13 +186,22 @@ color:#FFF;
 font-size:120%;
 opacity:0.8;
 bottom:0; 
-left:1%;
-right:3%;
+left:0;
+right:32px;
 background-color:#000;
 }
 form button 
 {
 visibility:hidden;
+}
+#cog
+{
+position:fixed;
+right:5px;
+}
+#options div
+{
+top:24px;
 }
 #options h1
 {
@@ -204,7 +218,6 @@ text-align:center;
 {
 color:#00FFF6;
 font-style:bold;
-text-align:center;
 }
 #customCSS
 {
@@ -217,10 +230,11 @@ height:320px;
 position:fixed;
 bottom:0;
 right:0;
-width:3%;
+width:32px;
+height:32px;
 z-index:2;
 color:white;
-font-size:24px;
+font-size:32px;
 }
 #smileContainer
 {
@@ -246,7 +260,7 @@ top:32px;
 z-index:4;
 text-align:center;
 font-size:120%;
-font-family:tahoma;
+font-family:sans-serif;
 background-color:black;
 width:30%;
 float:left;

@@ -9,6 +9,7 @@ var express = require('express');
 
 var users = [];
 var usersNum = 0;
+var lastCheck = "";
 
 //Node::
 	 
@@ -17,6 +18,7 @@ app.get('/', function(req, res){
   app.use("/", express.static(__dirname));
   app.use("/", express.static("emote"));
   app.use("/", express.static("movie"));
+  app.use("/", express.static("logo"));
 });
 
 //Connect::Node::HTTP::
@@ -37,7 +39,7 @@ io.on('connection', function(socket)
 	   //todo:change this to a for loop with i's max as length of message
 	   //and see if the ' ' characters occurences === length of message
 	   
-	   if(msg === '<li></li>' || msg === '<li> </li>')
+	   if(msg === '' || msg === ' ')
 	   {
 		   //breakSpam
 	   } 
@@ -47,9 +49,15 @@ io.on('connection', function(socket)
        }
   });
 
-	socket.on('typing', function(us)
+	socket.on('quote',function(getPost,us)
 	{
-		io.emit('typing',us);
+		io.emit('chatOUT', getPost, us);
+	});
+	
+	socket.on('shareGUI',function(getInput,us,options)
+	{		
+		//sendouttochat, with HTML from share, and username shared blah
+		 io.emit('chatOUT', getInput, socket.username+options); 
 	});
 	
 //User Organization::
@@ -67,10 +75,13 @@ io.on('connection', function(socket)
 	});
 	socket.on('disconnect',function()
 	{
+		if(socket.username !== undefined)
+		{
 		io.emit('announcement',socket.username+' left the chat.');
 		var a = users.indexOf(socket.username);
 		users.splice(a,1);
 		--usersNum;
+		}
 	});
 	socket.on('getUsersFromServer',function()
 	{
@@ -83,10 +94,11 @@ io.on('connection', function(socket)
 
 function command(msg,us)
 {
-	msg = msg.replace(/<(.*?)>/g, "<li> I just tried to inject HTML! <i>God I love cock!</i></li>");
+	msg = msg.replace(/</g, '&lt;');
 	
 	msg = msg.replace(/:snoop:/g, '<img src="/emote/snoop.png">');
 	msg = msg.replace(/Kappa/g, '<img src="/emote/Kappa.png">');
+	msg = msg.replace(/:kfc:/g, '<img src="/emote/kfc.png">');
 	msg = msg.replace(/:gasm:/g, '<img src="/emote/gasm.png">');
 	msg = msg.replace(/:maniaczzz:/g, '<img src="/emote/maniacSleeper.png">');
 	msg = msg.replace(/:smirk:/g, '<img src="/emote/smirk.png">');
@@ -149,7 +161,7 @@ function command(msg,us)
 	if(msg.substring(0,4) === '/web' || msg.substring(0,4) === '/www')
 	{
 		var url = msg.substring(4,msg.length);
-		return('<iframe src='+url+'>');
+		return('<iframe sandbox="allow-forms allow-scripts" src='+url+'>');
 	}
 	if(msg.substring(0,3) === '/yt')
 	{
@@ -170,7 +182,7 @@ function command(msg,us)
 		case '/octaGET':
 		case '/jimmyrollins':
 		case '/rollan':
-return ('<li>↳ rolled ' + roll() + '!</li>');
+return ('↳ rolled ' + roll() + '!');
 
 
 
@@ -178,25 +190,25 @@ return ('<li>↳ rolled ' + roll() + '!</li>');
 
 	    case 'nice':
 	    case 'noice':		
-return ('<li>'+msg+'</li><video src="/movie/nice.mp4" height="320" width="480" autoplay onended="this.remove()"></video>');
+return ('<p>'+msg+'</p>'+'<video src="/movie/nice.mp4" height="320" width="480" autoplay onended="this.remove()"></video>');
 		case 'wow':
-return ('<li>'+msg+'</li><video src="/movie/wow.mp4" height="320" width="480" autoplay onended="this.remove()"></video>');
+return ('<p>'+msg+'</p>'+'<video src="/movie/wow.mp4" height="320" width="480" autoplay onended="this.remove()"></video>');
 		case 'MOTHER 3':
 		case 'mother 3':
 		case 'earthbound':
 		case 'MOTHER':
-return ('<video src="/movie/bestgame.mp4" height="320" width="480" autoplay></video>' + msg);
+return ('<video src="/movie/bestgame.mp4" height="320" width="100%"></video>' + msg);
 		case '/polska':
 		case '/sciernisko':
 		case 'kurwa':
-return ('<li>GLUPI MURZYN!!! POLSKA JEST SUPER!</li><img src="/cancer/polishFlag.jpg"><audio src="/music/POLSKA.mp3" autoplay onended="this.remove()">');
+return (msg+'GLUPI MURZYN!!! POLSKA JEST SUPER!<img src="/cancer/polishFlag.jpg"><audio src="/music/POLSKA.mp3" autoplay onended="this.remove()">');
 		case 'cheekibreeki':
 		case 'RU':
 		case 'CHEEKI BREEKI':
 		case 'CHEEKIBREEKI':
-return ('<img id="CHEEKI" src="/cancer/VDAMKE.png" style="left:0;"> <audio src="/music/ru.mp3" autoplay onended="this.remove(); document.getElementById("CHEEKI").remove();">')
+return ('<p>'+msg+'</p><img id="CHEEKI" src="/cancer/VDAMKE.png" style="left:0;"> <audio src="/music/ru.mp3" autoplay onended="this.remove(); document.getElementById("CHEEKI").remove();">')
 		default:
-return ('<li>'+msg+'</li>');
+return (msg);
 	}
 }
 function rngesus(min,max)
@@ -228,22 +240,22 @@ function roll()
 	switch(counter)
 	{
 	 case 2:
-	 io.emit('GET2');
+	 io.emit('chatOUT','<br><video src="dubs.mp4" width:100% height:422px autoplay></video><br><p>V V V V V V</p>','Patrick Bateman likes those dubs.');
 	 break;
-	  case 3:
-	 io.emit('GET3');
+	 case 3:
+	 io.emit('chatOUT','<br><audio src="trips.mp3" width:100% height:422px autoplay></audio><br><p>V V V V V V</p>','OH BABY A TRIPLE');
 	 break;
 	  case 4:
-	 io.emit('GET4');
+	  io.emit('chatOUT','<br><video src="dubs.mp4" width:100% height:422px autoplay></video><br><p>V V V V V V</p>','<img src="q.gif"><img src="u.gif"><img src="a.gif"><img src="d.gif"><img src="s.gif">');
 	 break;
 	  case 5:
-	 io.emit('GET5');
+	 io.emit('chatOUT', '<br><video src="quints.mp4" width:100% height:422px autoplay></video><br><p>OH LAWD QUINTS</p>','<img src="q.gif"><img src="u.gif"><img src="i.gif"><img src="n.gif"><img src="t.gif"><img src="s.gif">');
 	 break;
 	  case 6:
-	 io.emit('GET6');
+	  io.emit('chatOUT', '<br><video src="hexes.mp4" width:100% height:422px autoplay></video><br><p style="color:red;font-size:24px;">OIUSAHOUIFEHOFNEFOUFNEOUFEHFLJH<img src="banner17.gif"></p>','<img src="h.gif"><img src="e.gif"><img src="x.gif"><img src="e.gif"><img src="s.gif">');
 	 break;
 	  case 7:
-	 io.emit('GET7');
+	 io.emit('chatOUT', '<video src="septa.mp4" autoplay>');
 	 break;
 	  case 8:
 	 io.emit('GET8');

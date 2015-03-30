@@ -1,13 +1,18 @@
-var version = "tr&chat alpha 0.7.2";
-/*
- * Client-side JS.
- * */
+//User defined customization variables! 
+//Edit these at your leisure:
+
+var version = "tr&chat alpha 0.7.7"; //version no.
+var numberOfBanners = 27; //how many banners do you have in ./banner?
+//Remember, it goes from banner1.gif to banner(numberOfBanners).gif
+
+//Options:
+var audioMute = false; // is tr&chat's audio muted?
+var memeMute = false; //is the user not fun?
+var autoScroll = true;
+var userName = "Anonymous";
+	
 
 var connection = new RTCMultiConnection('trautism');
-
-	var audioMute = false; // is tr&chat's audio muted?
-	var memeMute = false; //is the user not fun?
-	var autoScroll = true;
 	
 	function loadHistory()
 	{
@@ -20,27 +25,29 @@ var connection = new RTCMultiConnection('trautism');
 			return c + inp;
 		});
 	}
+	function deletePost(parentPost)
+	{
+		 $(parentPost).animate({opacity: 0,marginLeft: "100%",}, 200, function() {parentPost.remove()});
+	}
 	
 $(document).ready(function()
 {		
-		//Customization!!
-		var numberOfBanners = 25; //how many banners do you have in ./banner? Remember, start from banner1.gif.
-		
-		//generate rng to determine banner on login
-		$('#login').css("background-image","url(banner/banner"+Math.floor((Math.random() * numberOfBanners) + 1)+".gif)");
-		
+			
 		//Set up, Hide UI elements.
-		
-		$('#options').hide();
 		$('#title').hide();
 		$('#chatBar').hide();
+		$('#options').hide();
+		$('#share').hide();
 		$('#call').hide();
 		$('#usersOnline').hide();
 		$('#smileContainer').hide();
-		
+		$("#shareMenu").hide();
+
+		//generate rng to determine banner on login
+		$('#login').css("background-image","url(banner/banner"+Math.floor((Math.random() * numberOfBanners) + 1)+".gif)");
+
 		//CORES:
 		var socket = io();
-		var userName = "Anonymous";
 		var historyRequested = false;
 		
 		var IN = false; // Call div toggle
@@ -62,10 +69,10 @@ $(document).ready(function()
 		socket.emit('join',userName);
 		
 		$('#login').fadeOut();
-		$('#login').remove();
 		
 		$('#title').show();
 		$('#chatBar').show();
+		setTimeout(500,"$('#login').remove();");
 		return false;
 		});
 		
@@ -74,33 +81,30 @@ $(document).ready(function()
 			//clientside commands:
 			if($('#m').val() === '/clear' || $('#m').val() === '/c')
 			{
-				$('#chat').empty();
+				$('#chatContainer').empty();
 			}
 			else
 			{
 				socket.emit('chatIN', $('#m').val(),userName);
 			}		
 	
-			$('#m').val('');
-			$("html, body").animate({ scrollTop: $(document).height() }, "fast");
+			$('#m').val(''); //empty
+			
+			$("html, body").animate({ scrollTop: $(document).height() }, 0.1);
 			return false;
 		});
-		
 		//GUI AND EVENT FIRING: 
 		
-		$("#cog").click(function(){$("#options").slideToggle("fast");});
-		
-		document.querySelector('#phone').onclick = function() 
+		document.querySelector('#cog').onclick = function()
 		{
-			if(IN)
-			{
-				connection.disconnect('trautism');
-			}
-			else
-			{
-				connection.connect('trautism');
-			}
-			$("#call").slideToggle("fast");
+			$("#options").slideToggle("fast");
+		};
+		
+		document.querySelector('#openShare').onclick = function()
+		{
+			$("#share").slideToggle("fast");
+			$("#shareMenu").empty();
+			$("#shareMenu").hide();
 		};
 		
 		document.querySelector('#smiles').onclick = function()
@@ -114,60 +118,18 @@ $(document).ready(function()
 			socket.emit('getUsersFromServer');
 		};
 		
-		//VIDEO CALLING AND AUDIO CALLING: 
-		connection.direction = 'many-to-many';
-		connection.session =
+		//CHAT FUNCTIONS:
+		function quote(post)
 		{
-			audio:true,
-			video:true,
-			data: true
-		};
-		connection.bandwidth =
-		{
-			audio:128,
-			video:256
-		};
-		connection.onmute = function(e) 
-		{
-		e.mediaElement.setAttribute('poster', 'volumeOff.png');
-		};
-		connection.onunmute = function(e)
-		{
-		e.mediaElement.setAttribute('poster', 'volumeOn.png');
-		};
-		connection.userid = userName;
-		
-		//END OPTIONS AND SETTINGS:
-		
-		
-		//
-		//
-		//
-		//Every stream that comes in, gets appended to the div.
-		connection.onstream = function(e) 
-		{
-			$("#call").append(e.mediaElement);			
-			e.mediaElement.play();
-			e.mediaElement.controls = false;
-		};
-
-		connection.onstreamended = function(e)
-		{
-			e.mediaElement.parentNode.removeChild(e.mediaElement);
-		};
+			$("#chatContainer").append('<div class="chat"><b id="userName">'+userName.innerHTML+'</b><b id="chatUI" onclick="this.parentNode.remove();">x</b><div class="quote">'+post.innerHTML+'</div></div>');	
+		}
 		
 		
 		// SOCKET EVENTS:
 		
-		socket.on('disconnect',function()
-		{
-		socket.emit('announcement',userName+' left the chat.');
-		socket.emit('left',userName);
-		});
-		
 		socket.on('announcement',function(msg)
 		{
-			$("#chat").append('<h3>'+msg+'</h3>');
+			$("#chatContainer").append('<h3>'+msg+'</h3>');
 		});
 		
 		socket.on('chatOUT', function(msg,us)
@@ -177,7 +139,9 @@ $(document).ready(function()
 				document.getElementById('audioChannel').src = 'msg.ogg';
 				document.getElementById('audioChannel').play();
 			}
-			$('#chat').append('<li><b id="userName">'+us+'</b><br>'+msg+'</li><br>');
+			//sorry for this long ass line
+			
+			$("#chatContainer").append('<div class="chat"><b id="userName">'+us+'</b><b id="chatUI" onclick="deletePost(this.parentNode);">x</b><p id="message">'+msg+'</p></div>');
 				
 				if(autoScroll === true)
 				{
@@ -188,42 +152,11 @@ $(document).ready(function()
 		socket.on('returnUsersFromServer',function(users)
 		{
 		$('#usersOnline').empty();
-		$('#usersOnline').append('<b>whos online?</b>'); 
-
-
 		//empty old data, insert new data from server directly.
 		for(i=0;i<users.length;i++)
 		{
 		$('#usersOnline').append('<p>'+users[i]+'</p>');
 		}
-		});
-		
-		//GET
-		socket.on('GET2', function()
-		{
-			$('#chat').append($('<video src="dubs.mp4" height="320px" width="480px" autoplay></video>'));
-			$('#chat').append($('<li><img src="d.gif" width="64px" height="64px"><img src="u.gif" width="64px" height="64px"><img src="b.gif" width="64px" height="64px"><img src="s.gif" width="64px" height="64px"></li>'));
-
-		});
-		socket.on('GET3', function()
-		{
-			$('#chat').append($('<audio src="trips.mp3" autoplay ></audio>'));
-			$('#chat').append($('<li><img src="t.gif" width="64px" height="64px"><img src="r.gif" width="64px" height="64px"><img src="i.gif" width="64px" height="64px"><img src="p.gif" width="64px" height="64px"><img src="s.gif" width="64px" height="64px"></li>'));
-		});
-		socket.on('GET4', function()
-		{
-			$('#chat').append($('<video src="quads.mp4" height="320" width="480" autoplay onended="this.destroy()"></video>'));
-			$('#chat').append($('<img src="q.gif" width="64px" height="64px"><img src="u.gif" width="64px" height="64px"><img src="a.gif" width="64px" height="64px"><img src="d.gif" width="64px" height="64px"><img src="s.gif" width="64px" height="64px">'));
-		});
-		socket.on('GET5', function()
-		{
-			$('#chat').append($('<video src="quints.mp4" height="320" width="480" autoplay onended="this.destroy()"></video>'));
-			$('#chat').append($('<img src="q.gif" width="64px" height="64px"><img src="u.gif" width="64px" height="64px"><img src="i.gif" width="64px" height="64px"><img src="n.gif" width="64px" height="64px"><img src="t.gif" width="64px" height="64px"><img src="s.gif" width="64px" height="64px">'));
-		});
-		socket.on('GET420', function(video)
-		{
-			$('#chat').append($('<video src="'+video+'" height="420" width="420" autoplay onended="this.destroy()"></video>'));
-			$('#chat').append($('<img src="snoop.png" width="420" height="420"> <li color="green">Inhale combusted cannabis material on a daily basis!</li>'));
 		});
 });
 

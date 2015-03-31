@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+
+<head>
+	<title>tr&call</title>
+	<meta name="viewport" content="width=device-width, inital-scale=1"/>
+	
+<script src="https://cdn.firebase.com/js/client/2.2.3/firebase.js"></script>
+
+	<style>
+	body,html
+	{
+		height:100%;
+		width:100%;
+		margin:0;
+		font-family:sans-serif;
+		background-color:#191919;
+		color:#FFF;
+	}
+
+	#title{width:100%;background-color:#242424;margin:0;position:fixed;bottom:0;}
+	video{position:relative;max-width:49%;max-height:49%;}
+	button
+	{
+		position:fixed;
+		color:#FFF;
+		border-style:solid;
+		border-radius:15px;
+		right:0;
+	}
+	#join{background-color:#00BA16;border-color:#00BA16;position:fixed;}
+	#close{background-color:red;border-color:red;
+	</style>
+	
+<script src="rtc.js"></script>
+<script>
+
+var connection = new RTCMultiConnection();
+
+var firebaseURL = 'https://' + 'intense-heat-1674'+ '.firebaseio.com/';
+
+var roomFirebase = new Firebase(firebaseURL + connection.channel + '-session');
+roomFirebase.once('value', function (data) {
+    var sessionDescription = data.val();
+
+    // checking for room; if not available "open" otherwise "join"
+    if (sessionDescription == null) {
+        connection.open({
+            sessionid: connection.sessionid,
+            captureUserMediaOnDemand: false,
+            dontTransmit: true,
+            onMediaCaptured: function() {
+                // storing room on server
+                roomFirebase.set(connection.sessionDescription);
+                
+                // if room owner leaves; remove room from the server
+                roomFirebase.onDisconnect().remove();
+            }
+        });
+    } else {
+        // you can join with only audio or audio+video
+        var joinWith = {
+            audio: true,
+            video: true
+        };
+        
+        
+        // pure "sessionDescription" object is passed over "join" method
+        // 2nd parameter is optional which allows you customize how to join the session
+        connection.join(sessionDescription, joinWith);
+        
+
+    }
+		connection.onmute = function(e) 
+		{
+		e.mediaElement.setAttribute('poster', 'volumeOff.png');
+		};
+		connection.onunmute = function(e)
+		{
+		e.mediaElement.setAttribute('poster', 'volumeOn.png');
+		};
+		connection.onsilence = function (e) 
+		{
+		e.mediaElement.style.border = '5px solid #191919';
+		};
+		connection.onspeaking = function (e)
+		{
+		e.mediaElement.style.border = '5px solid #00FFED';
+		};
+    console.debug('room is present?', sessionDescription == null);
+    document.getElementById("wait").innerHTML = "OK!";
+    setTimeout("document.getElementById('wait').remove();",1000);
+    
+    
+           
+});
+</script>
+
+</head>
+<body>
+<p id="wait">Waiting to connect with peripherals... (it should automatically connect dun worry C: )</p>
+<button id="join" onclick="alert('ayy lmao')">ayy lmao</button>
+</body>

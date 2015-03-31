@@ -26,39 +26,40 @@
 	<title>tr&chat</title>
 	<meta name="viewport" content="width=device-width, inital-scale=1"/>
 	<link rel="icon" href="favicon.png">
-	<script src="jquery.js"></script>
-	<script src="socket.js"></script>
 	<script src="rtc.js"></script>
+	<script src="jquery.js"></script>
+	<script src="socket.js"></script>	
 	<script src="clientCore.js"></script>
-
+	<script src="share.js"></script>
 	<link id="currentStyle" rel="stylesheet" href="normal.css">
 	
 </head>
 
-<body id="body">
+<body onload="document.getElementById('version').innerHTML=version;">
 	
 <div id="login" style="z-index:1337;top:0;left:0;">
 <p id="loginTitle">tr&chat</p>
 <form id="liloForm" action="">
-<input id="loginForm" autocomplete="off"  autofocus maxlength = "18"/> 
+<input id="loginForm" autocomplete="off" autofocus maxlength = "18"/> 
 <button>Let's Jam.</button>
-<p id="version">tr&chat alpha 0.7.2</p>
+<p id="version" style="font-weight:bold"></p>
 </form>
+</div>
 
+<div id="chatContainer">
 </div>
 
 	<audio id="audioChannel"></audio>
 	
 	<div id="title">
-		&nbsp;| tr&chat | 
-		&nbsp;
+		&nbsp;| tr&chat | &nbsp;
 	<a title="Users Currently Online" id="whoson">&#9787;</a>
 		&nbsp;
-	<a title="Clear the Chat Screen (/c /clear)" onclick="$('#chat').empty();"><b>X</b></a>
+	<a title="Clear the Chat Screen (/c /clear)" onclick="$('#chatContainer').empty();"><b>X</b></a>
 		&nbsp;
-	<a title="Calls and Video Chats" id="phone">&#9742;</a>
+	<a href="/call.html" target="blank_" title="Calls and Video Chats">&#9742;</a>
 		&nbsp;
-	<a title="Autoscroll Toggle" onclick="autoScroll = !autoScroll;if(autoScroll){this.style='color:#00D127'}else{this.style='color:#D10007'}"><b>&#8595;</b></a>
+	<a title="Autoscroll Toggle" onclick="autoScroll = !autoScroll;if(autoScroll){this.style='color:#00D127'}else{this.style='color:#D10007'}"><b>&#8681;</b></a>
 		&nbsp;
 	<a title="pls help i cannot computer" target="blank_" href="help.html">?</a>
 		&nbsp;
@@ -66,52 +67,50 @@
 	</div>	
 	
 <a id="top"></a> <!-- Bookmark for top of messages -->
-<div id="options" style="background-color:black;height:90%;top:24px;color:#FFF;position:fixed;opacity:0.9;width:100%;overflow-y:scroll">
+<div id="options">
 	
-<h1><u>Options</u></h1>
+<h1>Options</h1>
 <h3 id="optionsAUDIO" onclick="audioMute = !audioMute; if(!audioMute){this.innerHTML = 'Audio Notifications [ON]'}else{this.innerHTML = 'Audio Notifications [OFF]'} ">Audio Notifications [ON]</h3>
 <h3 onclick="memeMute = !memeMute; if(!memeMute){this.innerHTML = 'Meme Mute [OFF]'}else{this.innerHTML = 'Meme Mute[ON]'} ">Meme Mute [STUB]</h3>
 <h3><a href="https://github.com/selcal/trandchat/issues" target="blank_" >Suggest changes on github.</a></h3>
 <br>
-<h3>Styles & Custom CSS Rules</h3>
+<h1>Block Content and Spam</h1>
+<p>Coming soon (´・ω・`)</p>
+<h1>Styles and Custom CSS</h1>
 <p>Preset Styles:</p>
 <h3 onclick="document.getElementById('currentStyle').href = 'normal.css'" style="background-color:#525252;color:#ADD8E6;font-family:sans-serif;">meditation++ (default)</h3>
 <h3 onclick="document.getElementById('currentStyle').href = 'skype.css'" style="background-color:#00D4FF;color:white;font-family:sans-serif;">skype</h3>
 <h3 onclick="document.getElementById('currentStyle').href = 'chan.css'" style="background-color:#D7AFA9;color:#750E00;">yotsuba C</h3>
 <h3 onclick="document.getElementById('currentStyle').href = 'unix.css'" style="background-color:#001A22;color:#00FF0B;font-family:monospace;">UNIX</h3>
 <br>
-<a onclick="document.getElementById('currentStyle').href = ''">Run this page like it's <i>1989!</i> (For slow connections, or toasters. Potatoes also work too.)</a>
-<br>
 <p>Custom Stylesheet:</p>
-<textarea style="width:100%;height:640px;"></textarea>
-<button>RICE!</button>
+<textarea style="width:100%;height:640px;background-color:#191919;color:white;"></textarea>
+<button onclick="document.getElementById('currentStyle').href = ''">RICE!</button>
 <br>
 <br>
-<p id="version">tr&chat alpha 0.7.2</p>
+<p id="version"></p>
 <p style="color:#1AF000">change log</p>
-<p>+ Added maniac's affluently metrosexual sleeping emoticon.</p>
-<p>+ Rearranged some GUI components.</p>
-<p>|- Tooltips for GUI elements</p>
-<p>|- Options is now a standardized HTML entity and is on the right.</p>
-<p>|- Favicon! <img src="favicon.png"></p>
-
-<p>+ Fixed some bugs in the 'Users Currently Online' panel, under certain circumstances users wouldn't "leave" the chat.</p>
-<p>|- Fixed bug that wouldn't show a user leaving in realtime as an announcment inside the chat section.</p>
-
+<p>#! Quick fix for 'undefined has left chat' bug.</p>
+<br>
+<p>+ Users can now delete individual posts. <i>Radical.</i></p>
+<br>
+<p>+ Share websites and content with other people using the new share panel, &#9741; !</p>
+<br>
+<p>+ Added :kfc: <img src="/emote/kfc.png" height="64px" width="64px"></p>
+<p>+ Box-Shadows and various eye-candy CSS3 based additions. Woo!</p>
+<p style="color:#FF1400">GANOO/LOONIX TIER EYE CANDY</p>
+<br>
+<p>~Separated the "call" functionality into a webpage of it's own. It will 
+help to debug it much more easily and efficently. Also, it's probably more
+convenient in general.</p>
 </div>
 
 <div id="call">
-<h1>
-<a onclick="connection.close('trautism');">leave call</a>
-&#9742;
-<a onclick="connection.open('trautism');">host call</a>
-</h1>
-
+<a onclick="connection.close('trautism');">leave call |</a>
+<a onclick="connection.open('trautism');">host call |</a>
+<a onclick="connection.mute();">mute</a>
+<br>
 </div>
-
-
-<ul id="chat">	
-</ul>
 
 <div id="usersOnline" style="top:24px;">
 </div>
@@ -122,6 +121,7 @@
 <img onclick="addEmote(':cheeki:');" onmouseover="document.getElementById('sml').innerHTML = ':cheeki:';" src="cheekibreeki.png">
 <img onclick="addEmote(':pepe:');" onmouseover="document.getElementById('sml').innerHTML = ':pepe:';" src="pepe.png">
 <img onclick="addEmote(':feel:');" onmouseover="document.getElementById('sml').innerHTML = ':feel:';" src="feel.png">
+<img onclick="addEmote(':kfc:');" onmouseover="document.getElementById('sml').innerHTML = ':kfc:';" src="kfc.png">
 <img onclick="addEmote(':hot:');" onmouseover="document.getElementById('sml').innerHTML = ':hot:';" src="hot.png">
 <img onclick="addEmote(':maniaczzz:');" onmouseover="document.getElementById('sml').innerHTML = ':maniaczzz:';" src="maniacSleeper.png">
 <img onclick="addEmote(':frog:');" onmouseover="document.getElementById('sml').innerHTML = ':frog:';" src="frog.gif">
@@ -152,7 +152,25 @@
 <div id="smiles">
 &#9786;
 </div>
+<div id="openShare" onclick="$('#shareMenu').empty();$('#shareMenu').hide();">
+&#9741;
+</div>
+
+<div id="share">
+<div id="shareMenu">
+</div>
+<p><b>sharing is caring</b></p>
+<div id="dropShare">
+<i>feature coming soon. you'll be able to drag files in here and they'll show up in chat!</i>
+</div>
+<p>&#8711;&nbsp;<i>or post something else from...</i>&nbsp;&#8711;</p>
+<a title="Share shit on 8chan!" onclick="shareEight();"><img src="8chanlogo.svg"></a>
+<a title="Share a youtube video!" onclick="shareYoutube();"><img src="youtubelogo.svg"></a>
+<a title="Share a comment on reddit!" onclick="shareReddit();"><img src="redditlogo.png"></a>
+<a title="Share a twitch stream!" onclick="shareTwitch();"><img src="twitchlogo.png"></a>
+<a title="Share something from tumblr!" onclick="shareTumblr();"><img src="triggeredlogo.png"></a>
+</div>
+
 
 </body>
-
 </html>

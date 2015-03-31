@@ -1,11 +1,14 @@
-@font-face{font-family:title;src: url(title.ttf);}
-@font-face{font-family:markerLight;src: url(markerLight.ttf)}
-@font-face{font-family:UI;src: url(ui.otf)}
+@font-face{font-family:title; src: url(title.ttf);}
+@font-face{font-family:markerLight; src: url(markerLight.ttf)}
+@font-face{font-family:UI; src: url(ui.otf)}
 
 body 
 {
 width:100%;
 height:100vh;
+background-size:100% 100%;
+background-repeat:no-repeat;
+background-attachment:fixed;
 font-family:sans-serif;
 margin-left:0px;
 margin-right:0px;
@@ -13,6 +16,7 @@ margin-top:0px;
 margin-bottom:0px;
 background-color:#4A4A4A;
 overflow-x:hidden;
+
 }
 html
 {
@@ -77,15 +81,19 @@ visibility:hidden;
 #chatContainer
 {
 margin-top:48px;
-margin-right:5%;
 margin-bottom:48px;
+padding-bottom:48px;
+padding-top:32px;
+z-index:3;
 }
 .chat
 {
 margin-top:8px;
-margin-left:5px;
-width:100%;
+margin-left:2%;
+z-index:3;
+width:95%;
 background-color:#191919;
+opacity:0.92;
 color:#FFF;
 font-size:90%;
 border: 1px #191919 solid;
@@ -112,7 +120,7 @@ overflow-x:hidden;
 font-size:100%;
 }
 #GET{width:64px;height:64px;}
-#sml{color:white;}
+#sml{color:white;z-index:4;}
 
 #smiles
 {
@@ -121,7 +129,7 @@ bottom:0;
 right:0;
 width:32px;
 height:32px;
-z-index:2;
+z-index:10;
 color:white;
 font-size:32px;
 }
@@ -167,7 +175,7 @@ bottom:0;
 right:32px;
 width:32px;
 height:32px;
-z-index:2;
+z-index:10;
 color:white;
 font-size:32px;
 }
@@ -186,6 +194,7 @@ padding:5px;
 #shareMenu
 {
 margin-top:0px;
+z-index:3;
 height:100%;
 width:100%;
 text-align:center;
@@ -241,6 +250,7 @@ h3
 {
 color:white;
 text-align:center;
+width:95%;
 background-color:#000000;
 border: 1px groove #FFF;
 border-radius:25px;
@@ -254,6 +264,7 @@ font-family:UI;
 color:#90C4D9;
 margin-right:5px;
 font-size:200%;
+cursor:pointer;
 }
 #title
 {
@@ -262,6 +273,7 @@ opacity:0.9;
 height:24px;
 top:0px;
 padding-bottom:2px;
+margin-bottom:48px;
 position:fixed;
 z-index:2;
 color:#FFFFFF;
@@ -269,15 +281,19 @@ background-color:#000000;
 text-align:left;
 font-size:20px;
 }
-#title{box-shadow:-2px 8px 20px #2F2F2F}
+
+#title{box-shadow:-2px 8px 15px #2F2F2F}
 #title p{text-align: center;}
-#title a{text-align:left;color:#A1D0D9;text-decoration:none;}
+#title a{text-align:left;color:#A1D0D9;font-size:100%;text-decoration:none;}
+
 #chatBar 
 {
 position:fixed;
 bottom: 0; 
 width: 100%;
 height:32px; 
+z-index:9;
+margin-top:32px;
 background-color:#000;
 opacity:0.8;
 }
@@ -295,7 +311,9 @@ left:0;
 right:32px;
 background-color:#000;
 }
+
 form button{visibility:hidden;}
+
 #cog{position:fixed;right:5px;}
 
 /********
@@ -305,6 +323,7 @@ form button{visibility:hidden;}
 {
 background-color:black;
 height:90%;
+z-index:9999;
 color:#FFF;
 position:fixed;
 opacity:0.9;
@@ -334,7 +353,7 @@ color:#00FFF6;
 #usersOnline
 {
 position:fixed;
-top:32px;
+top:24px;
 z-index:4;
 text-align:center;
 font-size:120%;
@@ -358,10 +377,10 @@ text-align:center;
 {
 margin-top:8px;
 margin-left:5px;
-width:100%;
-background-color:#226E25;
+width:inherit;
+background-color:#183D8C;
 color:#FFF;
-border: 1px #226E25 dashed;
+border: 2px #FFF dashed;
 border-radius:10px;
 box-shadow:5px 2px 0px #0C0C0C;
 padding: 2px;

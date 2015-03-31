@@ -1,4 +1,4 @@
-var portGiven = process.env.PORT;//process.env.PORT;
+var portGiven = process.env.PORT;
 
 var app = require('express')();
 var http = require('http').Server(app);
@@ -13,7 +13,8 @@ var lastCheck = "";
 
 //Node::
 	 
-app.get('/', function(req, res){
+app.get('/', function(req, res)
+{
   res.sendFile(__dirname + '/home.html');
   app.use("/", express.static(__dirname));
   app.use("/", express.static("emote"));
@@ -49,9 +50,11 @@ io.on('connection', function(socket)
        }
   });
 
-	socket.on('quote',function(getPost,us)
+	socket.on('quote',function(getPost,us,type)
 	{
-		io.emit('chatOUT', getPost, us);
+		var postingus = us;
+		us = socket.username;
+		io.emit('chatOUT', getPost, us + ' >' +postingus+' said...', 'quote');
 	});
 	
 	socket.on('shareGUI',function(getInput,us,options)
@@ -97,6 +100,8 @@ function command(msg,us)
 	msg = msg.replace(/</g, '&lt;');
 	
 	msg = msg.replace(/:snoop:/g, '<img src="/emote/snoop.png">');
+	msg = msg.replace(/:ok:/g, '<img src="/emote/ok.gif">');
+	msg = msg.replace(/:he:/g, '<img src="/emote/HE.png">');
 	msg = msg.replace(/Kappa/g, '<img src="/emote/Kappa.png">');
 	msg = msg.replace(/:kfc:/g, '<img src="/emote/kfc.png">');
 	msg = msg.replace(/:gasm:/g, '<img src="/emote/gasm.png">');

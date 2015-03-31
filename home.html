@@ -26,7 +26,6 @@
 	<title>tr&chat</title>
 	<meta name="viewport" content="width=device-width, inital-scale=1"/>
 	<link rel="icon" href="favicon.png">
-	<script src="rtc.js"></script>
 	<script src="jquery.js"></script>
 	<script src="socket.js"></script>	
 	<script src="clientCore.js"></script>
@@ -36,7 +35,6 @@
 </head>
 
 <body onload="document.getElementById('version').innerHTML=version;">
-	
 <div id="login" style="z-index:1337;top:0;left:0;">
 <p id="loginTitle">tr&chat</p>
 <form id="liloForm" action="">
@@ -45,21 +43,19 @@
 <p id="version" style="font-weight:bold"></p>
 </form>
 </div>
-
 <div id="chatContainer">
 </div>
-
 	<audio id="audioChannel"></audio>
 	
 	<div id="title">
-		&nbsp;| tr&chat | &nbsp;
+		&nbsp;| tr&chat |&nbsp;
 	<a title="Users Currently Online" id="whoson">&#9787;</a>
 		&nbsp;
 	<a title="Clear the Chat Screen (/c /clear)" onclick="$('#chatContainer').empty();"><b>X</b></a>
 		&nbsp;
 	<a href="/call.html" target="blank_" title="Calls and Video Chats">&#9742;</a>
 		&nbsp;
-	<a title="Autoscroll Toggle" onclick="autoScroll = !autoScroll;if(autoScroll){this.style='color:#00D127'}else{this.style='color:#D10007'}"><b>&#8681;</b></a>
+	<a title="Autoscroll Toggle" onclick="autoScroll = !autoScroll;if(autoScroll){$(this).css('color','green')}else{$(this).css('color','red')}"><b>&#8681;</b></a>
 		&nbsp;
 	<a title="pls help i cannot computer" target="blank_" href="help.html">?</a>
 		&nbsp;
@@ -73,10 +69,16 @@
 <h3 id="optionsAUDIO" onclick="audioMute = !audioMute; if(!audioMute){this.innerHTML = 'Audio Notifications [ON]'}else{this.innerHTML = 'Audio Notifications [OFF]'} ">Audio Notifications [ON]</h3>
 <h3 onclick="memeMute = !memeMute; if(!memeMute){this.innerHTML = 'Meme Mute [OFF]'}else{this.innerHTML = 'Meme Mute[ON]'} ">Meme Mute [STUB]</h3>
 <h3><a href="https://github.com/selcal/trandchat/issues" target="blank_" >Suggest changes on github.</a></h3>
+<h3><a href="https://github.com/selcal/trandchat/" target="blank_" >See the source code.</a></h3>
+<h3><a href="timeline.html" target="blank_" >View the (sort-of) complete timeline.</a></h3>
 <br>
 <h1>Block Content and Spam</h1>
 <p>Coming soon (´・ω・`)</p>
+<br>
 <h1>Styles and Custom CSS</h1>
+<p>Choose a preset chat background:</p>
+<h3 onclick="$(document.body).css('background-image','none');">Click to reset the background.</h3>
+<img onclick="$(document.body).css('background-image','url(banner/banner4.gif)');" src="banner/banner4.gif" width="25%" height="20%">
 <p>Preset Styles:</p>
 <h3 onclick="document.getElementById('currentStyle').href = 'normal.css'" style="background-color:#525252;color:#ADD8E6;font-family:sans-serif;">meditation++ (default)</h3>
 <h3 onclick="document.getElementById('currentStyle').href = 'skype.css'" style="background-color:#00D4FF;color:white;font-family:sans-serif;">skype</h3>
@@ -90,34 +92,24 @@
 <br>
 <p id="version"></p>
 <p style="color:#1AF000">change log</p>
-<p>#! Quick fix for 'undefined has left chat' bug.</p>
-<br>
-<p>+ Users can now delete individual posts. <i>Radical.</i></p>
-<br>
-<p>+ Share websites and content with other people using the new share panel, &#9741; !</p>
-<br>
-<p>+ Added :kfc: <img src="/emote/kfc.png" height="64px" width="64px"></p>
-<p>+ Box-Shadows and various eye-candy CSS3 based additions. Woo!</p>
-<p style="color:#FF1400">GANOO/LOONIX TIER EYE CANDY</p>
-<br>
-<p>~Separated the "call" functionality into a webpage of it's own. It will 
-help to debug it much more easily and efficently. Also, it's probably more
-convenient in general.</p>
+<p>- Migrating to new voice and audio streaming library.</p>
+<p>+ User definable chat background images in gif format.</p>
+<p>+ Added two new emoticons, :he: and :ok: 
+<img title=":he:" src="/emote/HE.png" width="32px" height="32px">
+<img title=":ok:" src="/emote/ok.gif" width="32px" height="32px">
+</p>
+<p>+ Added development timeline at url/timeline.html</p>
 </div>
 
-<div id="call">
-<a onclick="connection.close('trautism');">leave call |</a>
-<a onclick="connection.open('trautism');">host call |</a>
-<a onclick="connection.mute();">mute</a>
-<br>
-</div>
-
-<div id="usersOnline" style="top:24px;">
+<div id="usersOnline">
+	<p>Users Online:</p>
 </div>
 
 <div id="smileContainer">
 <p id="sml" style="text-align:center;">&nbsp;</p>
 <img onclick="addEmote(':wiz:');" onmouseover="document.getElementById('sml').innerHTML = ':wiz:';" src="wiz.png">
+<img onclick="addEmote(':ok:');" onmouseover="document.getElementById('sml').innerHTML = ':ok:';" src="ok.gif">
+<img onclick="addEmote(':he:');" onmouseover="document.getElementById('sml').innerHTML = ':he:';" src="HE.png">
 <img onclick="addEmote(':cheeki:');" onmouseover="document.getElementById('sml').innerHTML = ':cheeki:';" src="cheekibreeki.png">
 <img onclick="addEmote(':pepe:');" onmouseover="document.getElementById('sml').innerHTML = ':pepe:';" src="pepe.png">
 <img onclick="addEmote(':feel:');" onmouseover="document.getElementById('sml').innerHTML = ':feel:';" src="feel.png">
@@ -142,10 +134,8 @@ convenient in general.</p>
 <img onclick="addEmote(':shrekyeah:');" onmouseover="document.getElementById('sml').innerHTML = ':shrekyeah:';" src="shrekyeah.png">
 </div>
 
-<a id="bottom"></a> <!--bookmark@bottom of chat page-->
-
 <form id="chatBar" action="">
-<input id="m" autocomplete="off" autofocus maxlength = "256"/> 
+<input id="m" autocomplete="off" autofocus maxlength = "512"/> 
 <button></button>
 </form>
 
@@ -164,13 +154,12 @@ convenient in general.</p>
 <i>feature coming soon. you'll be able to drag files in here and they'll show up in chat!</i>
 </div>
 <p>&#8711;&nbsp;<i>or post something else from...</i>&nbsp;&#8711;</p>
-<a title="Share shit on 8chan!" onclick="shareEight();"><img src="8chanlogo.svg"></a>
-<a title="Share a youtube video!" onclick="shareYoutube();"><img src="youtubelogo.svg"></a>
-<a title="Share a comment on reddit!" onclick="shareReddit();"><img src="redditlogo.png"></a>
-<a title="Share a twitch stream!" onclick="shareTwitch();"><img src="twitchlogo.png"></a>
-<a title="Share something from tumblr!" onclick="shareTumblr();"><img src="triggeredlogo.png"></a>
+<a title="Share shit on 8chan!" onclick="shareEight();"><img src="8chanlogo.svg" height="100%"width="100%"></a>
+<a title="Share a youtube video!" onclick="shareYoutube();"><img src="youtubelogo.svg" alt="Share something from youtube."></a>
+<a title="Share a comment on reddit!" onclick="shareReddit();"><img src="redditlogo.png" alt="Share something from reddit."></a>
+<a title="Share a twitch stream!" onclick="shareTwitch();"><img src="twitchlogo.png" alt="Share something from twitch."></a>
+<a title="Share something from tumblr!" onclick="shareTumblr();"><img src="triggeredlogo.png" alt="Share something from tumblr."></a>
 </div>
-
 
 </body>
 </html>

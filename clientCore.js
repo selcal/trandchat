@@ -1,18 +1,18 @@
 //User defined customization variables! 
-//Edit these at your leisure:
+//Use these to add your own personal flair to the back-end.
 
-var version = "tr&chat alpha 0.7.7"; //version no.
-var numberOfBanners = 27; //how many banners do you have in ./banner?
-//Remember, it goes from banner1.gif to banner(numberOfBanners).gif
+var version = "tr&chat alpha 0.7.9"; //version no.
+var numberOfBanners = 28; //how many gif banners do you have in ./banner?
+//Remember, it goes from banner1.gif to banner(numberOfBanners).gif.
 
 //Options:
 var audioMute = false; // is tr&chat's audio muted?
 var memeMute = false; //is the user not fun?
 var autoScroll = true;
-var userName = "Anonymous";
-	
 
-var connection = new RTCMultiConnection('trautism');
+//Cores:
+var chatUIString = '<b id="chatUI"onclick="deletePost(this.parent)"></b><b id="chatUI"onclick="this.parentNode.remove();">x</b>'
+var userName = "Anonymous";
 	
 	function loadHistory()
 	{
@@ -27,8 +27,14 @@ var connection = new RTCMultiConnection('trautism');
 	}
 	function deletePost(parentPost)
 	{
-		 $(parentPost).animate({opacity: 0,marginLeft: "100%",}, 200, function() {parentPost.remove()});
+		$(parentPost).animate({marginLeft: "250%"}, 250, function() {parentPost.remove()});
 	}
+	
+	function quotePost(parentPost)
+	{
+		socket.emit('quote',parentPost.lastChild.innerHTML,parentPost.firstChild.innerHTML);
+	}
+		
 	
 $(document).ready(function()
 {		
@@ -48,15 +54,12 @@ $(document).ready(function()
 
 		//CORES:
 		var socket = io();
-		var historyRequested = false;
-		
-		var IN = false; // Call div toggle
-		
+			
+		//LOGIN:
 		$('#login').submit(function()
 		{
 			userName = $('#loginForm').val();
 			userName = userName.replace(/<(.*?)>/g,' ');
-			connection.userid = userName;
 			//noscriptattacks:pleb edition
 		
 		if(userName === '' || userName === ' ' || userName === null)
@@ -81,7 +84,7 @@ $(document).ready(function()
 			//clientside commands:
 			if($('#m').val() === '/clear' || $('#m').val() === '/c')
 			{
-				$('#chatContainer').empty();
+				$('#chatContainer').empty(); //clear
 			}
 			else
 			{
@@ -118,34 +121,31 @@ $(document).ready(function()
 			socket.emit('getUsersFromServer');
 		};
 		
-		//CHAT FUNCTIONS:
-		function quote(post)
-		{
-			$("#chatContainer").append('<div class="chat"><b id="userName">'+userName.innerHTML+'</b><b id="chatUI" onclick="this.parentNode.remove();">x</b><div class="quote">'+post.innerHTML+'</div></div>');	
-		}
-		
-		
 		// SOCKET EVENTS:
 		
 		socket.on('announcement',function(msg)
 		{
-			$("#chatContainer").append('<h3>'+msg+'</h3>');
+			$("#chatContainer").append('<h3>'+msg+'<b style="float:right;margin-right:10px;"onclick="deletePost(this.parentNode)">x</b></h3>');
 		});
 		
-		socket.on('chatOUT', function(msg,us)
+		socket.on('chatOUT', function(msg,us,type)
 		{
 			if(document.hidden === true && audioMute === false)
 			{
 				document.getElementById('audioChannel').src = 'msg.ogg';
 				document.getElementById('audioChannel').play();
 			}
-			//sorry for this long ass line
-			
-			$("#chatContainer").append('<div class="chat"><b id="userName">'+us+'</b><b id="chatUI" onclick="deletePost(this.parentNode);">x</b><p id="message">'+msg+'</p></div>');
-				
+			if(type === 'quote')
+			{
+				$("#chatContainer").append('<div class="chat"><b id="userName">'+us+'</b><b id="chatUI" onclick="deletePost(this.parentNode);">x</b><div class="quote"><p id="message">'+msg+'</p></div></div>');	
+			}
+			else
+			{//sorry for this long ass line, I know it must be painful.	
+			$("#chatContainer").append('<div class="chat"><b id="userName">'+us+'</b><b id="chatUI" onclick="deletePost(this.parentNode);">x</b><b id="chatUI" onclick="quotePost(this.parentNode);">"</b><p id="message">'+msg+'</p></div>');
+			}	
 				if(autoScroll === true)
 				{
-				$("html, body").animate({ scrollTop: $(document).height() }, "fast");
+				$("html, body").animate({ scrollTop: $(document).height() }, 0.2);
 				}
 		});
 		

@@ -1,8 +1,8 @@
 //User defined customization variables! 
 //Use these to add your own personal flair to the back-end.
 
-var version = "tr&chat alpha 0.7.9"; //version no.
-var numberOfBanners = 28; //how many gif banners do you have in ./banner?
+var version = "tr&chat alpha 0.8.0"; //version no.
+var numberOfBanners = 40; //how many gif banners do you have in ./banner?
 //Remember, it goes from banner1.gif to banner(numberOfBanners).gif.
 
 //Options:
@@ -11,7 +11,6 @@ var memeMute = false; //is the user not fun?
 var autoScroll = true;
 
 //Cores:
-var chatUIString = '<b id="chatUI"onclick="deletePost(this.parent)"></b><b id="chatUI"onclick="this.parentNode.remove();">x</b>'
 var userName = "Anonymous";
 	
 	function loadHistory()

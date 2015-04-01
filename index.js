@@ -1,4 +1,4 @@
-var portGiven = process.env.PORT;
+var portGiven = 3000;//process.env.PORT;
 
 var app = require('express')();
 var http = require('http').Server(app);
@@ -9,7 +9,6 @@ var express = require('express');
 
 var users = [];
 var usersNum = 0;
-var lastCheck = "";
 
 //Node::
 	 
@@ -54,7 +53,7 @@ io.on('connection', function(socket)
 	{
 		var postingus = us;
 		us = socket.username;
-		io.emit('chatOUT', getPost, us + ' >' +postingus+' said...', 'quote');
+		io.emit('chatOUT', getPost, us + '&nbsp;&nbsp;&nbsp;>' +postingus+' said...', 'quote');
 	});
 	
 	socket.on('shareGUI',function(getInput,us,options)
@@ -251,10 +250,10 @@ function roll()
 	 io.emit('chatOUT','<br><audio src="trips.mp3" width:100% height:422px autoplay></audio><br><p>V V V V V V</p>','OH BABY A TRIPLE');
 	 break;
 	  case 4:
-	  io.emit('chatOUT','<br><video src="dubs.mp4" width:100% height:422px autoplay></video><br><p>V V V V V V</p>','<img src="q.gif"><img src="u.gif"><img src="a.gif"><img src="d.gif"><img src="s.gif">');
+	  io.emit('chatOUT','<br><video src="quads.mp4" width:100% height:422px autoplay></video><br><p>V V V V V V</p>','<img src="q.gif"><img src="u.gif"><img src="a.gif"><img src="d.gif"><img src="s.gif">');
 	 break;
 	  case 5:
-	 io.emit('chatOUT', '<br><video src="quints.mp4" width:100% height:422px autoplay></video><br><p>OH LAWD QUINTS</p>','<img src="q.gif"><img src="u.gif"><img src="i.gif"><img src="n.gif"><img src="t.gif"><img src="s.gif">');
+	 io.emit('chatOUT', '<br><video src="quints.webm" width:100% height:422px autoplay></video><br><p>OH LAWD QUINTS</p>','<img src="q.gif"><img src="u.gif"><img src="i.gif"><img src="n.gif"><img src="t.gif"><img src="s.gif">');
 	 break;
 	  case 6:
 	  io.emit('chatOUT', '<br><video src="hexes.mp4" width:100% height:422px autoplay></video><br><p style="color:red;font-size:24px;">OIUSAHOUIFEHOFNEFOUFNEOUFEHFLJH<img src="banner17.gif"></p>','<img src="h.gif"><img src="e.gif"><img src="x.gif"><img src="e.gif"><img src="s.gif">');

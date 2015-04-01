@@ -101,6 +101,26 @@ border-radius:10px;
 box-shadow:5px 2px 0px #0C0C0C;
 padding:2px;
 }
+#chatUI
+{
+/*These are the 'buttons' that appear on chatboxes.*/
+float:right;
+font-family:monospace;
+border-radius:360px;
+box-shadow:2px 2px 0px #5C91A6;
+margin-bottom:5px;
+padding:4px;
+background-color:#90C4D9;
+color:#2D2D2D;
+margin-right:10px;
+font-size:100%;
+cursor:pointer;
+}
+.chat p
+{
+margin-left:16px;
+margin-right:10%;
+}
 .chat video, .chat iframe
 {
 width:100%;
@@ -118,6 +138,7 @@ color:#90C4D9;
 text-align:left;
 overflow-x:hidden;
 font-size:100%;
+margin-left:8px;
 }
 #GET{width:64px;height:64px;}
 #sml{color:white;z-index:4;}
@@ -255,16 +276,6 @@ background-color:#000000;
 border: 1px groove #FFF;
 border-radius:25px;
 box-shadow:2px 5px 10px #2F2F2F;
-}
-#chatUI
-{
-/*These are the 'buttons' that appear on chatboxes.*/
-float:right;
-font-family:UI;
-color:#90C4D9;
-margin-right:5px;
-font-size:200%;
-cursor:pointer;
 }
 #title
 {

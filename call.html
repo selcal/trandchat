@@ -3,7 +3,41 @@
 <head>
 	<title>tr&call</title>
 	<meta name="viewport" content="width=device-width, inital-scale=1"/>
-	<script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+	
+	<script src='rtc.js'></script> <!--Script by &yet; SIMPLEwebRTC-->
+	<script src='jquery.js'></script>
+	<script>
+	var isMuted = false;
+	
+	var webrtc = new SimpleWebRTC
+({
+	localVideoEl: 'localVideo',
+	remoteVideosEl: 'remoteVideos',
+	autoRequestMedia: true
+});
+
+	webrtc.on('readyToCall', function () 
+	{
+	$("#wait").remove();
+	webrtc.joinRoom('ti4chat');
+	});
+	
+	function toggleMute()
+	{
+	if(!isMuted)
+	{
+	webrtc.mute();
+	isMuted = !isMuted;
+	document.getElementById('status').innerHTML = "Audio MUTED";
+	}
+	else
+	{
+	webrtc.unmute();
+	isMuted = !isMuted;
+	document.getElementById('status').innerHTML = "Audio ON";
+	}
+	}
+	</script>
 	<style>
 	body,html
 	{
@@ -15,9 +49,31 @@
 		color:#FFF;
 	}
 
-	#title{width:100%;background-color:#242424;top:0;z-index:9999;}
+	#title
+	{
+		width:100%;
+		height:5%;
+		background-color:#242424;
+		top:0;
+		z-index:9999;
+		position:fixed;
+		opacity:0.8;
+	}
 	
-	video{position:relative;max-width:49%;max-height:49%;}
+	#remoteVideos
+	{
+		width:100%;
+		max-height:90%;
+	}
+	#remoteVideos video
+	{
+		max-width:50%;
+		max-height:25%;
+	}
+	#localVideo
+	{
+		margin-top:5%;
+	}
 	
 	button
 	{
@@ -26,65 +82,23 @@
 		border-radius:15px;
 		right:0;
 	}
-	#join{background-color:#00BA16;border-color:#00BA16;}
-	#close{background-color:red;border-color:red;}
+	#wait{margin-top:80%;text-align:center;}
+	#mute{background-color:red;border-color:red;}
 	#options{background-color:#4D4D4D;border-color:#4D4D4D;float:right;}
+	#sendFile{background-color:#005199;border-color:#005199;}
 	</style>
-	
-<script src="rtc.js"></script>
-<script>
-var connection = new RTCMultiConnection();
-connection.session = {
-     audio:     true, 
-     video:     true
-};
-connection.direction = 'many-to-many';
-
-var firebaseURL = 'https://' + 'intense-heat-1674' + '.firebaseIO.com/';
-
-var roomFirebase = new Firebase(firebaseURL + connection.channel + '-session');
-roomFirebase.once('value', function (data) {
-    var sessionDescription = data.val();
-
-    // checking for room; if not available "open" otherwise "join"
-    if (sessionDescription == null) {
-        connection.open({
-            sessionid: connection.sessionid,
-            captureUserMediaOnDemand: false,
-            dontTransmit: true,
-            onMediaCaptured: function() {
-                // storing room on server
-                roomFirebase.set(connection.sessionDescription);
-                
-                // if room owner leaves; remove room from the server
-                roomFirebase.onDisconnect().remove();
-            }
-        });
-    } else {
-        // you can join with only audio or audio+video
-        var joinWith = {
-            audio: true,
-            video: true
-        };
-        
-        // pure "sessionDescription" object is passed over "join" method
-        // 2nd parameter is optional which allows you customize how to join the session
-        connection.join(sessionDescription, joinWith);
-
-    }
-	document.getElementById("wait").innerHTML = "";
-    console.debug('room is present?', sessionDescription == null);
-});
-</script>
 
 </head>
 <body>
 <div id="title">
-	|tr&call| <p id="wait">Loadang!</p>
+	|tr&call|
+	<button id="mute" onclick="toggleMute();">Toggle mute</button>
+	<button id="options" onclick="alert('WIP:STUB@94>>>>call.html')">Options</button>
+	<b id="status">Audio ON</b>
 </div>
-<p>OHGODWHATHAPPENED? Don't panic try this:</p>
-<p><b>If you're the first (host) in the call, don't refresh. Let other people connect to <i>you.</i></b></p>
-<p>If you see only two people; or it's screwed up, just refresh the page and you should be good. Chrome works best in this regard btw.</p>
-<p>If the host drops out of the call for any reason, just refresh the page and the host duty will be given once more.</p>
-<p>(Sorry, this library is kind of ass)</p>
+<p id="wait">Loadan... ( ͡° ͜ʖ ͡°)</p>
+<video height="128px" id="localVideo"></video><b>You</b>
+<div id="remoteVideos"></div>
+
+</div>
 </body>

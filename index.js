@@ -1,4 +1,4 @@
-var portGiven = 3000;//process.env.PORT;
+var portGiven = process.env.PORT;
 
 var app = require('express')();
 var http = require('http').Server(app);

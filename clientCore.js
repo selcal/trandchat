@@ -1,6 +1,6 @@
 //User defined customization variables! 
 //Use these to add your own personal flair (well except version)
-var version = "tr&chat alpha 0.8.1"; //version no.
+var version = "tr&chat alpha 0.8.2"; //version no.
 var numberOfBanners = 41; //how many gif banners do you have in ./banner?
 //Remember, it goes from banner1.gif to banner(numberOfBanners).gif.
 
@@ -10,12 +10,11 @@ var memeMute = false; //is the user not fun?
 var autoScroll = true;
 
 //Sound Effects:
-var userLeftSFX = 'leave.ogg';//a user left.
-var userJoinSFX = 'beep.ogg';//a user joined.
-var messageGetSFX = 'msg.ogg';//a message was received.
+var userLeftSFX = "leave.ogg";//a user left.
+var userJoinSFX = "beep.ogg";//a user joined.
+var messageGetSFX = "msg.ogg";//a message was received.
 
 //Cores:
-var audioChannelREF = $("#audioChannel");
 var userName = "Anonymous";
 	
 	function loadHistory()
@@ -42,7 +41,8 @@ var userName = "Anonymous";
 	
 $(document).ready(function()
 {		
-		//Set up, Hide UI elements.
+		var audioChannelREF = document.getElementById("audioChannel");
+		//Set up, Hide UI elements. EVERYONE HIDE
 		$('#title').hide();
 		$('#openShare').hide();
 		$('#smiles').hide();
@@ -127,15 +127,28 @@ $(document).ready(function()
 		
 		socket.on('audioCue',function(cue)
 		{
-			if(audioMute === false)
+			if(!audioMute)
 			{
-				if(cue === 'message')
-				{$("#audioChannel").attr("src","msg.ogg"); $("#audioChannel").play();}
+				
+				if(cue === 'message' && document.hidden)
+				{
+					audioChannelREF.src = messageGetSFX;	
+				audioChannelREF.play();
+				}
+				else
+				if(cue === 'left')
+				{
+					audioChannelREF.src = userLeftSFX;	
+				audioChannelREF.play();
+				}
+				else
+				if(cue === 'join')
+				{
+					audioChannelREF.src = userJoinSFX;	
+				audioChannelREF.play();	
+				}
 			}
 		});
-		
-		socket.on('cleanedUserName',function(userGET){userName = userGET;});
-		//get your assigned and cleaned username from the server.
 		
 		socket.on('chatOUT', function(msg,us,type)
 		{
@@ -157,6 +170,7 @@ $(document).ready(function()
 		{
 		$('#usersOnline').empty();
 		//empty old data, insert new data from server directly.
+		$('#usersOnline').append('<p>Users online:</p>');
 		for(i=0;i<users.length;i++)
 		{
 		$('#usersOnline').append('<p>'+users[i]+'</p>');

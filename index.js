@@ -1,5 +1,5 @@
 
-var portGiven = process.env.PORT;
+var portGiven = process.env.PORT;//3000
 
 var app = require('express')();
 var http = require('http').Server(app);
@@ -38,15 +38,20 @@ io.on('connection', function(socket)
   
   socket.on('chatIN', function(msg,us)
   {
+	   msg = msg.replace(/<(.*?)>/g,'');
 	   if(msg === '' || msg === ' ' || msg === lastmsg){}
 	   else
 	   {
 	   lastmsg = msg;
-	   setTimeout(function(){ lastmsg = null; },1500);
-	   msg = command(msg,us);
+	   setTimeout(function(){ lastmsg = null; },1000);
+
+	   msg = emoteScrub(msg);//scrub for emotes
+	   
+	   msg = command(msg,us);//scrub for command syntax and check for any mute triggers
+	   
 	   io.emit('chatOUT', msg, us);
 	   io.emit('audioCue','message');
-       }
+	   }
 	   //todo:change this to a for loop with i's max as length of message
 	   //and see if the ' ' characters occurences === length of message
   });
@@ -71,8 +76,8 @@ io.on('connection', function(socket)
 	//actually 'connects' to the chat once they choose a name.
 	
 	socket.on('join',function(us)
-	{
-		us = us.replace(/<(.*?)>/g,' ');
+	{	
+		us = us.replace(/<(.*?)>/g,'');
 		
 		if(us === '' || us === ' ' || us === null)
 		{
@@ -83,14 +88,14 @@ io.on('connection', function(socket)
 		users.push(socket.username);
 		++usersNum;
 		io.emit('announcement',socket.username+' joined the chat.');
-		io.emit('audioCue', 'userJoinSFX');
+		io.emit('audioCue', 'join');
 	});
 	socket.on('disconnect',function()
 	{
 		if(socket.username !== undefined)
 		{
 		io.emit('announcement',socket.username+' left the chat.');
-		io.emit('audioCue', 'userLeftSFX');
+		io.emit('audioCue', 'left');
 		var a = users.indexOf(socket.username);
 		users.splice(a,1);
 		--usersNum;
@@ -107,10 +112,49 @@ io.on('connection', function(socket)
 //TODO: Refactor emoticons to use the actual filename of the picture
 //instead of this atrocity against nature:
 
-function command(msg,us)
+function command(msg,us,type)
 {
-	msg = msg.replace(/</g, '&lt;');//prevent scripting
+	//slice needed section
+	//remove HTML
 	
+	if(msg.substring(0,4) === '/pic' || msg.substring(0,4) === '/img')
+	{
+		var url = msg.substring(4,msg.length);
+		return('<img id="imgShare" src='+url+'>');
+	}
+	if(msg.substring(0,4) === '/web' || msg.substring(0,4) === '/www')
+	{
+		var url = msg.substring(4,msg.length);
+		return('<iframe sandbox="allow-forms allow-scripts" src='+url+'>');
+	}
+	if(msg.substring(0,3) === '/yt')
+	{
+		var id = msg.slice(-11,msg.length);
+		return('<iframe src="http://www.youtube.com/embed/'+id+'"></iframe>');
+	}
+	// slice end section	
+	switch(msg)
+	{
+		case '/roll':
+		case '/rawl':
+		case '/dubsGET':
+		case '/tripsGET':
+		case '/quadsGET':
+		case '/quintsGET':
+		case '/hexsGET':
+		case '/heptaGET':
+		case '/octaGET':
+		case '/jimmyrollins':
+		case '/rollan':
+		type 
+return ('↳ rolled ' + roll() + '!');
+		default:
+return (msg);
+	}
+}
+
+function emoteScrub(msg)
+{	
 	msg = msg.replace(/:snoop:/g, '<img src="/emote/snoop.png">');
 	msg = msg.replace(/:ok:/g, '<img src="/emote/ok.gif">');
 	msg = msg.replace(/:he:/g, '<img src="/emote/HE.png">');
@@ -167,66 +211,7 @@ function command(msg,us)
 	msg = msg.replace(/:x:/g, '<img src="/emote/x.gif">');
 	msg = msg.replace(/:y:/g, '<img src="/emote/y.gif">');
 	msg = msg.replace(/:z:/g, '<img src="/emote/z.gif">');
-	//slice needed section
-	//remove HTML
-	
-	if(msg.substring(0,4) === '/pic' || msg.substring(0,4) === '/img')
-	{
-		var url = msg.substring(4,msg.length);
-		return('<img id="imgShare" src='+url+'>');
-	}
-	if(msg.substring(0,4) === '/web' || msg.substring(0,4) === '/www')
-	{
-		var url = msg.substring(4,msg.length);
-		return('<iframe sandbox="allow-forms allow-scripts" src='+url+'>');
-	}
-	if(msg.substring(0,3) === '/yt')
-	{
-		var id = msg.slice(-11,msg.length);
-		return('<iframe src="http://www.youtube.com/embed/'+id+'"></iframe>');
-	}
-	// slice end section	
-	switch(msg)
-	{
-		case '/roll':
-		case '/rawl':
-		case '/dubsGET':
-		case '/tripsGET':
-		case '/quadsGET':
-		case '/quintsGET':
-		case '/hexsGET':
-		case '/heptaGET':
-		case '/octaGET':
-		case '/jimmyrollins':
-		case '/rollan':
-return ('↳ rolled ' + roll() + '!');
-
-
-
-
-
-	    case 'nice':
-	    case 'noice':		
-return ('<p>'+msg+'</p>'+'<video src="/movie/nice.mp4" height="320" width="480" autoplay onended="this.remove()"></video>');
-		case 'wow':
-return ('<p>'+msg+'</p>'+'<video src="/movie/wow.mp4" height="320" width="480" autoplay onended="this.remove()"></video>');
-		case 'MOTHER 3':
-		case 'mother 3':
-		case 'earthbound':
-		case 'MOTHER':
-return ('<video src="/movie/bestgame.mp4" height="320" width="100%"></video>' + msg);
-		case '/polska':
-		case '/sciernisko':
-		case 'kurwa':
-return (msg+'GLUPI MURZYN!!! POLSKA JEST SUPER!<img src="/cancer/polishFlag.jpg"><audio src="/music/POLSKA.mp3" autoplay onended="this.remove()">');
-		case 'cheekibreeki':
-		case 'RU':
-		case 'CHEEKI BREEKI':
-		case 'CHEEKIBREEKI':
-return ('<p>'+msg+'</p><img id="CHEEKI" src="/cancer/VDAMKE.png" style="left:0;"> <audio src="/music/ru.mp3" autoplay onended="this.remove(); document.getElementById("CHEEKI").remove();">')
-		default:
-return (msg);
-	}
+	return msg;
 }
 function rngesus(min,max)
 {

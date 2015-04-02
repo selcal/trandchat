@@ -35,17 +35,19 @@
 </head>
 
 <body onload="document.getElementById('version').innerHTML=version;">
+	
 <div id="login" style="z-index:1337;top:0;left:0;">
 <p id="loginTitle">tr&chat</p>
 <form id="liloForm" action="">
 <input id="loginForm" autocomplete="off" autofocus maxlength = "18"/> 
-<button>Let's Jam.</button>
-<p id="version" style="font-weight:bold"></p>
+<button></button><b id="version"> Loading tr&chat... </b>
 </form>
+
 </div>
+
 <div id="chatContainer">
 </div>
-	<audio id="audioChannel"></audio>
+	<audio id="audioChannel" src=""></audio>
 	
 	<div id="title">
 		&nbsp;| tr&chat |&nbsp;
@@ -67,21 +69,20 @@
 	
 <h1>Options</h1>
 <h3 id="optionsAUDIO" onclick="audioMute = !audioMute; if(!audioMute){this.innerHTML = 'Audio Notifications [ON]'}else{this.innerHTML = 'Audio Notifications [OFF]'} ">Audio Notifications [ON]</h3>
-<h3 onclick="memeMute = !memeMute; if(!memeMute){this.innerHTML = 'Meme Mute [OFF]'}else{this.innerHTML = 'Meme Mute[ON]'} ">Meme Mute [STUB]</h3>
 <h3><a href="https://github.com/selcal/trandchat/issues" target="blank_" >Suggest changes on github.</a></h3>
 <h3><a href="https://github.com/selcal/trandchat/" target="blank_" >See the source code.</a></h3>
 <h3><a href="timeline.html" target="blank_" >View the (sort-of) complete timeline.</a></h3>
 <br>
-<h1>Block Content and Spam</h1>
-<p>Coming soon (´・ω・`)</p>
+<h1>Block Content</h1>
+<h3 onclick="memeMute = !memeMute; if(!memeMute){this.innerHTML = 'Meme Mute [OFF]'}else{this.innerHTML = 'Meme Mute[ON]'} ">Meme Mute [STUB]</h3>
 <br>
 <h1>Styles and Custom CSS</h1>
 <p>Choose a preset chat background:</p>
-<h3 onclick="$(document.body).css('background-image','none');">Click to reset the background.</h3>
-<img onclick="$(document.body).css('background-image','url(banner/banner4.gif)');" src="banner/banner4.gif" width="25%" height="20%">
-<img onclick="$(document.body).css('background-image','url(banner/banner1.gif)');" src="banner/banner1.gif" width="25%" height="20%">
-<img onclick="$(document.body).css('background-image','url(banner/banner21.gif)');" src="banner/banner21.gif" width="25%" height="20%">
-<img onclick="$(document.body).css('background-image','url(banner/banner40.gif)');" src="banner/banner40.gif" width="25%" height="20%">
+<h3 onclick="$(document.body).css('background-image','none');">Set the background back to default.</h3>
+<img alt="Backdrop 1" onclick="$(document.body).css('background-image','url(banner/banner4.gif)');" src="logo/backdrop1.png" width="128px" height="64px">
+<img alt="Backdrop 2" onclick="$(document.body).css('background-image','url(banner/banner1.gif)');" src="logo/backdrop2.png" width="128px" height="64px">
+<img alt="Backdrop 3" onclick="$(document.body).css('background-image','url(banner/banner21.gif)');" src="logo/backdrop3.png" width="128px" height="64px">
+<img alt="Backdrop 4" onclick="$(document.body).css('background-image','url(banner/banner40.gif)');" src="logo/backdrop4.png" width="128px" height="64px">
 <p>Preset Styles:</p>
 <h3 onclick="document.getElementById('currentStyle').href = 'normal.css'" style="background-color:#525252;color:#ADD8E6;font-family:sans-serif;">meditation++ (default)</h3>
 <h3 onclick="document.getElementById('currentStyle').href = 'skype.css'" style="background-color:#00D4FF;color:white;font-family:sans-serif;">skype</h3>
@@ -89,22 +90,21 @@
 <h3 onclick="document.getElementById('currentStyle').href = 'unix.css'" style="background-color:#001A22;color:#00FF0B;font-family:monospace;">UNIX</h3>
 <br>
 <p>Custom Stylesheet:</p>
-<textarea style="width:100%;height:640px;background-color:#191919;color:white;"></textarea>
+<textarea style="width:100%;height:240px;background-color:#191919;color:white;"></textarea>
 <button onclick="document.getElementById('currentStyle').href = ''">RICE!</button>
 <br>
 <br>
 <p id="version"></p>
 <p style="color:#1AF000">change log</p>
-<p>+ Audiovisual chat moved to another webRTC library. Thank god.</p>
-<p>+ Added a few new chat background images for extra flair.</p>
-<p>+ Refactored clientside code.</p>
-<p>~ Timeline updated.</p>
-<p>+ Refactored back-end code.</p>
-<p>Sexy buttons, for close message and quote message.</p>
+<p>+ Some anti-spam changes were made.</p>
+<p>+ Improved loading times.</p>
+<p>+ Transferred some responsibilities from the client to the server (refactored)</p>
+<p>+ Improved security.</p>
+<p>+ Added 'loading' text on the login page.</p>
+<p>- Audio Notifications are broken? <b>Why.</b></p>
 </div>
 
 <div id="usersOnline">
-	<p>Users Online:</p>
 </div>
 
 <div id="smileContainer">
@@ -156,7 +156,6 @@
 <i>feature coming soon. you'll be able to drag files in here and they'll show up in chat!</i>
 </div>
 <p>&#8711;&nbsp;<i>or post something else from...</i>&nbsp;&#8711;</p>
-<a title="Share shit on 8chan!" onclick="shareEight();"><img src="8chanlogo.svg" height="100%"width="100%"></a>
 <a title="Share a youtube video!" onclick="shareYoutube();"><img src="youtubelogo.svg" alt="Share something from youtube."></a>
 <a title="Share a comment on reddit!" onclick="shareReddit();"><img src="redditlogo.png" alt="Share something from reddit."></a>
 <a title="Share a twitch stream!" onclick="shareTwitch();"><img src="twitchlogo.png" alt="Share something from twitch."></a>

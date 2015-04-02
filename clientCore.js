@@ -1,8 +1,7 @@
 //User defined customization variables! 
-//Use these to add your own personal flair to the back-end.
-
-var version = "tr&chat alpha 0.8.0"; //version no.
-var numberOfBanners = 40; //how many gif banners do you have in ./banner?
+//Use these to add your own personal flair (well except version)
+var version = "tr&chat alpha 0.8.1"; //version no.
+var numberOfBanners = 41; //how many gif banners do you have in ./banner?
 //Remember, it goes from banner1.gif to banner(numberOfBanners).gif.
 
 //Options:
@@ -10,7 +9,13 @@ var audioMute = false; // is tr&chat's audio muted?
 var memeMute = false; //is the user not fun?
 var autoScroll = true;
 
+//Sound Effects:
+var userLeftSFX = 'leave.ogg';//a user left.
+var userJoinSFX = 'beep.ogg';//a user joined.
+var messageGetSFX = 'msg.ogg';//a message was received.
+
 //Cores:
+var audioChannelREF = $("#audioChannel");
 var userName = "Anonymous";
 	
 	function loadHistory()
@@ -37,9 +42,10 @@ var userName = "Anonymous";
 	
 $(document).ready(function()
 {		
-			
 		//Set up, Hide UI elements.
 		$('#title').hide();
+		$('#openShare').hide();
+		$('#smiles').hide();
 		$('#chatBar').hide();
 		$('#options').hide();
 		$('#share').hide();
@@ -57,33 +63,25 @@ $(document).ready(function()
 		//LOGIN:
 		$('#login').submit(function()
 		{
-			userName = $('#loginForm').val();
-			userName = userName.replace(/<(.*?)>/g,' ');
-			//noscriptattacks:pleb edition
-		
-		if(userName === '' || userName === ' ' || userName === null)
-		{
-			//Set to anon if n/a
-			userName = 'Anonymous';
-		}
-		
-		//join with your username.
-		socket.emit('join',userName);
-		
+		//request the server to join with your username::
+		socket.emit('join',$("#loginForm").val());
+		userName = $("#loginForm").val().replace(/<(.*?)>/g,'.');
 		$('#login').fadeOut();
 		
 		$('#title').show();
 		$('#chatBar').show();
-		setTimeout(500,"$('#login').remove();");
+		$('#openShare').show();
+		$('#smiles').show();
+		setTimeout("$('#login').remove();",500);
 		return false;
 		});
 		
-		$('#chatBar').submit(function(msg,us)
+		$('#chatBar').submit(function(msg,us) //submit a message
 		{
 			//clientside commands:
 			if($('#m').val() === '/clear' || $('#m').val() === '/c')
 			{
-				$('#chatContainer').empty(); //clear
+				$('#chatContainer').empty(); //clear on client side....
 			}
 			else
 			{
@@ -122,18 +120,25 @@ $(document).ready(function()
 		
 		// SOCKET EVENTS:
 		
-		socket.on('announcement',function(msg)
+		socket.on('announcement',function(msg)//something happened
 		{
 			$("#chatContainer").append('<h3>'+msg+'<b style="float:right;margin-right:10px;"onclick="deletePost(this.parentNode)">x</b></h3>');
 		});
 		
+		socket.on('audioCue',function(cue)
+		{
+			if(audioMute === false)
+			{
+				if(cue === 'message')
+				{$("#audioChannel").attr("src","msg.ogg"); $("#audioChannel").play();}
+			}
+		});
+		
+		socket.on('cleanedUserName',function(userGET){userName = userGET;});
+		//get your assigned and cleaned username from the server.
+		
 		socket.on('chatOUT', function(msg,us,type)
 		{
-			if(document.hidden === true && audioMute === false)
-			{
-				document.getElementById('audioChannel').src = 'msg.ogg';
-				document.getElementById('audioChannel').play();
-			}
 			if(type === 'quote')
 			{
 				$("#chatContainer").append('<div class="chat"><b id="userName">'+us+'</b><b id="chatUI" onclick="deletePost(this.parentNode);">x</b><div class="quote"><p id="message">'+msg+'</p></div></div>');	

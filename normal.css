@@ -27,7 +27,7 @@ a
 {
 cursor:pointer;
 }
-#version{font-family:monospace;font-size:140%}
+#version{font-size:120%;text-align:center;}
 /***************
  * Login style *
  **************/

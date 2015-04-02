@@ -1,3 +1,4 @@
+
 var portGiven = process.env.PORT;
 
 var app = require('express')();
@@ -9,6 +10,9 @@ var express = require('express');
 
 var users = [];
 var usersNum = 0;
+
+//Core::
+var lastmsg = '<';//the last message that was typed. 
 
 //Node::
 	 
@@ -24,7 +28,7 @@ app.get('/', function(req, res)
 //Connect::Node::HTTP::
 http.listen(portGiven,function(){
 	console.log("ayy lmao");
-	console.log("PORT:"+portGiven+" !");
+	console.log("PORT:"+portGiven+"!");
 });
 
 //SocketIOEvents::
@@ -34,19 +38,17 @@ io.on('connection', function(socket)
   
   socket.on('chatIN', function(msg,us)
   {
-	   //clean up/scrape and process input.
-	   msg = command(msg,us);
-	   //todo:change this to a for loop with i's max as length of message
-	   //and see if the ' ' characters occurences === length of message
-	   
-	   if(msg === '' || msg === ' ')
-	   {
-		   //breakSpam
-	   } 
+	   if(msg === '' || msg === ' ' || msg === lastmsg){}
 	   else
 	   {
+	   lastmsg = msg;
+	   setTimeout(function(){ lastmsg = null; },1500);
+	   msg = command(msg,us);
 	   io.emit('chatOUT', msg, us);
+	   io.emit('audioCue','message');
        }
+	   //todo:change this to a for loop with i's max as length of message
+	   //and see if the ' ' characters occurences === length of message
   });
 
 	socket.on('quote',function(getPost,us,type)
@@ -70,16 +72,25 @@ io.on('connection', function(socket)
 	
 	socket.on('join',function(us)
 	{
+		us = us.replace(/<(.*?)>/g,' ');
+		
+		if(us === '' || us === ' ' || us === null)
+		{
+			us = 'Anonymous';			//Set to anon if n/a
+		}
+		
 		socket.username = us;
 		users.push(socket.username);
 		++usersNum;
 		io.emit('announcement',socket.username+' joined the chat.');
+		io.emit('audioCue', 'userJoinSFX');
 	});
 	socket.on('disconnect',function()
 	{
 		if(socket.username !== undefined)
 		{
 		io.emit('announcement',socket.username+' left the chat.');
+		io.emit('audioCue', 'userLeftSFX');
 		var a = users.indexOf(socket.username);
 		users.splice(a,1);
 		--usersNum;
@@ -93,10 +104,12 @@ io.on('connection', function(socket)
 });
 
 //non core, save your eyes from the pain pls:
+//TODO: Refactor emoticons to use the actual filename of the picture
+//instead of this atrocity against nature:
 
 function command(msg,us)
 {
-	msg = msg.replace(/</g, '&lt;');
+	msg = msg.replace(/</g, '&lt;');//prevent scripting
 	
 	msg = msg.replace(/:snoop:/g, '<img src="/emote/snoop.png">');
 	msg = msg.replace(/:ok:/g, '<img src="/emote/ok.gif">');
@@ -244,25 +257,25 @@ function roll()
 	switch(counter)
 	{
 	 case 2:
-	 io.emit('chatOUT','<br><video src="dubs.mp4" width:100% height:422px autoplay></video><br><p>V V V V V V</p>','Patrick Bateman likes those dubs.');
+	 io.emit('chatOUT','<br><video src="dubs.mp4" width="100%" height="422px" autoplay></video><br><p>V V V V V V</p>','Patrick Bateman likes those dubs.');
 	 break;
 	 case 3:
-	 io.emit('chatOUT','<br><audio src="trips.mp3" width:100% height:422px autoplay></audio><br><p>V V V V V V</p>','OH BABY A TRIPLE');
+	 io.emit('chatOUT','<br><audio src="trips.mp3" width="100%" height="422px" autoplay></audio><br><p>V V V V V V</p>','OH BABBBBBBBBBBY A TRIPLE');
 	 break;
 	  case 4:
-	  io.emit('chatOUT','<br><video src="quads.mp4" width:100% height:422px autoplay></video><br><p>V V V V V V</p>','<img src="q.gif"><img src="u.gif"><img src="a.gif"><img src="d.gif"><img src="s.gif">');
+	  io.emit('chatOUT','<br><video src="quads.mp4" width="100%" height="422px" autoplay></video><br><p>V V V V V V</p>','<img src="q.gif"><img src="u.gif"><img src="a.gif"><img src="d.gif"><img src="s.gif">');
 	 break;
 	  case 5:
-	 io.emit('chatOUT', '<br><video src="quints.webm" width:100% height:422px autoplay></video><br><p>OH LAWD QUINTS</p>','<img src="q.gif"><img src="u.gif"><img src="i.gif"><img src="n.gif"><img src="t.gif"><img src="s.gif">');
+	 io.emit('chatOUT', '<br><video src="quints.webm" width="100%" height="422px" autoplay></video><br><p>OH LAWD QUINTS</p>','<img src="q.gif"><img src="u.gif"><img src="i.gif"><img src="n.gif"><img src="t.gif"><img src="s.gif">');
 	 break;
 	  case 6:
-	  io.emit('chatOUT', '<br><video src="hexes.mp4" width:100% height:422px autoplay></video><br><p style="color:red;font-size:24px;">OIUSAHOUIFEHOFNEFOUFNEOUFEHFLJH<img src="banner17.gif"></p>','<img src="h.gif"><img src="e.gif"><img src="x.gif"><img src="e.gif"><img src="s.gif">');
+	  io.emit('chatOUT', '<br><video src="hexs.webm" width="100%" height="422px" autoplay></video><br><p style="color:red;font-size:24px;">OIUSAHOUIFEHOFNEFOUFNEOUFEHFLJH<img src="banner17.gif"></p>','<img src="h.gif"><img src="e.gif"><img src="x.gif"><img src="e.gif"><img src="s.gif">');
 	 break;
 	  case 7:
-	 io.emit('chatOUT', '<video src="septa.mp4" autoplay>');
+	 io.emit('chatOUT', '<p>theresnovideoforseptagetsocongratulationsoniichan</p>','tr&chat server #!');
 	 break;
 	  case 8:
-	 io.emit('GET8');
+	 io.emit('chatOUT','<p>Congratulations, you broke the chat.</p>','why');
 	 break;
 	}
 	if(checkGET.substr(5,3) === '420')
@@ -277,7 +290,7 @@ function roll()
 		{
 			movie = "/movie/4202.webm";
 		}
-		io.emit('GET420',movie);
+		io.emit('chatOUT','<video src="'+movie+'" width="420px" height="420px"></video>');
 	}
 	return intGET;
 }

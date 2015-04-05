@@ -83,6 +83,7 @@
 		right:0;
 	}
 	#wait{margin-top:80%;text-align:center;}
+	#join{background-color:#3E9FD5;border-color:#3E9FD5;}
 	#mute{background-color:red;border-color:red;}
 	#options{background-color:#4D4D4D;border-color:#4D4D4D;float:right;}
 	#sendFile{background-color:#005199;border-color:#005199;}
@@ -92,6 +93,7 @@
 <body>
 <div id="title">
 	|tr&call|
+	<button id="join" onclick="webrtc.joinRoom('ti4chat');">Join call manually</button>
 	<button id="mute" onclick="toggleMute();">Toggle mute</button>
 	<button id="options" onclick="alert('WIP:STUB@94>>>>call.html')">Options</button>
 	<b id="status">Audio ON</b>

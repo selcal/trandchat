@@ -146,7 +146,7 @@ margin-left:8px;
 #smiles
 {
 position:fixed;
-bottom:0;
+bottom:4px;
 right:0;
 width:32px;
 height:32px;
@@ -192,7 +192,7 @@ margin:5px;
 #openShare
 {
 position:fixed;
-bottom:0;
+bottom:4px;
 right:32px;
 width:32px;
 height:32px;
@@ -270,12 +270,10 @@ padding:5px;
 h3
 {
 color:white;
+width:100%;
 text-align:center;
-width:95%;
-background-color:#000000;
-border: 1px groove #FFF;
-border-radius:25px;
-box-shadow:2px 5px 10px #2F2F2F;
+background-color:#122020;
+box-shadow:2px 5px 2px #2F2F2F;
 }
 #title
 {

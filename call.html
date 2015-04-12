@@ -3,42 +3,27 @@
 <head>
 	<title>tr&call</title>
 	<meta name="viewport" content="width=device-width, inital-scale=1"/>
+	<script src="socket.js"></script>
+	<script src="jquery.js"></script>
+	<script src="rtc.js"></script>
 	
-	<script src='rtc.js'></script> <!--Script by &yet; SIMPLEwebRTC-->
-	<script src='jquery.js'></script>
-	<script>
-	var isMuted = false;
-	
-	var webrtc = new SimpleWebRTC
-({
-	localVideoEl: 'localVideo',
-	remoteVideosEl: 'remoteVideos',
-	autoRequestMedia: true
-});
+<script>
+$(document).ready(function()
+{
+	var connection = new RTCMultiConnection().connect('trandchat');
+document.querySelector('#join').onclick = function() 
+{
+    connection.open('trandchat');
+};
+document.querySelector('#mute').onclick = function() 
+{
+    connection.mute();
+};
 
-	webrtc.on('readyToCall', function () 
-	{
-	$("#wait").remove();
-	webrtc.joinRoom('ti4chat');
-	});
-	
-	function toggleMute()
-	{
-	if(!isMuted)
-	{
-	webrtc.mute();
-	isMuted = !isMuted;
-	document.getElementById('status').innerHTML = "Audio MUTED";
-	}
-	else
-	{
-	webrtc.unmute();
-	isMuted = !isMuted;
-	document.getElementById('status').innerHTML = "Audio ON";
-	}
-	}
-	</script>
-	<style>
+
+});
+</script>
+<style>
 	body,html
 	{
 		height:100%;
@@ -93,14 +78,9 @@
 <body>
 <div id="title">
 	|tr&call|
-	<button id="join" onclick="webrtc.joinRoom('ti4chat');">Join call manually</button>
-	<button id="mute" onclick="toggleMute();">Toggle mute</button>
+	<button id="join">Join/Start</button>
+	<button id="mute">Mute</button>
 	<button id="options" onclick="alert('WIP:STUB@94>>>>call.html')">Options</button>
-	<b id="status">Audio ON</b>
-</div>
-<p id="wait">Loadan... ( ͡° ͜ʖ ͡°)</p>
-<video height="128px" id="localVideo"></video><b>You</b>
-<div id="remoteVideos"></div>
-
+	<b id="status">tr&call 0001</b>
 </div>
 </body>

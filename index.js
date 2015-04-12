@@ -1,5 +1,5 @@
 
-var portGiven = process.env.PORT;//3000
+var portGiven = process.env.PORT;//3000;
 
 var app = require('express')();
 var http = require('http').Server(app);
@@ -257,7 +257,7 @@ function roll()
 	  io.emit('chatOUT', '<br><video src="hexs.webm" width="100%" height="422px" autoplay></video><br><p style="color:red;font-size:24px;">OIUSAHOUIFEHOFNEFOUFNEOUFEHFLJH<img src="banner17.gif"></p>','<img src="h.gif"><img src="e.gif"><img src="x.gif"><img src="e.gif"><img src="s.gif">');
 	 break;
 	  case 7:
-	 io.emit('chatOUT', '<p>theresnovideoforseptagetsocongratulationsoniichan</p>','tr&chat server #!');
+	 io.emit('chatOUT', '<video src="septa.webm" width="100%" height="422px" autoplay></video>','wew');
 	 break;
 	  case 8:
 	 io.emit('chatOUT','<p>Congratulations, you broke the chat.</p>','why');

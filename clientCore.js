@@ -1,9 +1,11 @@
 //User defined customization variables! 
 //Use these to add your own personal flair (well except version)
-var version = "tr&chat alpha 0.8.2"; //version no.
+var version = "tr&chat alpha 0.8.3"; //version no.
 var numberOfBanners = 41; //how many gif banners do you have in ./banner?
 //Remember, it goes from banner1.gif to banner(numberOfBanners).gif.
-
+var UIClose='<b id="chatUI" onclick="deletePost(this.parentNode);">x</b>';
+var UIQuote='<b id="chatUI" onclick="quotePost(this.parentNode);">"</b>';
+var UIMax ='<b id="chatUI" onclick="maxPost(this.parentNode);">O</b>';
 //Options:
 var audioMute = false; // is tr&chat's audio muted?
 var memeMute = false; //is the user not fun?
@@ -36,6 +38,15 @@ var userName = "Anonymous";
 	function quotePost(parentPost)
 	{
 		socket.emit('quote',parentPost.lastChild.innerHTML,parentPost.firstChild.innerHTML);
+	}
+	
+	function maxPost(parentPost)
+	{
+		$(parentPost).animate({marginLeft: "0px"}, 100);
+		$(parentPost).animate({marginTop: "-48px"}, 100);
+		$(parentPost).css("position","fixed");
+		$(parentPost).animate({height: "79vh"}, 250);
+		$(parentPost).animate({width: "99%"}, 500);	
 	}
 		
 	
@@ -133,19 +144,19 @@ $(document).ready(function()
 				if(cue === 'message' && document.hidden)
 				{
 					audioChannelREF.src = messageGetSFX;	
-				audioChannelREF.play();
+					audioChannelREF.play();
 				}
 				else
 				if(cue === 'left')
 				{
 					audioChannelREF.src = userLeftSFX;	
-				audioChannelREF.play();
+					audioChannelREF.play();
 				}
 				else
 				if(cue === 'join')
 				{
 					audioChannelREF.src = userJoinSFX;	
-				audioChannelREF.play();	
+					audioChannelREF.play();	
 				}
 			}
 		});
@@ -154,11 +165,11 @@ $(document).ready(function()
 		{
 			if(type === 'quote')
 			{
-				$("#chatContainer").append('<div class="chat"><b id="userName">'+us+'</b><b id="chatUI" onclick="deletePost(this.parentNode);">x</b><div class="quote"><p id="message">'+msg+'</p></div></div>');	
+				$("#chatContainer").append('<div class="chat"><b id="userName">'+us+'</b>'+UIClose+'<div class="quote"><p id="message">'+msg+'</p></div></div>');	
 			}
 			else
 			{//sorry for this long ass line, I know it must be painful.	
-			$("#chatContainer").append('<div class="chat"><b id="userName">'+us+'</b><b id="chatUI" onclick="deletePost(this.parentNode);">x</b><b id="chatUI" onclick="quotePost(this.parentNode);">"</b><p id="message">'+msg+'</p></div>');
+			$("#chatContainer").append('<div class="chat"><b id="userName">'+us+'</b>'+UIClose+UIQuote+UIMax+'<p id="message">'+msg+'</p></div>');
 			}	
 				if(autoScroll === true)
 				{

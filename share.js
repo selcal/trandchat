@@ -1,39 +1,8 @@
-<<<<<<< HEAD
 var socket = io();
 
 function shareFile()
 {
 	connection.send(document.getElementById('#inputFile').files[0]);
-=======
-var whichShare = "none";
-var socket = io();
-var userName = userName;
-
-function closeShare()
-{
-	return false;
-	
-}
-
-function shareEight()
-{
-	$("#shareMenu").empty();
-	$("#shareMenu").css("backgroundImage","url('logo/eightShare.png')");
-	$("#shareMenu").css("backgroundSize","cover");
-	$("#shareMenu").fadeIn("slow");
-	$("#shareMenu").append('<p id="shareText">Paste the URL of the cancer in question.</p>');
-	$("#shareMenu").append('<form id="url" action=""><input id="u" autocomplete="off" autofocus maxlength = "256"/><input type="submit" style="visibility:hidden"/></form>');
-	
-	$('#url').submit(function(e)
-	{
-		e.preventDefault();
-		socket.emit('shareGUI','<iframe src="'+$("#u").val()+'"></iframe>','hotwheels', ' posted something from 8chan:');
-			$("#u").val('');
-		$("#share").hide("fast");
-		$("#shareMenu").empty();
-		return false;	
-	});
->>>>>>> 05bd03f7a42789594eab803145653bf05ad07b76
 }
 function shareTwitch()
 {
@@ -105,11 +74,7 @@ function shareReddit()
 	$('#url').submit(function(e)
 	{		
 		e.preventDefault();
-<<<<<<< HEAD
 		socket.emit('shareGUI',"<script src='//redditjs.com/subreddit.js' data-url='"+$("#u").val()+"' data-height='480' data-width='320' data-post-finder='mostComments' data-theme='dark'></script>",'kek', ' shared a post from reddit:');
-=======
-		socket.emit('shareGUI',"<script src='//redditjs.com/post.js' data-url='"+$("#u").val()+"' data-height='480' data-width='320' data-post-finder='mostComments' data-theme='dark'></script>",'kek', ' shared a post from reddit:');
->>>>>>> 05bd03f7a42789594eab803145653bf05ad07b76
 		$("#u").val('');
 		$("#share").hide("fast");
 		$("#shareMenu").empty();

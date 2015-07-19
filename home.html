@@ -19,7 +19,6 @@
 </head>
 
 <body onload="document.getElementById('version').innerHTML=version;">
-<<<<<<< HEAD
 	
 <div id="login" style="z-index:1337;top:0;left:0;">
 <p id="loginTitle">tr&chat</p>
@@ -27,17 +26,9 @@
 	<p>Choose a nickname...</p>
 <input id="loginForm" autocomplete="off" autofocus maxlength = "18"/> 
 <button></button><b id="version"> Loadan tr&chat... </b>
-=======
-<div id="login" style="z-index:1337;top:0;left:0;">
-<p id="loginTitle">tr&chat</p>
-<form id="liloForm" action="">
-<input id="loginForm" autocomplete="off" autofocus maxlength = "18"/> 
-<button>Let's Jam.</button>
-<p id="version" style="font-weight:bold"></p>
->>>>>>> 05bd03f7a42789594eab803145653bf05ad07b76
 </form>
+
 </div>
-<<<<<<< HEAD
 
 <div id="chatContainer">
 </div>
@@ -53,32 +44,12 @@
 	&nbsp;	
 	<a id="autoScrollToggle" title="Toggle Autoscrolling Text" title="Autoscroll Toggle (/at)" onclick="autoScroll = !autoScroll;if(autoScroll){$(this).css('color','green')}else{$(this).css('color','red')}">&#8681;</a>
 	<a id="optionsButton" title="Options and Changelog" id="cog">&#9776;</a>
-=======
-<div id="chatContainer">
-</div>
-	<audio id="audioChannel"></audio>
-	
-	<div id="title">
-		&nbsp;| tr&chat |&nbsp;
-	<a title="Users Currently Online" id="whoson">&#9787;</a>
-		&nbsp;
-	<a title="Clear the Chat Screen (/c /clear)" onclick="$('#chatContainer').empty();"><b>X</b></a>
-		&nbsp;
-	<a href="/call.html" target="blank_" title="Calls and Video Chats">&#9742;</a>
-		&nbsp;
-	<a title="Autoscroll Toggle" onclick="autoScroll = !autoScroll;if(autoScroll){$(this).css('color','green')}else{$(this).css('color','red')}"><b>&#8681;</b></a>
-		&nbsp;
-	<a title="pls help i cannot computer" target="blank_" href="help.html">?</a>
-		&nbsp;
-	<a title="Options and Changelog" id="cog"><b>&#9776;</b></a>
->>>>>>> 05bd03f7a42789594eab803145653bf05ad07b76
 	</div>	
 	
 <a id="top"></a> <!-- Bookmark for top of messages -->
 <div id="options">
 	
 <h1>Options</h1>
-<<<<<<< HEAD
 <br>
 <h1>Styles and Custom CSS</h1>
 <p>Choose a preset chat background:</p>
@@ -94,49 +65,14 @@
 <p>Custom Stylesheet:</p>
 <textarea placeholder="Coming soon. For now you can find all CSS rules using your web browser's inspector." style="width:100%;height:240px;background-color:#191919;color:white;"></textarea>
 <button onclick="document.getElementById('currentStyle').href = ''">Set Style</button>
-=======
-<h3 id="optionsAUDIO" onclick="audioMute = !audioMute; if(!audioMute){this.innerHTML = 'Audio Notifications [ON]'}else{this.innerHTML = 'Audio Notifications [OFF]'} ">Audio Notifications [ON]</h3>
-<h3 onclick="memeMute = !memeMute; if(!memeMute){this.innerHTML = 'Meme Mute [OFF]'}else{this.innerHTML = 'Meme Mute[ON]'} ">Meme Mute [STUB]</h3>
-<h3><a href="https://github.com/selcal/trandchat/issues" target="blank_" >Suggest changes on github.</a></h3>
-<h3><a href="https://github.com/selcal/trandchat/" target="blank_" >See the source code.</a></h3>
-<h3><a href="timeline.html" target="blank_" >View the (sort-of) complete timeline.</a></h3>
-<br>
-<h1>Block Content and Spam</h1>
-<p>Coming soon (´・ω・`)</p>
-<br>
-<h1>Styles and Custom CSS</h1>
-<p>Choose a preset chat background:</p>
-<h3 onclick="$(document.body).css('background-image','none');">Click to reset the background.</h3>
-<img onclick="$(document.body).css('background-image','url(banner/banner4.gif)');" src="banner/banner4.gif" width="25%" height="20%">
-<p>Preset Styles:</p>
-<h3 onclick="document.getElementById('currentStyle').href = 'normal.css'" style="background-color:#525252;color:#ADD8E6;font-family:sans-serif;">meditation++ (default)</h3>
-<h3 onclick="document.getElementById('currentStyle').href = 'skype.css'" style="background-color:#00D4FF;color:white;font-family:sans-serif;">skype</h3>
-<h3 onclick="document.getElementById('currentStyle').href = 'chan.css'" style="background-color:#D7AFA9;color:#750E00;">yotsuba C</h3>
-<h3 onclick="document.getElementById('currentStyle').href = 'unix.css'" style="background-color:#001A22;color:#00FF0B;font-family:monospace;">UNIX</h3>
-<br>
-<p>Custom Stylesheet:</p>
-<textarea style="width:100%;height:640px;background-color:#191919;color:white;"></textarea>
-<button onclick="document.getElementById('currentStyle').href = ''">RICE!</button>
->>>>>>> 05bd03f7a42789594eab803145653bf05ad07b76
 <br>
 <br>
 <p id="version"></p>
 <p style="color:#1AF000">change log</p>
-<<<<<<< HEAD
 <p>~ Updated github source. months behind what was on my laptop. :/</p>
-=======
-<p>- Migrating to new voice and audio streaming library.</p>
-<p>+ User definable chat background images in gif format.</p>
-<p>+ Added two new emoticons, :he: and :ok: 
-<img title=":he:" src="/emote/HE.png" width="32px" height="32px">
-<img title=":ok:" src="/emote/ok.gif" width="32px" height="32px">
-</p>
-<p>+ Added development timeline at url/timeline.html</p>
->>>>>>> 05bd03f7a42789594eab803145653bf05ad07b76
 </div>
 
 <div id="usersOnline">
-	<p>Users Online:</p>
 </div>
 
 <div id="smileContainer">
@@ -144,15 +80,6 @@
 <img onclick="addEmote(':wiz:');" onmouseover="document.getElementById('sml').innerHTML = ':wiz:';" src="wiz.png">
 <img onclick="addEmote(':ok:');" onmouseover="document.getElementById('sml').innerHTML = ':ok:';" src="ok.gif">
 <img onclick="addEmote(':he:');" onmouseover="document.getElementById('sml').innerHTML = ':he:';" src="HE.png">
-<<<<<<< HEAD
-=======
-<img onclick="addEmote(':cheeki:');" onmouseover="document.getElementById('sml').innerHTML = ':cheeki:';" src="cheekibreeki.png">
-<img onclick="addEmote(':pepe:');" onmouseover="document.getElementById('sml').innerHTML = ':pepe:';" src="pepe.png">
-<img onclick="addEmote(':feel:');" onmouseover="document.getElementById('sml').innerHTML = ':feel:';" src="feel.png">
-<img onclick="addEmote(':kfc:');" onmouseover="document.getElementById('sml').innerHTML = ':kfc:';" src="kfc.png">
-<img onclick="addEmote(':hot:');" onmouseover="document.getElementById('sml').innerHTML = ':hot:';" src="hot.png">
-<img onclick="addEmote(':maniaczzz:');" onmouseover="document.getElementById('sml').innerHTML = ':maniaczzz:';" src="maniacSleeper.png">
->>>>>>> 05bd03f7a42789594eab803145653bf05ad07b76
 <img onclick="addEmote(':frog:');" onmouseover="document.getElementById('sml').innerHTML = ':frog:';" src="frog.gif">
 <img onclick="addEmote(':smirk:');" onmouseover="document.getElementById('sml').innerHTML = ':smirk:';" src="smirk.png">
 <img onclick="addEmote(':srs:');" onmouseover="document.getElementById('sml').innerHTML = ':srs:';" src="srs.png">
@@ -169,10 +96,7 @@
 <div id="smiles">
 &#9786;
 </div>
-<<<<<<< HEAD
 
-=======
->>>>>>> 05bd03f7a42789594eab803145653bf05ad07b76
 <div id="openShare" onclick="$('#shareMenu').empty();$('#shareMenu').hide();">
 &#9741;
 </div>
@@ -181,19 +105,11 @@
 <div id="shareMenu">
 </div>
 <p><b>sharing is caring</b></p>
-<<<<<<< HEAD
 <input type="file" id="inputFile"/>
 <br>
 <br>
 <button onclick="shareFile();">Upload file! THIS DOESNT WORK D:</button>
 <p><i>or post something else...</i></p>
-=======
-<div id="dropShare">
-<i>feature coming soon. you'll be able to drag files in here and they'll show up in chat!</i>
-</div>
-<p>&#8711;&nbsp;<i>or post something else from...</i>&nbsp;&#8711;</p>
-<a title="Share shit on 8chan!" onclick="shareEight();"><img src="8chanlogo.svg" height="100%"width="100%"></a>
->>>>>>> 05bd03f7a42789594eab803145653bf05ad07b76
 <a title="Share a youtube video!" onclick="shareYoutube();"><img src="youtubelogo.svg" alt="Share something from youtube."></a>
 <a title="Share a comment on reddit!" onclick="shareReddit();"><img src="redditlogo.png" alt="Share something from reddit."></a>
 <a title="Share a twitch stream!" onclick="shareTwitch();"><img src="twitchlogo.png" alt="Share something from twitch."></a>

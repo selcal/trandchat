@@ -16,7 +16,6 @@ margin-top:0px;
 margin-bottom:0px;
 background-color:#4A4A4A;
 overflow-x:hidden;
-
 }
 html
 {
@@ -56,8 +55,9 @@ position:absolute;
 text-align:center;
 top:80%;
 width:100%;
+height:48px;
 color:#FFF;
-padding:0;
+padding:5px;
 }
 #liloForm input
 {
@@ -101,20 +101,55 @@ border-radius:10px;
 box-shadow:5px 2px 0px #0C0C0C;
 padding:2px;
 }
-#chatUI
+#chatUIMax
 {
 /*These are the 'buttons' that appear on chatboxes.*/
 float:right;
 font-family:monospace;
 border-radius:360px;
-box-shadow:2px 2px 0px #5C91A6;
+box-shadow:2px 2px 0px #115811;
 margin-bottom:5px;
 padding:4px;
-background-color:#90C4D9;
-color:#2D2D2D;
+background-color:#21A021;
+color:white;
 margin-right:10px;
 font-size:100%;
 cursor:pointer;
+}
+#chatUIQuote
+{
+/*These are the 'buttons' that appear on chatboxes.*/
+float:right;
+font-family:monospace;
+border-radius:360px;
+box-shadow:2px 2px 0px #897300;
+margin-bottom:5px;
+padding:4px;
+background-color:#C6A709;
+color:white;
+margin-right:10px;
+font-size:100%;
+cursor:pointer;
+}
+#chatUIClose
+{
+/*These are the 'buttons' that appear on chatboxes.*/
+float:right;
+font-family:monospace;
+border-radius:360px;
+box-shadow:2px 2px 0px #96040E;
+margin-bottom:5px;
+padding:4px;
+background-color:#E40212;
+color:white;
+margin-right:10px;
+font-size:100%;
+cursor:pointer;
+}
+i
+{
+font-size:65%;
+margin-left:64px;
 }
 .chat p
 {
@@ -146,7 +181,7 @@ margin-left:8px;
 #smiles
 {
 position:fixed;
-bottom:0;
+bottom:4px;
 right:0;
 width:32px;
 height:32px;
@@ -192,7 +227,7 @@ margin:5px;
 #openShare
 {
 position:fixed;
-bottom:0;
+bottom:4px;
 right:32px;
 width:32px;
 height:32px;
@@ -210,6 +245,20 @@ font-size:150%;
 font-weight:bold;
 color:#FF7300;
 text-align:center;
+padding:5px;
+}
+#share button
+{
+background-color:#FF6600;
+color:#FFF;
+border: 1px #FF6600 solid;
+border-radius:20px;
+}
+#inputFile
+{
+border:4px dotted #FF7A00;
+width:95%;
+height:20%;
 padding:5px;
 }
 #shareMenu
@@ -270,12 +319,10 @@ padding:5px;
 h3
 {
 color:white;
+width:100%;
 text-align:center;
-width:95%;
-background-color:#000000;
-border: 1px groove #FFF;
-border-radius:25px;
-box-shadow:2px 5px 10px #2F2F2F;
+background-color:#122020;
+box-shadow:2px 5px 2px #2F2F2F;
 }
 #title
 {
@@ -296,6 +343,7 @@ font-size:20px;
 #title{box-shadow:-2px 8px 15px #2F2F2F}
 #title p{text-align: center;}
 #title a{text-align:left;color:#A1D0D9;font-size:100%;text-decoration:none;}
+#title img{width:22px!important;height:22px!important;padding:none;margin:0 0 0 0;}
 
 #chatBar 
 {
@@ -361,6 +409,11 @@ color:#00FFF6;
 /*******
 *Others*
 *******/
+#whoson{border-bottom:2px groove #FFFF00; padding: none; display: inline;}
+#help{border-bottom:2px groove #0074FF; padding: none; display: inline;}
+#optionsButton{float:right;color:white!important;}
+#volume{border-bottom:2px groove #0BFF00; padding: none; display: inline;}
+#clearChat{border-bottom:2px groove #FF0000; padding: none; display: inline;}
 #usersOnline
 {
 position:fixed;
@@ -373,16 +426,6 @@ width:30%;
 float:left;
 opacity:0.9;
 color:white;
-}
-#history
-{
-position:relative;
-margin-top:24px;
-width:100%; 
-font-size:80%;
-background-color:#A1D0D9;
-color:#2D2D2D;
-text-align:center;
 }
 .quote
 {

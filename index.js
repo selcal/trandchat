@@ -1,5 +1,5 @@
 
-var portGiven = process.env.PORT;//3000;
+var portGiven = 3000;//process.env.PORT;
 
 var app = require('express')();
 var http = require('http').Server(app);
@@ -21,46 +21,45 @@ app.get('/', function(req, res)
   res.sendFile(__dirname + '/home.html');
   app.use("/", express.static(__dirname));
   app.use("/", express.static("emote"));
-  app.use("/", express.static("movie"));
   app.use("/", express.static("logo"));
 });
 
 //Connect::Node::HTTP::
-http.listen(portGiven,function(){
-	console.log("ayy lmao");
+http.listen(portGiven,function()
+{
 	console.log("PORT:"+portGiven+"!");
 });
 
 //SocketIOEvents::
 
 io.on('connection', function(socket)
-{
-  
+{ 
   socket.on('chatIN', function(msg,us)
   {
-	   msg = msg.replace(/<(.*?)>/g,'');
-	   if(msg === '' || msg === ' ' || msg === lastmsg){}
+	   msg = msg.replace(/<(.*?)>/g,''); //remove any html injection opportunities
+	   
+	   if(msg === '' || msg === ' ' || msg === lastmsg)
+	   {
+			return;
+	   }
 	   else
 	   {
 	   lastmsg = msg;
 	   setTimeout(function(){ lastmsg = null; },1000);
-
-	   msg = emoteScrub(msg);//scrub for emotes
 	   
+	   msg = emoteScrub(msg);//scrub for emotes
 	   msg = command(msg,us);//scrub for command syntax and check for any mute triggers
 	   
 	   io.emit('chatOUT', msg, us);
 	   io.emit('audioCue','message');
 	   }
-	   //todo:change this to a for loop with i's max as length of message
-	   //and see if the ' ' characters occurences === length of message
   });
 
 	socket.on('quote',function(getPost,us,type)
 	{
 		var postingus = us;
 		us = socket.username;
-		io.emit('chatOUT', getPost, us + '&nbsp;&nbsp;&nbsp;>' +postingus+' said...', 'quote');
+		io.emit('chatOUT', getPost, us + '&nbsp;&nbsp;&nbsp;>' +postingus, 'quote');
 	});
 	
 	socket.on('shareGUI',function(getInput,us,options)
@@ -110,7 +109,7 @@ io.on('connection', function(socket)
 
 //non core, save your eyes from the pain pls:
 //TODO: Refactor emoticons to use the actual filename of the picture
-//instead of this atrocity against nature:
+//instead of this atrocity:
 
 function command(msg,us,type)
 {
@@ -132,55 +131,23 @@ function command(msg,us,type)
 		var id = msg.slice(-11,msg.length);
 		return('<iframe src="http://www.youtube.com/embed/'+id+'"></iframe>');
 	}
-	// slice end section	
-	switch(msg)
-	{
-		case '/roll':
-		case '/rawl':
-		case '/dubsGET':
-		case '/tripsGET':
-		case '/quadsGET':
-		case '/quintsGET':
-		case '/hexsGET':
-		case '/heptaGET':
-		case '/octaGET':
-		case '/jimmyrollins':
-		case '/rollan':
-		type 
-return ('↳ rolled ' + roll() + '!');
-		default:
-return (msg);
-	}
+	return msg;
+	// slice end section
 }
 
 function emoteScrub(msg)
 {	
+	//TODO: Refactor completely, perhaps set these into array?
 	msg = msg.replace(/:snoop:/g, '<img src="/emote/snoop.png">');
 	msg = msg.replace(/:ok:/g, '<img src="/emote/ok.gif">');
 	msg = msg.replace(/:he:/g, '<img src="/emote/HE.png">');
 	msg = msg.replace(/Kappa/g, '<img src="/emote/Kappa.png">');
-	msg = msg.replace(/:kfc:/g, '<img src="/emote/kfc.png">');
-	msg = msg.replace(/:gasm:/g, '<img src="/emote/gasm.png">');
-	msg = msg.replace(/:maniaczzz:/g, '<img src="/emote/maniacSleeper.png">');
 	msg = msg.replace(/:smirk:/g, '<img src="/emote/smirk.png">');
-	msg = msg.replace(/:cheeki:/g, '<img src="/emote/cheekibreeki.png">');
 	msg = msg.replace(/:yee:/g, '<img src="/emote/yee.png">');
-	msg = msg.replace(/:sadmike:/g, '<img src="/emote/ixmike.png">');
-	msg = msg.replace(/:axe:/g, '<img src="/emote/axe.png">');
-	msg = msg.replace(/:pepe:/g, '<img src="/emote/pepe.png">');
-	msg = msg.replace(/:feel:/g, '<img src="/emote/feel.png">');
 	msg = msg.replace(/:frog:/g, '<img src="/emote/frog.gif">');
-	msg = msg.replace(/:shrekayy:/g, '<img src="/emote/shrekayy.png">');
-	msg = msg.replace(/:shrekohno:/g, '<img src="/emote/shrekohno.png">');
-	msg = msg.replace(/:shreksmug:/g, '<img src="/emote/shreksmug.png">');
-	msg = msg.replace(/:shrekyeah:/g, '<img src="/emote/shrekyeah.png">');
-	msg = msg.replace(/:hot:/g, '<img src="/emote/hot.png">');
 	msg = msg.replace(/:wow:/g, '<img src="/emote/wow.png">');
 	msg = msg.replace(/:srs:/g, '<img src="/emote/srs.png">');
-	msg = msg.replace(/:bush:/g, '<img src="/emote/bush.png">');
-	msg = msg.replace(/:polska:/g, '<img src="/emote/polska.png">');
 	msg = msg.replace(/:wiz:/g, '<img src="/emote/wiz.png">');
-	msg = msg.replace(/:bushappa:/g, '<img src="/emote/bushappa.png">');
 	//hidden emotes
 	msg = msg.replace(/:denko:/g, '(´･ω･`)');
 	msg = msg.replace(/:lenny:/g, '( ͡° ͜ʖ ͡°)');
@@ -216,68 +183,6 @@ function emoteScrub(msg)
 function rngesus(min,max)
 {
 	return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-function roll()
-{
-	//may the quads gods bless this function ~<3 behold, the h  o  l  y  f u n c t i o n.
-	
-	var intGET = Math.floor(Math.random() * (99999999 - 10000000 + 1)) + 10000000;
-	
-	//calculate percentage of WIN and GET:
-	var checkGET = intGET.toString();
-	var lastDIGIT = checkGET.charAt(checkGET.length - 1);
-	var counter = 0;
-	for(i = checkGET.length - 1; i > 0; i--)
-	{
-		if(checkGET.charAt(i) === lastDIGIT)
-		{
-			counter++;
-		}
-		else
-		{
-			break;
-		}
-	}
-	switch(counter)
-	{
-	 case 2:
-	 io.emit('chatOUT','<br><video src="dubs.mp4" width="100%" height="422px" autoplay></video><br><p>V V V V V V</p>','Patrick Bateman likes those dubs.');
-	 break;
-	 case 3:
-	 io.emit('chatOUT','<br><audio src="trips.mp3" width="100%" height="422px" autoplay></audio><br><p>V V V V V V</p>','OH BABBBBBBBBBBY A TRIPLE');
-	 break;
-	  case 4:
-	  io.emit('chatOUT','<br><video src="quads.mp4" width="100%" height="422px" autoplay></video><br><p>V V V V V V</p>','<img src="q.gif"><img src="u.gif"><img src="a.gif"><img src="d.gif"><img src="s.gif">');
-	 break;
-	  case 5:
-	 io.emit('chatOUT', '<br><video src="quints.webm" width="100%" height="422px" autoplay></video><br><p>OH LAWD QUINTS</p>','<img src="q.gif"><img src="u.gif"><img src="i.gif"><img src="n.gif"><img src="t.gif"><img src="s.gif">');
-	 break;
-	  case 6:
-	  io.emit('chatOUT', '<br><video src="hexs.webm" width="100%" height="422px" autoplay></video><br><p style="color:red;font-size:24px;">OIUSAHOUIFEHOFNEFOUFNEOUFEHFLJH<img src="banner17.gif"></p>','<img src="h.gif"><img src="e.gif"><img src="x.gif"><img src="e.gif"><img src="s.gif">');
-	 break;
-	  case 7:
-	 io.emit('chatOUT', '<video src="septa.webm" width="100%" height="422px" autoplay></video>','wew');
-	 break;
-	  case 8:
-	 io.emit('chatOUT','<p>Congratulations, you broke the chat.</p>','why');
-	 break;
-	}
-	if(checkGET.substr(5,3) === '420')
-	{
-		var which = rngesus(1,2);
-		var movie = "";
-		if(which == 1)
-		{
-			movie = "/movie/4201.mp4";
-		}
-		else
-		{
-			movie = "/movie/4202.webm";
-		}
-		io.emit('chatOUT','<video src="'+movie+'" width="420px" height="420px"></video>');
-	}
-	return intGET;
 }
 
 

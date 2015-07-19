@@ -2,22 +2,7 @@
 								tr&chat
 				
 	<  Contact me at selcal@protonmail.ch or on github @ selcal  >
-   
-   This program is free software; you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation; either version 2 of the License, or
-   (at your option) any later version.
-   
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-   
-   You should have received a copy of the GNU General Public License
-   along with this program; if not, write to the Free Software
-   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-   MA 02110-1301, USA.
-   
+		This 'program' is 'licensed' under the WTFPL.
 -->
 
 <!DOCTYPE html>
@@ -31,7 +16,6 @@
 	<script src="clientCore.js"></script>
 	<script src="share.js"></script>
 	<link id="currentStyle" rel="stylesheet" href="normal.css">
-	
 </head>
 
 <body onload="document.getElementById('version').innerHTML=version;">
@@ -39,8 +23,9 @@
 <div id="login" style="z-index:1337;top:0;left:0;">
 <p id="loginTitle">tr&chat</p>
 <form id="liloForm" action="">
+	<p>Choose a nickname...</p>
 <input id="loginForm" autocomplete="off" autofocus maxlength = "18"/> 
-<button></button><b id="version"> Loading tr&chat... </b>
+<button></button><b id="version"> Loadan tr&chat... </b>
 </form>
 
 </div>
@@ -50,54 +35,41 @@
 	<audio id="audioChannel" src=""></audio>
 	
 	<div id="title">
-		&nbsp;| tr&chat |&nbsp;
-	<a title="Users Currently Online" id="whoson">&#9787;</a>
+		chatroom name
 		&nbsp;
-	<a title="Clear the Chat Screen (/c /clear)" onclick="$('#chatContainer').empty();"><b>X</b></a>
-		&nbsp;
-	<a href="/call.html" target="blank_" title="Calls and Video Chats">&#9742;</a>
-		&nbsp;
-	<a title="Autoscroll Toggle" onclick="autoScroll = !autoScroll;if(autoScroll){$(this).css('color','green')}else{$(this).css('color','red')}"><b>&#8681;</b></a>
-		&nbsp;
-	<a title="Help" target="blank_" href="help.html">?</a>
-		&nbsp;
-	<a title="Options and Changelog" id="cog"><b>&#9776;</b></a>
+	<a title="Users Currently Online"><img id="whoson" src="users.png"></a>
+	<a title="Clear the Chat Screen (/c /clear)" onclick="$('#chatContainer').empty();"><img id="clearChat" src="clear.png"></a>
+	<a title="Help" target="blank_" href="help.html"><img id="help" src="help.png"></a>
+	<a title="Audio Notifications" onclick="audioMute = !audioMute; if(audioMute){$('#volume').attr('src','volumeOff.png')} else{$('#volume').attr('src','volumeOn.png')}"><img id="volume" src="volumeOn.png"></img></a>
+	&nbsp;	
+	<a id="autoScrollToggle" title="Toggle Autoscrolling Text" title="Autoscroll Toggle (/at)" onclick="autoScroll = !autoScroll;if(autoScroll){$(this).css('color','green')}else{$(this).css('color','red')}">&#8681;</a>
+	<a id="optionsButton" title="Options and Changelog" id="cog">&#9776;</a>
 	</div>	
 	
 <a id="top"></a> <!-- Bookmark for top of messages -->
 <div id="options">
 	
 <h1>Options</h1>
-<h3 id="optionsAUDIO" onclick="audioMute = !audioMute; if(!audioMute){this.innerHTML = 'Audio Notifications [ON]'}else{this.innerHTML = 'Audio Notifications [OFF]'} ">Audio Notifications [ON]</h3>
-<h3><a href="https://github.com/selcal/trandchat/issues" target="blank_" >Suggest changes on github.</a></h3>
-<h3><a href="https://github.com/selcal/trandchat/" target="blank_" >See the source code.</a></h3>
-<h3><a href="timeline.html" target="blank_" >View the (sort-of) complete timeline.</a></h3>
 <br>
 <h1>Styles and Custom CSS</h1>
 <p>Choose a preset chat background:</p>
 <h3 onclick="$(document.body).css('background-image','none');">Set the background back to default.</h3>
 <img alt="Backdrop 1" onclick="$(document.body).css('background-image','url(banner/banner4.gif)');" src="logo/backdrop1.png" width="128px" height="64px">
 <img alt="Backdrop 2" onclick="$(document.body).css('background-image','url(banner/banner1.gif)');" src="logo/backdrop2.png" width="128px" height="64px">
-<img alt="Backdrop 3" onclick="$(document.body).css('background-image','url(banner/banner21.gif)');" src="logo/backdrop3.png" width="128px" height="64px">
-<img alt="Backdrop 4" onclick="$(document.body).css('background-image','url(banner/banner40.gif)');" src="logo/backdrop4.png" width="128px" height="64px">
+<img alt="Backdrop 3" onclick="$(document.body).css('background-image','url(banner/banner7.gif)');" src="logo/backdrop3.png" width="128px" height="64px">
+<img alt="Backdrop 4" onclick="$(document.body).css('background-image','url(banner/banner9.gif)');" src="logo/backdrop4.png" width="128px" height="64px">
 <p>Preset Styles:</p>
-<h3 onclick="document.getElementById('currentStyle').href = 'normal.css'" style="background-color:#525252;color:#ADD8E6;font-family:sans-serif;">meditation++ (default)</h3>
-<h3 onclick="document.getElementById('currentStyle').href = 'skype.css'" style="background-color:#00D4FF;color:white;font-family:sans-serif;">skype</h3>
-<h3 onclick="document.getElementById('currentStyle').href = 'chan.css'" style="background-color:#D7AFA9;color:#750E00;">yotsuba C</h3>
-<h3 onclick="document.getElementById('currentStyle').href = 'unix.css'" style="background-color:#001A22;color:#00FF0B;font-family:monospace;">UNIX</h3>
+<h3 onclick="document.getElementById('currentStyle').href = 'normal.css'" style="background-color:#525252;color:#ADD8E6;font-family:sans-serif;">mona-- (default)</h3>
+<h3 onclick="document.getElementById('currentStyle').href = 'unix.css'" style="background-color:#001A22;color:#00FF0B;font-family:monospace;">U83R 1337 H@xX0R</h3>
 <br>
 <p>Custom Stylesheet:</p>
-<textarea style="width:100%;height:240px;background-color:#191919;color:white;"></textarea>
-<button onclick="document.getElementById('currentStyle').href = ''">RICE!</button>
+<textarea placeholder="Coming soon. For now you can find all CSS rules using your web browser's inspector." style="width:100%;height:240px;background-color:#191919;color:white;"></textarea>
+<button onclick="document.getElementById('currentStyle').href = ''">Set Style</button>
 <br>
 <br>
 <p id="version"></p>
 <p style="color:#1AF000">change log</p>
-<p>+ Added more videos</p>
-<p>+ Code cleanup.</p>
-<p>- Wasted 3 hours browsing dank memes.</p>
-<p>+ Users can now maximize a message. Wew.</p>
-<p>~ Reverted back to old library.</p>
+<p>~ Updated github source. months behind what was on my laptop. :/</p>
 </div>
 
 <div id="usersOnline">
@@ -108,28 +80,12 @@
 <img onclick="addEmote(':wiz:');" onmouseover="document.getElementById('sml').innerHTML = ':wiz:';" src="wiz.png">
 <img onclick="addEmote(':ok:');" onmouseover="document.getElementById('sml').innerHTML = ':ok:';" src="ok.gif">
 <img onclick="addEmote(':he:');" onmouseover="document.getElementById('sml').innerHTML = ':he:';" src="HE.png">
-<img onclick="addEmote(':cheeki:');" onmouseover="document.getElementById('sml').innerHTML = ':cheeki:';" src="cheekibreeki.png">
-<img onclick="addEmote(':pepe:');" onmouseover="document.getElementById('sml').innerHTML = ':pepe:';" src="pepe.png">
-<img onclick="addEmote(':feel:');" onmouseover="document.getElementById('sml').innerHTML = ':feel:';" src="feel.png">
-<img onclick="addEmote(':kfc:');" onmouseover="document.getElementById('sml').innerHTML = ':kfc:';" src="kfc.png">
-<img onclick="addEmote(':hot:');" onmouseover="document.getElementById('sml').innerHTML = ':hot:';" src="hot.png">
-<img onclick="addEmote(':maniaczzz:');" onmouseover="document.getElementById('sml').innerHTML = ':maniaczzz:';" src="maniacSleeper.png">
 <img onclick="addEmote(':frog:');" onmouseover="document.getElementById('sml').innerHTML = ':frog:';" src="frog.gif">
-<img onclick="addEmote(':bush:');" onmouseover="document.getElementById('sml').innerHTML = ':bush:';" src="bush.png">
-<img onclick="addEmote(':bushappa:');" onmouseover="document.getElementById('sml').innerHTML = ':bushappa:';" src="bushappa.png">
-<img onclick="addEmote(':axe:');" onmouseover="document.getElementById('sml').innerHTML = ':axe:';" src="axe.png">
-<img onclick="addEmote(':gasm:');" onmouseover="document.getElementById('sml').innerHTML = ':gasm:';" src="gasm.png">
 <img onclick="addEmote(':smirk:');" onmouseover="document.getElementById('sml').innerHTML = ':smirk:';" src="smirk.png">
-<img onclick="addEmote(':snoop:');" onmouseover="document.getElementById('sml').innerHTML = ':snoop:';" src="snoop.png">
 <img onclick="addEmote(':srs:');" onmouseover="document.getElementById('sml').innerHTML = ':srs:';" src="srs.png">
 <img onclick="addEmote(':wow:');" onmouseover="document.getElementById('sml').innerHTML = ':wow:';" src="wow.png">
 <img onclick="addEmote(':yee:');" onmouseover="document.getElementById('sml').innerHTML = ':yee:';" src="yee.png">
-<img onclick="addEmote(':sadmike:');" onmouseover="document.getElementById('sml').innerHTML = ':sadmike:';" src="ixmike.png">
 <img onclick="addEmote('Kappa');" onmouseover="document.getElementById('sml').innerHTML = 'Kappa';" src="Kappa.png">
-<img onclick="addEmote(':shreksmug:');" onmouseover="document.getElementById('sml').innerHTML = ':shreksmug:';" src="shreksmug.png">
-<img onclick="addEmote(':shrekayy:');" onmouseover="document.getElementById('sml').innerHTML = ':shrekayy:';" src="shrekayy.png">
-<img onclick="addEmote(':shrekohno:');" onmouseover="document.getElementById('sml').innerHTML = ':shrekohno:';" src="shrekohno.png">
-<img onclick="addEmote(':shrekyeah:');" onmouseover="document.getElementById('sml').innerHTML = ':shrekyeah:';" src="shrekyeah.png">
 </div>
 
 <form id="chatBar" action="">
@@ -140,6 +96,7 @@
 <div id="smiles">
 &#9786;
 </div>
+
 <div id="openShare" onclick="$('#shareMenu').empty();$('#shareMenu').hide();">
 &#9741;
 </div>
@@ -148,10 +105,11 @@
 <div id="shareMenu">
 </div>
 <p><b>sharing is caring</b></p>
-<div id="dropShare">
-<i>feature coming soon. you'll be able to drag files in here and they'll show up in chat!</i>
-</div>
-<p>&#8711;&nbsp;<i>or post something else from...</i>&nbsp;&#8711;</p>
+<input type="file" id="inputFile"/>
+<br>
+<br>
+<button onclick="shareFile();">Upload file! THIS DOESNT WORK D:</button>
+<p><i>or post something else...</i></p>
 <a title="Share a youtube video!" onclick="shareYoutube();"><img src="youtubelogo.svg" alt="Share something from youtube."></a>
 <a title="Share a comment on reddit!" onclick="shareReddit();"><img src="redditlogo.png" alt="Share something from reddit."></a>
 <a title="Share a twitch stream!" onclick="shareTwitch();"><img src="twitchlogo.png" alt="Share something from twitch."></a>

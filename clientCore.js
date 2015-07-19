@@ -1,14 +1,15 @@
-//User defined customization variables! 
-//Use these to add your own personal flair (well except version)
-var version = "tr&chat alpha 0.8.3"; //version no.
-var numberOfBanners = 41; //how many gif banners do you have in ./banner?
+//Use these to add your own personal touch
+var version = "0.9.0"; //version no.
+var numberOfBanners = 9; //how many gif banners do you have in ./banner?
 //Remember, it goes from banner1.gif to banner(numberOfBanners).gif.
-var UIClose='<b id="chatUI" onclick="deletePost(this.parentNode);">x</b>';
-var UIQuote='<b id="chatUI" onclick="quotePost(this.parentNode);">"</b>';
-var UIMax ='<b id="chatUI" onclick="maxPost(this.parentNode);">O</b>';
+var UIClose='<b title="Remove this message" id="chatUIClose" onclick="deletePost(this.parentNode);">x</b>';
+var UIQuote='<b title="Quote this message" id="chatUIQuote" onclick="quotePost(this.parentNode);">"</b>';
+var UIMax ='<b title="Open this message in Split View (recommended for youtube and twitch streams)" id="chatUIMax" onclick="maxPost(this.parentNode);">O</b>';
+var windowSplitted; //what is the element that is splited?
+var windowSplittedSize;
+var splitView = false; //when the user clicks UImax
 //Options:
 var audioMute = false; // is tr&chat's audio muted?
-var memeMute = false; //is the user not fun?
 var autoScroll = true;
 
 //Sound Effects:
@@ -17,12 +18,14 @@ var userJoinSFX = "beep.ogg";//a user joined.
 var messageGetSFX = "msg.ogg";//a message was received.
 
 //Cores:
-var userName = "Anonymous";
+var userName = "Anonymous"; //by default
 	
-	function loadHistory()
+	function endSplit()
 	{
-		alert('stub@loadHistory(); >> ~~Line 48');
+		windowSplitted = null;
+		splitView = false;
 	}
+	
 	function addEmote(inp)
 	{
 		$('#m').val(function(n,c)
@@ -33,6 +36,11 @@ var userName = "Anonymous";
 	function deletePost(parentPost)
 	{
 		$(parentPost).animate({marginLeft: "250%"}, 250, function() {parentPost.remove()});
+		if(parentPost === windowSplitted)
+		{
+			//if this is the window that was splitted, then allow chatContainer to resize
+			$('#chatContainer').animate({width: "100%"}, 250, function() {endSplit()});
+		}
 	}
 	
 	function quotePost(parentPost)
@@ -42,30 +50,46 @@ var userName = "Anonymous";
 	
 	function maxPost(parentPost)
 	{
-		$(parentPost).animate({marginLeft: "0px"}, 100);
-		$(parentPost).animate({marginTop: "-48px"}, 100);
-		$(parentPost).css("position","fixed");
-		$(parentPost).animate({height: "79vh"}, 250);
-		$(parentPost).animate({width: "99%"}, 500);	
+		if(parentPost === windowSplitted && splitView === true)
+		{
+			$('#chatContainer').append(parentPost);
+			$('#chatContainer').animate({width: "100%"}, 250, function() {endSplit()});
+			$(parentPost).css("position","relative");
+			$(parentPost).css("marginBottom","32px");
+			$(parentPost).animate({width: "80%"},100);
+			$(parentPost).animate({height: windowSplittedSize},100);
+			$(parentPost).animate({marginLeft: "16px"},300);
+		}
+		else
+		{
+			splitView = true;
+			windowSplittedSize = $(parentPost).height();
+			$(parentPost).animate({marginLeft: "50%"}, 100);
+			$(parentPost).animate({top: "24px"}, 50);
+			$('#chatContainer').animate({width: "50%"},100);
+			$(parentPost).css("position","fixed");
+			$(parentPost).animate({height: "95vh"}, 250);
+			$(parentPost).animate({width: "50%"}, 300);	
+	
+			windowSplitted = parentPost; //grab element for comparision later down the line
+		}
 	}
-		
 	
 $(document).ready(function()
 {		
 		var audioChannelREF = document.getElementById("audioChannel");
-		//Set up, Hide UI elements. EVERYONE HIDE
+		//Set up, Hide UI elements.
 		$('#title').hide();
 		$('#openShare').hide();
 		$('#smiles').hide();
 		$('#chatBar').hide();
 		$('#options').hide();
 		$('#share').hide();
-		$('#call').hide();
 		$('#usersOnline').hide();
 		$('#smileContainer').hide();
 		$("#shareMenu").hide();
 
-		//generate rng to determine banner on login
+		//rng determine banner on login
 		$('#login').css("background-image","url(banner/banner"+Math.floor((Math.random() * numberOfBanners) + 1)+".gif)");
 
 		//CORES:
@@ -83,13 +107,18 @@ $(document).ready(function()
 		$('#chatBar').show();
 		$('#openShare').show();
 		$('#smiles').show();
-		setTimeout("$('#login').remove();",500);
+		setTimeout("$('#login').remove();",500); //remove the login screen to save memory after 500 mseconds after logging in
 		return false;
 		});
 		
 		$('#chatBar').submit(function(msg,us) //submit a message
-		{
-			//clientside commands:
+		{	
+			if($('#m').val() === '/at')
+			{
+				autoScroll = !autoScroll;
+				$('#m').val('');
+				return false;
+			}
 			if($('#m').val() === '/clear' || $('#m').val() === '/c')
 			{
 				$('#chatContainer').empty(); //clear on client side....
@@ -97,7 +126,9 @@ $(document).ready(function()
 			else
 			{
 				socket.emit('chatIN', $('#m').val(),userName);
-			}		
+			}
+			
+		
 	
 			$('#m').val(''); //empty
 			
@@ -106,7 +137,7 @@ $(document).ready(function()
 		});
 		//GUI AND EVENT FIRING: 
 		
-		document.querySelector('#cog').onclick = function()
+		document.querySelector('#optionsButton').onclick = function()
 		{
 			$("#options").slideToggle("fast");
 		};
@@ -139,8 +170,7 @@ $(document).ready(function()
 		socket.on('audioCue',function(cue)
 		{
 			if(!audioMute)
-			{
-				
+			{	
 				if(cue === 'message' && document.hidden)
 				{
 					audioChannelREF.src = messageGetSFX;	
@@ -165,16 +195,17 @@ $(document).ready(function()
 		{
 			if(type === 'quote')
 			{
-				$("#chatContainer").append('<div class="chat"><b id="userName">'+us+'</b>'+UIClose+'<div class="quote"><p id="message">'+msg+'</p></div></div>');	
+				$("#chatContainer").append('<div class="chat"><b id="userName">'+us+'</b>'+UIClose+'<div class="quote"><p id="message">'+msg+'</p></div><p>Quoted at '+new Date().toUTCString()+'</p></div>');	
 			}
 			else
-			{//sorry for this long ass line, I know it must be painful.	
-			$("#chatContainer").append('<div class="chat"><b id="userName">'+us+'</b>'+UIClose+UIQuote+UIMax+'<p id="message">'+msg+'</p></div>');
+			{
+				//refactor this :(
+				$("#chatContainer").append('<div class="chat"><b id="userName">'+us+'&nbsp;&nbsp;<i>'+new Date().toUTCString()+'</i></b>'+UIClose+UIQuote+UIMax+'<p id="message">'+msg+'</p></div>');
 			}	
-				if(autoScroll === true)
-				{
+			if(autoScroll === true)
+			{
 				$("html, body").animate({ scrollTop: $(document).height() }, 0.2);
-				}
+			}
 		});
 		
 		socket.on('returnUsersFromServer',function(users)
@@ -182,10 +213,11 @@ $(document).ready(function()
 		$('#usersOnline').empty();
 		//empty old data, insert new data from server directly.
 		$('#usersOnline').append('<p>Users online:</p>');
-		for(i=0;i<users.length;i++)
-		{
-		$('#usersOnline').append('<p>'+users[i]+'</p>');
-		}
+			
+			for(var i=0;i<users.length;i++)
+			{
+				$('#usersOnline').append('<p>'+users[i]+'</p>');
+			}
 		});
 });
 

@@ -1,0 +1,2 @@
+When a user saves anything server-side, files should be redirected here
+until the user leaves or 24 hours have passed.

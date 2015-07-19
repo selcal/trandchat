@@ -1,5 +1,9 @@
 var socket = io();
 
+function shareFile()
+{
+	connection.send(document.getElementById('#inputFile').files[0]);
+}
 function shareTwitch()
 {
 	$("#shareMenu").empty();

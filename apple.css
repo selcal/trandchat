@@ -1,0 +1,436 @@
+@font-face{font-family:title; src: url(title.ttf);}
+@font-face{font-family:markerLight; src: url(markerLight.ttf)}
+@font-face{font-family:UI; src: url(ui.otf)}
+
+body 
+{
+width:100%;
+height:100vh;
+background-size:100% 100%;
+background-repeat:no-repeat;
+background-attachment:fixed;
+font-family:sans-serif;
+margin-left:0px;
+margin-right:0px;
+margin-top:0px;
+margin-bottom:0px;
+background-color:white;
+overflow-x:hidden;
+}
+html
+{
+height:100%;
+width:100%;
+}
+a
+{
+cursor:pointer;
+}
+#version
+{
+font-size:120%;
+text-align:center;
+}
+/***************
+ * Login style *
+ **************/
+#login
+{
+width:100%;
+height:100%;
+position:fixed;
+z-index:9999;
+background-size:100% 100%;
+}
+#loginTitle
+{
+background-color:#000;
+width:100%;
+opacity:0.78;
+margin-top:0px;
+text-align:center;
+color:white;
+font-size:350%;
+}
+
+#liloForm
+{
+position:absolute;
+text-align:center;
+top:80%;
+width:100%;
+height:48px;
+color:#FFF;
+padding:5px;
+}
+#liloForm input
+{
+text-align:center;
+width:100%;
+margin-right:0px;
+border:0;
+background-color:#000;
+opacity:0.98;
+color:#FFF;
+font-size:32px;
+}
+#liloForm button
+{
+visibility:hidden;
+}
+
+/********************
+ * Chat based style *
+ *******************/
+#chatContainer
+{
+margin-top:48px;
+margin-bottom:48px;
+padding-bottom:48px;
+padding-top:32px;
+z-index:3;
+}
+.chat
+{
+margin-top:8px;
+margin-left:2%;
+z-index:3;
+width:95%;
+background-color:#1DE90E;
+color:#FFF;
+font-size:100%;
+border: 1px #1DE90E groove;
+border-radius:20px;
+box-shadow:10px 5px 4px #000;
+padding:12px;
+}
+#chatUIMax
+{
+/*These are the 'buttons' that appear on chatboxes.*/
+float:right;
+font-family:monospace;
+margin-bottom:5px;
+padding:4px;
+color:black;
+margin-right:10px;
+font-size:130%;
+cursor:pointer;
+}
+#chatUIQuote
+{
+/*These are the 'buttons' that appear on chatboxes.*/
+float:right;
+font-family:monospace;
+margin-bottom:5px;
+padding:4px;
+color:black;
+margin-right:10px;
+font-size:120%;
+cursor:pointer;
+}
+#chatUIClose
+{
+/*These are the 'buttons' that appear on chatboxes.*/
+float:right;
+font-family:monospace;
+margin-bottom:5px;
+padding:4px;
+color:black;
+margin-right:10px;
+font-size:120%;
+cursor:pointer;
+}
+i
+{
+font-size:65%;
+margin-left:64px;
+}
+.chat p
+{
+margin-left:16px;
+margin-right:10%;
+}
+.chat video, .chat iframe
+{
+width:100%;
+height:60vh;
+border:none;
+}
+.chat img
+{
+max-width:90%;
+max-height:70vh;
+}
+#userName
+{
+color:white;
+text-align:left;
+overflow-x:hidden;
+font-size:100%;
+margin-left:8px;
+}
+#GET{width:64px;height:64px;}
+#sml{color:white;z-index:4;}
+
+#smiles
+{
+position:fixed;
+bottom:4px;
+right:0;
+width:32px;
+height:32px;
+z-index:10;
+color:black;
+font-size:32px;
+}
+#smileContainer
+{
+background-color:white;
+position:fixed;
+opacity:0.9;
+overflow-y:scroll;
+width:50%;
+height:50%;
+bottom:32px;
+right:0;
+}
+#share
+{
+font-weight:bold;
+font-family:title;
+background-color:white;
+text-align:center;
+color:black;
+position:fixed;
+width:100%;
+height:40%;
+bottom:32px;
+overflow-y:scroll;
+}
+#share img
+{
+position:relative;
+width:64px;
+float:left;
+background-color:white;
+height:64px;
+border: 1px solid white;
+border-radius:10px;
+margin:5px;
+}
+#openShare
+{
+position:fixed;
+bottom:4px;
+right:32px;
+width:32px;
+height:32px;
+z-index:10;
+color:black;
+font-size:32px;
+}
+#dropShare
+{
+position:relative;
+height:30%;
+border:5px dashed #FF7300;
+font-family:markerLight;
+font-size:150%;
+font-weight:bold;
+color:black;
+text-align:center;
+padding:5px;
+}
+#share button
+{
+background-color:#FF6600;
+color:#FFF;
+border: 1px #FF6600 solid;
+border-radius:20px;
+}
+#inputFile
+{
+border:4px dotted #FF7A00;
+width:95%;
+height:20%;
+padding:5px;
+}
+#shareMenu
+{
+margin-top:0px;
+z-index:3;
+height:100%;
+width:100%;
+text-align:center;
+font-family:sans-serif;
+background-color:#FFF;
+color:#000;
+}
+#shareMenu input
+{
+background-color:black;
+width:99%;
+color:#FF5700;
+opacity:0.87;
+}
+#shareMenu p
+{
+width:100%;
+background-color:#000;
+color:white;
+margin:0;
+}
+#shareText{width:100%;background-color:#000;color:#FFF;z-index:6;}
+#shareMenu a{color:blue;}
+/**************
+ * Call based *
+ *************/
+#call
+{
+font-family:title;
+width:40%;
+position:fixed;
+right:0;
+z-index:4;
+height:100%;
+font-size:50%;
+background-color:#000;
+top:24px;
+color:white;
+text-align:center;
+opacity:0.9;
+overflow:scroll;
+}
+#call video
+{
+width:128px;
+height:128px;
+padding:5px;
+}
+/****
+ *UI*
+ ****/
+h3
+{
+color:white;
+width:100%;
+text-align:center;
+background-color:#122020;
+box-shadow:2px 5px 2px #2F2F2F;
+}
+#title
+{
+width:100%;
+opacity:0.9;
+height:24px;
+top:0px;
+padding-bottom:2px;
+margin-bottom:48px;
+position:fixed;
+z-index:2;
+color:#FFFFFF;
+background-color:#000000;
+text-align:left;
+font-size:20px;
+}
+
+#title{box-shadow:-2px 8px 15px #2F2F2F}
+#title p{text-align: center;}
+#title a{text-align:left;color:#A1D0D9;font-size:100%;text-decoration:none;}
+#title img{width:22px!important;height:22px!important;padding:none;margin:0 0 0 0;}
+
+#chatBar 
+{
+position:fixed;
+bottom: 0; 
+width: 100%;
+height:32px; 
+z-index:9;
+margin-top:32px;
+background-color:#000;
+opacity:0.8;
+}
+#chatBar input
+{ 
+border: 0;
+width: 95%;
+z-index:9;
+height:32px;
+color:#FFF;
+font-size:120%;
+opacity:0.8;
+bottom:0; 
+left:0;
+right:32px;
+background-color:#000;
+}
+
+form button{visibility:hidden;}
+
+#cog{position:fixed;right:5px;}
+
+/********
+*Options* 
+********/
+#options 
+{
+background-color:black;
+height:90%;
+z-index:9999;
+color:#FFF;
+position:fixed;
+opacity:0.9;
+width:100%;
+overflow-y:scroll;
+top:24px;
+}
+#options h1
+{
+text-align:center;
+font-family:title;
+}
+#options p
+{
+font-family:monospace;
+font-size:140%;
+text-align:center;
+}
+#options a
+{
+color:#00FFF6;
+}
+#customCSS{width:100%;height:320px;}
+/*******
+*Others*
+*******/
+#whoson{border-bottom:2px groove #FFFF00; padding: none; display: inline;}
+#help{border-bottom:2px groove #0074FF; padding: none; display: inline;}
+#optionsButton{float:right;color:white!important;}
+#volume{border-bottom:2px groove #0BFF00; padding: none; display: inline;}
+#clearChat{border-bottom:2px groove #FF0000; padding: none; display: inline;}
+#usersOnline
+{
+position:fixed;
+top:24px;
+z-index:4;
+text-align:center;
+font-size:120%;
+background-color:black;
+width:30%;
+float:left;
+opacity:0.9;
+color:white;
+}
+.quote
+{
+margin-top:8px;
+margin-left:5px;
+width:inherit;
+background-color:#183D8C;
+color:#FFF;
+border: 2px #FFF dashed;
+border-radius:10px;
+box-shadow:5px 2px 0px #0C0C0C;
+padding: 2px;
+}
+

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 //Use these to add your own personal touch
 var version = "0.9.0"; //version no.
 var numberOfBanners = 9; //how many gif banners do you have in ./banner?
@@ -21,6 +22,25 @@ var messageGetSFX = "msg.ogg";//a message was received.
 var userName = "Anonymous"; //by default
 	
 	function endSplit()
+=======
+//User defined customization variables! 
+//Use these to add your own personal flair to the back-end.
+
+var version = "tr&chat alpha 0.7.9"; //version no.
+var numberOfBanners = 28; //how many gif banners do you have in ./banner?
+//Remember, it goes from banner1.gif to banner(numberOfBanners).gif.
+
+//Options:
+var audioMute = false; // is tr&chat's audio muted?
+var memeMute = false; //is the user not fun?
+var autoScroll = true;
+
+//Cores:
+var chatUIString = '<b id="chatUI"onclick="deletePost(this.parent)"></b><b id="chatUI"onclick="this.parentNode.remove();">x</b>'
+var userName = "Anonymous";
+	
+	function loadHistory()
+>>>>>>> 05bd03f7a42789594eab803145653bf05ad07b76
 	{
 		windowSplitted = null;
 		splitView = false;
@@ -34,6 +54,7 @@ var userName = "Anonymous"; //by default
 		});
 	}
 	function deletePost(parentPost)
+<<<<<<< HEAD
 	{
 		$(parentPost).animate({marginLeft: "250%"}, 250, function() {parentPost.remove()});
 		if(parentPost === windowSplitted)
@@ -73,11 +94,25 @@ var userName = "Anonymous"; //by default
 	
 			windowSplitted = parentPost; //grab element for comparision later down the line
 		}
+=======
+	{
+		$(parentPost).animate({marginLeft: "250%"}, 250, function() {parentPost.remove()});
+>>>>>>> 05bd03f7a42789594eab803145653bf05ad07b76
 	}
+	
+	function quotePost(parentPost)
+	{
+		socket.emit('quote',parentPost.lastChild.innerHTML,parentPost.firstChild.innerHTML);
+	}
+		
 	
 $(document).ready(function()
 {		
+<<<<<<< HEAD
 		var audioChannelREF = document.getElementById("audioChannel");
+=======
+			
+>>>>>>> 05bd03f7a42789594eab803145653bf05ad07b76
 		//Set up, Hide UI elements.
 		$('#title').hide();
 		$('#openShare').hide();
@@ -85,11 +120,19 @@ $(document).ready(function()
 		$('#chatBar').hide();
 		$('#options').hide();
 		$('#share').hide();
+<<<<<<< HEAD
+=======
+		$('#call').hide();
+>>>>>>> 05bd03f7a42789594eab803145653bf05ad07b76
 		$('#usersOnline').hide();
 		$('#smileContainer').hide();
 		$("#shareMenu").hide();
 
+<<<<<<< HEAD
 		//rng determine banner on login
+=======
+		//generate rng to determine banner on login
+>>>>>>> 05bd03f7a42789594eab803145653bf05ad07b76
 		$('#login').css("background-image","url(banner/banner"+Math.floor((Math.random() * numberOfBanners) + 1)+".gif)");
 
 		//CORES:
@@ -98,16 +141,36 @@ $(document).ready(function()
 		//LOGIN:
 		$('#login').submit(function()
 		{
+<<<<<<< HEAD
 		//request the server to join with your username::
 		socket.emit('join',$("#loginForm").val());
 		userName = $("#loginForm").val().replace(/<(.*?)>/g,'.');
+=======
+			userName = $('#loginForm').val();
+			userName = userName.replace(/<(.*?)>/g,' ');
+			//noscriptattacks:pleb edition
+		
+		if(userName === '' || userName === ' ' || userName === null)
+		{
+			//Set to anon if n/a
+			userName = 'Anonymous';
+		}
+		
+		//join with your username.
+		socket.emit('join',userName);
+		
+>>>>>>> 05bd03f7a42789594eab803145653bf05ad07b76
 		$('#login').fadeOut();
 		
 		$('#title').show();
 		$('#chatBar').show();
+<<<<<<< HEAD
 		$('#openShare').show();
 		$('#smiles').show();
 		setTimeout("$('#login').remove();",500); //remove the login screen to save memory after 500 mseconds after logging in
+=======
+		setTimeout(500,"$('#login').remove();");
+>>>>>>> 05bd03f7a42789594eab803145653bf05ad07b76
 		return false;
 		});
 		
@@ -121,7 +184,11 @@ $(document).ready(function()
 			}
 			if($('#m').val() === '/clear' || $('#m').val() === '/c')
 			{
+<<<<<<< HEAD
 				$('#chatContainer').empty(); //clear on client side....
+=======
+				$('#chatContainer').empty(); //clear
+>>>>>>> 05bd03f7a42789594eab803145653bf05ad07b76
 			}
 			else
 			{
@@ -137,7 +204,11 @@ $(document).ready(function()
 		});
 		//GUI AND EVENT FIRING: 
 		
+<<<<<<< HEAD
 		document.querySelector('#optionsButton').onclick = function()
+=======
+		document.querySelector('#cog').onclick = function()
+>>>>>>> 05bd03f7a42789594eab803145653bf05ad07b76
 		{
 			$("#options").slideToggle("fast");
 		};
@@ -162,6 +233,7 @@ $(document).ready(function()
 		
 		// SOCKET EVENTS:
 		
+<<<<<<< HEAD
 		socket.on('announcement',function(msg)//something happened
 		{
 			$("#chatContainer").append('<h3>'+msg+'<b style="float:right;margin-right:10px;"onclick="deletePost(this.parentNode)">x</b></h3>');
@@ -189,6 +261,11 @@ $(document).ready(function()
 					audioChannelREF.play();	
 				}
 			}
+=======
+		socket.on('announcement',function(msg)
+		{
+			$("#chatContainer").append('<h3>'+msg+'<b style="float:right;margin-right:10px;"onclick="deletePost(this.parentNode)">x</b></h3>');
+>>>>>>> 05bd03f7a42789594eab803145653bf05ad07b76
 		});
 		
 		socket.on('chatOUT', function(msg,us,type)
@@ -206,18 +283,40 @@ $(document).ready(function()
 			{
 				$("html, body").animate({ scrollTop: $(document).height() }, 0.2);
 			}
+<<<<<<< HEAD
+=======
+			if(type === 'quote')
+			{
+				$("#chatContainer").append('<div class="chat"><b id="userName">'+us+'</b><b id="chatUI" onclick="deletePost(this.parentNode);">x</b><div class="quote"><p id="message">'+msg+'</p></div></div>');	
+			}
+			else
+			{//sorry for this long ass line, I know it must be painful.	
+			$("#chatContainer").append('<div class="chat"><b id="userName">'+us+'</b><b id="chatUI" onclick="deletePost(this.parentNode);">x</b><b id="chatUI" onclick="quotePost(this.parentNode);">"</b><p id="message">'+msg+'</p></div>');
+			}	
+				if(autoScroll === true)
+				{
+				$("html, body").animate({ scrollTop: $(document).height() }, 0.2);
+				}
+>>>>>>> 05bd03f7a42789594eab803145653bf05ad07b76
 		});
 		
 		socket.on('returnUsersFromServer',function(users)
 		{
 		$('#usersOnline').empty();
 		//empty old data, insert new data from server directly.
+<<<<<<< HEAD
 		$('#usersOnline').append('<p>Users online:</p>');
 			
 			for(var i=0;i<users.length;i++)
 			{
 				$('#usersOnline').append('<p>'+users[i]+'</p>');
 			}
+=======
+		for(i=0;i<users.length;i++)
+		{
+		$('#usersOnline').append('<p>'+users[i]+'</p>');
+		}
+>>>>>>> 05bd03f7a42789594eab803145653bf05ad07b76
 		});
 });
 

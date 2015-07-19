@@ -6,10 +6,13 @@ body
 {
 width:100%;
 height:100vh;
+<<<<<<< HEAD
 background-size:100% 100%;
 background-repeat:no-repeat;
 background-attachment:fixed;
 font-family:sans-serif;
+=======
+>>>>>>> 05bd03f7a42789594eab803145653bf05ad07b76
 margin-left:0px;
 margin-right:0px;
 margin-top:0px;
@@ -21,12 +24,18 @@ html
 {
 height:100%;
 width:100%;
+<<<<<<< HEAD
+}
+a
+{
+cursor:pointer;
+=======
 }
 a
 {
 cursor:pointer;
 }
-#version{font-size:120%;text-align:center;}
+#version{font-family:monospace;font-size:110%}
 /***************
  * Login style *
  **************/
@@ -40,6 +49,7 @@ background-size:100% 100%;
 }
 #loginTitle
 {
+font-family:sans-serif,tahoma;
 background-color:#000;
 width:100%;
 opacity:0.78;
@@ -55,9 +65,8 @@ position:absolute;
 text-align:center;
 top:80%;
 width:100%;
-height:48px;
 color:#FFF;
-padding:5px;
+padding:0;
 }
 #liloForm input
 {
@@ -78,16 +87,110 @@ visibility:hidden;
 /********************
  * Chat based style *
  *******************/
+#chat
+{
+margin-top:32px;
+margin-bottom:48px;
+margin-right:40%;
+>>>>>>> 05bd03f7a42789594eab803145653bf05ad07b76
+}
+#version{font-size:120%;text-align:center;}
+/***************
+ * Login style *
+ **************/
+#login
+{
+width:100%;
+height:100%;
+position:fixed;
+z-index:9999;
+background-size:100% 100%;
+}
+<<<<<<< HEAD
+#loginTitle
+{
+background-color:#000;
+width:100%;
+opacity:0.78;
+margin-top:0px;
+text-align:center;
+=======
+/**************
+ * Call based *
+ *************/
+#call
+{
+width:40%;
+position:fixed;
+font-family:sans-serif;
+right:0;
+z-index:4;
+height:100%;
+font-size:50%;
+background-color:#000;
+top:24px;
+>>>>>>> 05bd03f7a42789594eab803145653bf05ad07b76
+color:white;
+font-size:350%;
+}
+
+#liloForm
+{
+position:absolute;
+text-align:center;
+<<<<<<< HEAD
+top:80%;
+width:100%;
+height:48px;
+color:#FFF;
+padding:5px;
+=======
+opacity:0.9;
+overflow:scroll;
+>>>>>>> 05bd03f7a42789594eab803145653bf05ad07b76
+}
+#liloForm input
+{
+text-align:center;
+width:100%;
+<<<<<<< HEAD
+margin-right:0px;
+border:0;
+background-color:#000;
+opacity:0.98;
+color:#FFF;
+font-size:32px;
+}
+#liloForm button
+=======
+height:128px;
+}
+#imgShare
+>>>>>>> 05bd03f7a42789594eab803145653bf05ad07b76
+{
+visibility:hidden;
+}
+
+/********************
+ * Chat based style *
+ *******************/
 #chatContainer
 {
+<<<<<<< HEAD
 margin-top:48px;
 margin-bottom:48px;
 padding-bottom:48px;
 padding-top:32px;
 z-index:3;
+=======
+margin-top:15px;
+width:480px;
+height:320px;
+>>>>>>> 05bd03f7a42789594eab803145653bf05ad07b76
 }
 .chat
 {
+<<<<<<< HEAD
 margin-top:8px;
 margin-left:2%;
 z-index:3;
@@ -95,6 +198,13 @@ width:95%;
 background-color:#191919;
 opacity:0.92;
 color:#FFF;
+=======
+font-family:sans-serif,monospace,tahoma;
+margin-left:-30px;
+list-style:none;
+text-align:left;
+color:white;
+>>>>>>> 05bd03f7a42789594eab803145653bf05ad07b76
 font-size:90%;
 border: 1px #191919 solid;
 border-radius:10px;
@@ -159,6 +269,7 @@ margin-right:10%;
 .chat video, .chat iframe
 {
 width:100%;
+<<<<<<< HEAD
 height:60vh;
 border:none;
 }
@@ -268,6 +379,28 @@ z-index:3;
 height:100%;
 width:100%;
 text-align:center;
+=======
+opacity:0.9;
+height:24px;
+top:0px;
+position:fixed;
+z-index:2;
+color:#FFFFFF;
+background-color:#000000;
+text-align:left;
+font-family:sans-serif;
+font-size:20px;
+}
+
+/**
+ *UI*/
+#userName
+{
+color:#90C4D9;
+text-align:left;
+margin-bottom:-15px;
+overflow-x:hidden;
+>>>>>>> 05bd03f7a42789594eab803145653bf05ad07b76
 font-family:sans-serif;
 background-color:#FFF;
 color:#000;
@@ -303,9 +436,14 @@ font-size:50%;
 background-color:#000;
 top:24px;
 color:white;
+font-family:sans-serif;
 text-align:center;
+<<<<<<< HEAD
 opacity:0.9;
 overflow:scroll;
+=======
+background-color:#000000;
+>>>>>>> 05bd03f7a42789594eab803145653bf05ad07b76
 }
 #call video
 {
@@ -318,6 +456,7 @@ padding:5px;
  ****/
 h3
 {
+<<<<<<< HEAD
 color:white;
 width:100%;
 text-align:center;
@@ -355,6 +494,15 @@ z-index:9;
 margin-top:32px;
 background-color:#000;
 opacity:0.8;
+=======
+text-align:left;
+color:#A1D0D9;
+text-decoration:none;
+}
+#chatBar 
+{
+position:fixed;bottom: 0; width: 100%; height:32px; background-color:#000; opacity:0.8;
+>>>>>>> 05bd03f7a42789594eab803145653bf05ad07b76
 }
 #chatBar input
 { 
@@ -366,8 +514,13 @@ color:#FFF;
 font-size:120%;
 opacity:0.8;
 bottom:0; 
+<<<<<<< HEAD
 left:0;
 right:32px;
+=======
+left:1%;
+right:3%;
+>>>>>>> 05bd03f7a42789594eab803145653bf05ad07b76
 background-color:#000;
 }
 
@@ -380,6 +533,7 @@ form button{visibility:hidden;}
 ********/
 #options 
 {
+<<<<<<< HEAD
 background-color:black;
 height:90%;
 z-index:9999;
@@ -389,6 +543,14 @@ opacity:0.9;
 width:100%;
 overflow-y:scroll;
 top:24px;
+=======
+visibility:hidden;
+}
+#cog
+{
+position:fixed;
+right:5px;
+>>>>>>> 05bd03f7a42789594eab803145653bf05ad07b76
 }
 #options h1
 {
@@ -404,6 +566,7 @@ text-align:center;
 #options a
 {
 color:#00FFF6;
+<<<<<<< HEAD
 }
 #customCSS{width:100%;height:320px;}
 /*******
@@ -414,6 +577,43 @@ color:#00FFF6;
 #optionsButton{float:right;color:white!important;}
 #volume{border-bottom:2px groove #0BFF00; padding: none; display: inline;}
 #clearChat{border-bottom:2px groove #FF0000; padding: none; display: inline;}
+=======
+font-style:bold;
+}
+#customCSS
+{
+width:100%;
+height:320px;
+}
+
+#smiles
+{
+position:fixed;
+bottom:0;
+right:0;
+width:3%;
+z-index:2;
+color:white;
+font-size:24px;
+}
+#smileContainer
+{
+background-color:black;
+position:fixed;
+opacity:0.9;
+overflow-y:scroll;
+width:50%;
+height:50%;
+bottom:32px;
+right:0;
+}
+#sml
+{
+color:white;
+font-family:sans-serif;
+}
+
+>>>>>>> 05bd03f7a42789594eab803145653bf05ad07b76
 #usersOnline
 {
 position:fixed;
@@ -421,6 +621,7 @@ top:24px;
 z-index:4;
 text-align:center;
 font-size:120%;
+font-family:tahoma;
 background-color:black;
 width:30%;
 float:left;
@@ -429,6 +630,7 @@ color:white;
 }
 .quote
 {
+<<<<<<< HEAD
 margin-top:8px;
 margin-left:5px;
 width:inherit;
@@ -438,5 +640,16 @@ border: 2px #FFF dashed;
 border-radius:10px;
 box-shadow:5px 2px 0px #0C0C0C;
 padding: 2px;
+=======
+position:relative;
+margin-top:24px;
+width:100%; 
+font-family:sans-serif;
+font-size:80%;
+font-style:bold;
+background-color:#A1D0D9;
+color:#2D2D2D;
+text-align:center;
+>>>>>>> 05bd03f7a42789594eab803145653bf05ad07b76
 }
 

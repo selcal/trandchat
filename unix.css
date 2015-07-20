@@ -1,7 +1,11 @@
 @font-face{font-family:title; src: url(title.ttf);}
 @font-face{font-family:markerLight; src: url(markerLight.ttf)}
 @font-face{font-family:UI; src: url(ui.otf)}
-
+#gauss_blur
+{
+	-webkit-filter: blur(10px);
+	filter: blur(10px);
+}
 body 
 {
 width:100%;
@@ -14,7 +18,7 @@ margin-left:0px;
 margin-right:0px;
 margin-top:0px;
 margin-bottom:0px;
-background-color:black;
+background-color:#4A4A4A;
 overflow-x:hidden;
 }
 html
@@ -92,48 +96,56 @@ margin-top:8px;
 margin-left:2%;
 z-index:3;
 width:95%;
-background-color:#000;
-color:green;
+background-color:#191919;
+opacity:0.92;
+color:#FFF;
 font-size:90%;
-font-family:monospace;
-border: 2px green solid;
+border: 1px #191919 solid;
+border-radius:10px;
+box-shadow:5px 2px 0px #0C0C0C;
 padding:2px;
 }
-#chatUIMax
+.chatUIMax
 {
 /*These are the 'buttons' that appear on chatboxes.*/
 float:right;
 font-family:monospace;
+border-radius:360px;
+box-shadow:2px 2px 0px #115811;
 margin-bottom:5px;
 padding:4px;
-background-color:green;
-color:black;
+background-color:#21A021;
+color:white;
 margin-right:10px;
 font-size:100%;
 cursor:pointer;
 }
-#chatUIQuote
+.chatUIQuote
 {
 /*These are the 'buttons' that appear on chatboxes.*/
 float:right;
 font-family:monospace;
+border-radius:360px;
+box-shadow:2px 2px 0px #897300;
 margin-bottom:5px;
 padding:4px;
-background-color:green;
-color:black;
+background-color:#C6A709;
+color:white;
 margin-right:10px;
 font-size:100%;
 cursor:pointer;
 }
-#chatUIClose
+.chatUIClose
 {
 /*These are the 'buttons' that appear on chatboxes.*/
 float:right;
 font-family:monospace;
+border-radius:360px;
+box-shadow:2px 2px 0px #96040E;
 margin-bottom:5px;
 padding:4px;
-background-color:green;
-color:black;
+background-color:#E40212;
+color:white;
 margin-right:10px;
 font-size:100%;
 cursor:pointer;
@@ -151,7 +163,7 @@ margin-right:10%;
 .chat video, .chat iframe
 {
 width:100%;
-height:60vh;
+height:60vh!important;
 border:none;
 }
 .chat img
@@ -178,13 +190,14 @@ right:0;
 width:32px;
 height:32px;
 z-index:10;
-color:green;
+color:white;
 font-size:32px;
 }
 #smileContainer
 {
 background-color:black;
 position:fixed;
+opacity:0.9;
 overflow-y:scroll;
 width:50%;
 height:50%;
@@ -197,7 +210,7 @@ font-weight:bold;
 font-family:title;
 background-color:black;
 text-align:center;
-color:green;
+color:#FFF;
 position:fixed;
 width:100%;
 height:40%;
@@ -223,7 +236,7 @@ right:32px;
 width:32px;
 height:32px;
 z-index:10;
-color:#FF00BF;
+color:white;
 font-size:32px;
 }
 #dropShare
@@ -240,13 +253,14 @@ padding:5px;
 }
 #share button
 {
-background-color:green;
-color:black;
-border: 3px green solid;
+background-color:#FF6600;
+color:#FFF;
+border: 1px #FF6600 solid;
+border-radius:20px;
 }
 #inputFile
 {
-border:4px dotted green;
+border:4px dotted #FF7A00;
 width:95%;
 height:20%;
 padding:5px;
@@ -259,37 +273,40 @@ height:100%;
 width:100%;
 text-align:center;
 font-family:sans-serif;
-background-color:green;
+background-color:#FFF;
 color:#000;
 }
 #shareMenu input
 {
 background-color:black;
 width:99%;
-color:green;
+color:#FF5700;
+opacity:0.87;
 }
 #shareMenu p
 {
 width:100%;
-background-color:green;
-color:black;
+background-color:#000;
+color:white;
 margin:0;
 }
-#shareText{width:100%;background-color:#000;color:green;z-index:6;}
-#shareMenu a{color:#00FFD2;}
+#shareText{width:100%;background-color:#000;color:#FFF;z-index:6;}
+#shareMenu a{color:blue;}
 /****
  *UI*
  ****/
 h3
 {
-color:black;
+color:white;
 width:100%;
 text-align:center;
-background-color:green;
+background-color:#122020;
+box-shadow:2px 5px 2px #2F2F2F;
 }
 #title
 {
 width:100%;
+opacity:0.9;
 height:24px;
 top:0px;
 padding-bottom:2px;
@@ -297,14 +314,14 @@ margin-bottom:48px;
 position:fixed;
 z-index:2;
 color:#FFFFFF;
-background-color:#000261;
+background-color:#000000;
 text-align:left;
 font-size:20px;
 }
 
 #title{box-shadow:-2px 8px 15px #2F2F2F}
 #title p{text-align: center;}
-#title a{text-align:left;color:white;font-size:100%;text-decoration:none;}
+#title a{text-align:left;color:#A1D0D9;font-size:100%;text-decoration:none;}
 #title img{width:22px!important;height:22px!important;padding:none;margin:0 0 0 0;}
 
 #chatBar 
@@ -316,6 +333,7 @@ height:32px;
 z-index:9;
 margin-top:32px;
 background-color:#000;
+opacity:0.8;
 }
 #chatBar input
 { 
@@ -324,8 +342,8 @@ width: 95%;
 z-index:9;
 height:32px;
 color:#FFF;
-font-family:monospace;
 font-size:120%;
+opacity:0.8;
 bottom:0; 
 left:0;
 right:32px;
@@ -341,11 +359,12 @@ form button{visibility:hidden;}
 ********/
 #options 
 {
-background-color:blue;
+background-color:black;
 height:90%;
 z-index:9999;
 color:#FFF;
 position:fixed;
+opacity:0.9;
 width:100%;
 overflow-y:scroll;
 top:24px;
@@ -369,11 +388,11 @@ color:#00FFF6;
 /*******
 *Others*
 *******/
-#whoson{border-bottom:2px groove #FF00BF; padding: none; display: inline;}
-#help{border-bottom:2px groove #FF00BF; padding: none; display: inline;}
+#whoson{border-bottom:2px groove #FFFF00; padding: none; display: inline;}
+#help{border-bottom:2px groove #0074FF; padding: none; display: inline;}
 #optionsButton{float:right;color:white!important;}
-#volume{border-bottom:2px groove #FF00BF; padding: none; display: inline;}
-#clearChat{border-bottom:2px groove #FF00BF; padding: none; display: inline;}
+#volume{border-bottom:2px groove #0BFF00; padding: none; display: inline;}
+#clearChat{border-bottom:2px groove #FF0000; padding: none; display: inline;}
 #usersOnline
 {
 position:fixed;
@@ -384,8 +403,8 @@ font-size:120%;
 background-color:black;
 width:30%;
 float:left;
-font-family:monospace;
-color:green;
+opacity:0.9;
+color:white;
 }
 .quote
 {

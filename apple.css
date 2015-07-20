@@ -1,7 +1,11 @@
 @font-face{font-family:title; src: url(title.ttf);}
 @font-face{font-family:markerLight; src: url(markerLight.ttf)}
 @font-face{font-family:UI; src: url(ui.otf)}
-
+#gauss_blur
+{
+	-webkit-filter: blur(10px);
+	filter: blur(10px);
+}
 body 
 {
 width:100%;
@@ -14,7 +18,7 @@ margin-left:0px;
 margin-right:0px;
 margin-top:0px;
 margin-bottom:0px;
-background-color:white;
+background-color:#4A4A4A;
 overflow-x:hidden;
 }
 html
@@ -26,11 +30,7 @@ a
 {
 cursor:pointer;
 }
-#version
-{
-font-size:120%;
-text-align:center;
-}
+#version{font-size:120%;text-align:center;}
 /***************
  * Login style *
  **************/
@@ -96,48 +96,58 @@ margin-top:8px;
 margin-left:2%;
 z-index:3;
 width:95%;
-background-color:#1DE90E;
+background-color:#191919;
+opacity:0.92;
 color:#FFF;
+font-size:90%;
+border: 1px #191919 solid;
+border-radius:10px;
+box-shadow:5px 2px 0px #0C0C0C;
+padding:2px;
+}
+.chatUIMax
+{
+/*These are the 'buttons' that appear on chatboxes.*/
+float:right;
+font-family:monospace;
+border-radius:360px;
+box-shadow:2px 2px 0px #115811;
+margin-bottom:5px;
+padding:4px;
+background-color:#21A021;
+color:white;
+margin-right:10px;
 font-size:100%;
-border: 1px #1DE90E groove;
-border-radius:20px;
-box-shadow:10px 5px 4px #000;
-padding:12px;
-}
-#chatUIMax
-{
-/*These are the 'buttons' that appear on chatboxes.*/
-float:right;
-font-family:monospace;
-margin-bottom:5px;
-padding:4px;
-color:black;
-margin-right:10px;
-font-size:130%;
 cursor:pointer;
 }
-#chatUIQuote
+.chatUIQuote
 {
 /*These are the 'buttons' that appear on chatboxes.*/
 float:right;
 font-family:monospace;
+border-radius:360px;
+box-shadow:2px 2px 0px #897300;
 margin-bottom:5px;
 padding:4px;
-color:black;
+background-color:#C6A709;
+color:white;
 margin-right:10px;
-font-size:120%;
+font-size:100%;
 cursor:pointer;
 }
-#chatUIClose
+.chatUIClose
 {
 /*These are the 'buttons' that appear on chatboxes.*/
 float:right;
 font-family:monospace;
+border-radius:360px;
+box-shadow:2px 2px 0px #96040E;
 margin-bottom:5px;
 padding:4px;
-color:black;
+background-color:#E40212;
+color:white;
 margin-right:10px;
-font-size:120%;
+font-size:100%;
 cursor:pointer;
 }
 i
@@ -153,17 +163,17 @@ margin-right:10%;
 .chat video, .chat iframe
 {
 width:100%;
-height:60vh;
+height:60vh!important;
 border:none;
 }
 .chat img
 {
-max-width:90%;
-max-height:70vh;
+max-width:100%;
+max-height:80vh;
 }
 #userName
 {
-color:white;
+color:#90C4D9;
 text-align:left;
 overflow-x:hidden;
 font-size:100%;
@@ -180,12 +190,12 @@ right:0;
 width:32px;
 height:32px;
 z-index:10;
-color:black;
+color:white;
 font-size:32px;
 }
 #smileContainer
 {
-background-color:white;
+background-color:black;
 position:fixed;
 opacity:0.9;
 overflow-y:scroll;
@@ -198,9 +208,9 @@ right:0;
 {
 font-weight:bold;
 font-family:title;
-background-color:white;
+background-color:black;
 text-align:center;
-color:black;
+color:#FFF;
 position:fixed;
 width:100%;
 height:40%;
@@ -226,7 +236,7 @@ right:32px;
 width:32px;
 height:32px;
 z-index:10;
-color:black;
+color:white;
 font-size:32px;
 }
 #dropShare
@@ -237,7 +247,7 @@ border:5px dashed #FF7300;
 font-family:markerLight;
 font-size:150%;
 font-weight:bold;
-color:black;
+color:#FF7300;
 text-align:center;
 padding:5px;
 }
@@ -282,31 +292,6 @@ margin:0;
 }
 #shareText{width:100%;background-color:#000;color:#FFF;z-index:6;}
 #shareMenu a{color:blue;}
-/**************
- * Call based *
- *************/
-#call
-{
-font-family:title;
-width:40%;
-position:fixed;
-right:0;
-z-index:4;
-height:100%;
-font-size:50%;
-background-color:#000;
-top:24px;
-color:white;
-text-align:center;
-opacity:0.9;
-overflow:scroll;
-}
-#call video
-{
-width:128px;
-height:128px;
-padding:5px;
-}
 /****
  *UI*
  ****/

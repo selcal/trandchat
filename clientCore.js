@@ -1,12 +1,11 @@
-//Use these to add your own personal touch
 var version = "0.9.0"; //version no.
-var numberOfBanners = 9; //how many gif banners do you have in ./banner?
-//Remember, it goes from banner1.gif to banner(numberOfBanners).gif.
-var UIClose='<b title="Remove this message" id="chatUIClose" onclick="deletePost(this.parentNode);">x</b>';
-var UIQuote='<b title="Quote this message" id="chatUIQuote" onclick="quotePost(this.parentNode);">"</b>';
-var UIMax ='<b title="Open this message in Split View (recommended for youtube and twitch streams)" id="chatUIMax" onclick="maxPost(this.parentNode);">O</b>';
+var numberOfBanners = 5; //how many gif banners do you want to see
+//9 by default
+var UIClose='<b title="Remove this message" class="chatUIClose" onclick="deletePost(this.parentNode);">x</b>';
+var UIQuote='<b title="Quote this message" class="chatUIQuote" onclick="quotePost(this.parentNode);">"</b>';
+var UIMax ='<b title="Open this message in Split View (recommended for youtube and twitch streams)" class="chatUIMax" onclick="maxPost(this.parentNode);">|</b>';
 var windowSplitted; //what is the element that is splited?
-var windowSplittedSize;
+var windowSplittedSize;//splitted element last size.
 var splitView = false; //when the user clicks UImax
 //Options:
 var audioMute = false; // is tr&chat's audio muted?
@@ -50,27 +49,32 @@ var userName = "Anonymous"; //by default
 	
 	function maxPost(parentPost)
 	{
-		if(parentPost === windowSplitted && splitView === true)
+			//STOP SPLIT
+		if(parentPost === windowSplitted)
 		{
-			$('#chatContainer').append(parentPost);
-			$('#chatContainer').animate({width: "100%"}, 250, function() {endSplit()});
+			$('#chatContainer').animate({width: "100%"}, 350, function() {endSplit()});
 			$(parentPost).css("position","relative");
+			$(parentPost).css("zIndex","inherit");
 			$(parentPost).css("marginBottom","32px");
-			$(parentPost).animate({width: "80%"},100);
-			$(parentPost).animate({height: windowSplittedSize},100);
-			$(parentPost).animate({marginLeft: "16px"},300);
+			$(parentPost).css("width","80%");
+			$(parentPost).css("height",windowSplittedSize);
+			$(parentPost).animate({marginLeft: "2%"},150);
 		}
-		else
+		if(splitView === true)
+		{
+			return;
+		}
+		else //START SPLIT
 		{
 			splitView = true;
+			$(parentPost).animate({marginLeft: "200%"},100); //hide
 			windowSplittedSize = $(parentPost).height();
-			$(parentPost).animate({marginLeft: "50%"}, 100);
-			$(parentPost).animate({top: "24px"}, 50);
-			$('#chatContainer').animate({width: "50%"},100);
 			$(parentPost).css("position","fixed");
-			$(parentPost).animate({height: "95vh"}, 250);
-			$(parentPost).animate({width: "50%"}, 300);	
-	
+			$(parentPost).css("top","24px");
+			$(parentPost).css("height","95vh");
+			$(parentPost).css("width","50%");
+			$('#chatContainer').animate({width: "50%"},100);
+			$(parentPost).animate({marginLeft: "50%"}, 250);
 			windowSplitted = parentPost; //grab element for comparision later down the line
 		}
 	}
@@ -220,5 +224,3 @@ $(document).ready(function()
 			}
 		});
 });
-
-	

@@ -50,7 +50,6 @@ function shareYoutube()
 	$("#shareMenu").fadeIn("slow");
 	$("#shareMenu").append('<p id="shareText">Paste the URL of the video you want to post.</p>');
 	$("#shareMenu").append('<form id="url" action=""><input id="u" autocomplete="off" autofocus maxlength = "256"/><input type="submit" style="visibility:hidden"/></form>');
-	
 	$('#url').submit(function(e)
 	{
 		e.preventDefault();
